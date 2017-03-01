@@ -1,0 +1,24 @@
+{
+  "name": "showapp",
+  "version": "0.1.0",
+  "description": "Desktop application for creating and viewing graduate showcase presentations",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deltodon/ShowApp.git"
+  },
+  "keywords": [
+    "showapp",
+    "graduate",
+    "showcase"
+  ],
+  "author": "Deltodon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deltodon/ShowApp/issues"
+  },
+  "homepage": "https://github.com/deltodon/ShowApp#readme"
+}
