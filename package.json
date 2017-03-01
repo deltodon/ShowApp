@@ -4,6 +4,7 @@
   "description": "Desktop application for creating and viewing graduate showcase presentations",
   "main": "src/main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/deltodon/ShowApp/issues"
   },
-  "homepage": "https://github.com/deltodon/ShowApp#readme"
+  "homepage": "https://github.com/deltodon/ShowApp#readme",
+  "devDependencies": {
+    "electron": "^1.4.15"
+  }
 }
