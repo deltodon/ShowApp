@@ -1,5 +1,5 @@
-const Menu = require('electron').Menu;
-
+const electron = require('electron');
+const Menu = electron.Menu;
 
 var createMenu = function(){
 
@@ -83,7 +83,7 @@ var createMenu = function(){
             },
             {
                 role: 'togglefullscreen'
-            }
+            }           
             ]
         },
         {
@@ -102,7 +102,7 @@ var createMenu = function(){
             submenu: [
             {
                 label: 'Learn More',
-                click () { require('electron').shell.openExternal('http://electron.atom.io') }
+                click () { require('electron').shell.openExternal('https://github.com/deltodon/ShowApp/wiki') }
             }
             ]
         }

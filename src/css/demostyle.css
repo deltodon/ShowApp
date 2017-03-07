@@ -1,4 +1,30 @@
-h1 {
-    font-family: sans-serif;
+html, body {
+    height: 100%;
+}
+
+
+body {
+    font-family: "Lucida Grande", "Segoe UI", Ubuntu, Cantarell, Arial, Helvetica, sans-serif;
     color: white;
+    margin: 0;
+    padding: 0;
+}
+
+
+h1 {
+    font-family: 'Times New Roman', Times, serif;
+    color: burlywood;
+}
+
+#side-nav {
+    background: #333333;
+    /*padding-top: 18px;*/
+    height: 100%;
+    width: 50px;
+    float: left;
+}
+
+#main {
+    margin-left: 18px;
+    float: left;
 }
