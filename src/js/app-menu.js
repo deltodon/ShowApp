@@ -1,4 +1,5 @@
 const electron = require('electron');
+const app = electron.app;
 const Menu = electron.Menu;
 
 var createMenu = function(){
@@ -18,8 +19,8 @@ var createMenu = function(){
             },
             {
                 label: 'Quit',
-                // click: () => app.quit(),
-                role: 'quit',
+                click: () => app.quit(),
+                //role: 'quit',
                 accelerator: 'ctrl+q'
                 
             }
@@ -94,6 +95,10 @@ var createMenu = function(){
             },
             {
                 role: 'close'
+            },
+            {
+                label: 'Toggle Menu',
+                click () {toggleMenu()}
             }
             ]
         },
@@ -112,5 +117,11 @@ var createMenu = function(){
     Menu.setApplicationMenu(myMenu);
 
 }
+
+var toggleMenu = function(){
+    console.log('menu toggled');
+}
+
+
 
 module.exports.createMenu = createMenu;

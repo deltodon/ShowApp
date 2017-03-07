@@ -1,7 +1,7 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-const showappmenu = require('./js/showappmenu');
+const showappmenu = require('./js/app-menu');
 const path = require('path');
 
 var mainWindow = null;
