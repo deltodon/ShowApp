@@ -13,6 +13,8 @@ app.on('ready', () => {
         backgroundColor: "#222222",
         width: 1000,
         height: 800,
+        minWidth: 640,
+        minHeight: 480,
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     })
 

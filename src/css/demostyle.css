@@ -21,10 +21,41 @@ h1 {
     /*padding-top: 18px;*/
     height: 100%;
     width: 50px;
-    float: left;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+#side-nav a {
+    font-size: 1.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#side-nav a:hover {
+    color: rgba(255, 255, 255, 1.0);
+}
+
+#side-nav ul {
+    list-style: none;
+    padding: 12px;
+    margin: 0;
+}
+
+#side-nav li {
+    padding-bottom: 8px;
+}
+
+#wrapper {
+    height: 100%;
+    min-width: 800px;
 }
 
 #main {
-    margin-left: 18px;
-    float: left;
+    margin-left: 20px;
+    min-width: 500px;
+    position: absolute;
+    left: 50px;
+    top: 0;
+    bottom: 0;
+    right: 0;
 }
