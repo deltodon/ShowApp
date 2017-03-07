@@ -2,6 +2,9 @@ const electron = require('electron');
 const app = electron.app;
 const Menu = electron.Menu;
 
+
+var menuIsActive = true;
+
 var createMenu = function(){
 
     const template = [
@@ -98,7 +101,8 @@ var createMenu = function(){
             },
             {
                 label: 'Toggle Menu',
-                click () {toggleMenu()}
+                click () {toggleMenu()},
+                accelerator: 'f12'
             }
             ]
         },
@@ -119,7 +123,20 @@ var createMenu = function(){
 }
 
 var toggleMenu = function(){
-    console.log('menu toggled');
+
+    if (menuIsActive === true)
+    {
+        //console.log('menu off');
+        Menu.setApplicationMenu(null);
+        menuIsActive = false;
+    }
+    else
+    {
+        //console.log('menu on');
+        Menu.setApplicationMenu(myMenu);
+        menuIsActive = true;
+    }
+
 }
 
 
