@@ -6,6 +6,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
+    "build": "rimraf ShowApp-* && electron-packager . --asar=true --platform=win32 --arch=ia32 --icon=src/assets/icons/win/icon-b.ico --prune=true --app-copyright=\"Copyright (c) 2017 Deltodon\" --win32metadata.CompanyName=Deltodon --win32metadata.FileDescription=ShowApp --win32metadata.ProductName=\"ShowApp Application\" --win32metadata.OriginalFilename=showapp.exe",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

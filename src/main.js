@@ -1,7 +1,7 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-const showappmenu = require('./js/app-menu');
+const appMenu = require('./js/app-menu');
 const path = require('path');
 
 var mainWindow = null;
@@ -18,7 +18,7 @@ app.on('ready', () => {
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     })
 
-    showappmenu.createMenu();
+    appMenu.createMenu();
 
     mainWindow.loadURL('file://' + __dirname + '/index.html');
 

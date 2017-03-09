@@ -1,21 +1,40 @@
 const electron = require('electron');
 const app = electron.app;
 const Menu = electron.Menu;
+const dialog = electron.dialog;
+const fs = require('fs');
 
 
-var menuIsActive = true;
+var obj = {
+   people: [
+       {
+           name: "Alex",
+           online: true
+       },
+       {
+           name: "Billy",
+           online: false
+       }
+   ]
+};
 
-var createMenu = function(){
+obj.people.push({name: "Anna", online: true});
+var jsonFile = JSON.stringify(obj);
+
+
+module.exports.createMenu = function(){
 
     const template = [
                 {
             label: 'File',
             submenu: [
             {
-                role: 'undo'
+                label: 'New Project',
+                click: () => createProject()
             },
             {
-                role: 'redo'
+                label: 'Open Project',
+                click: () => openProject()
             },
             {
                 type: 'separator'
@@ -24,8 +43,7 @@ var createMenu = function(){
                 label: 'Quit',
                 click: () => app.quit(),
                 //role: 'quit',
-                accelerator: 'ctrl+q'
-                
+                accelerator: 'ctrl+q'                
             }
             ]
         },
@@ -98,11 +116,6 @@ var createMenu = function(){
             },
             {
                 role: 'close'
-            },
-            {
-                label: 'Toggle Menu',
-                click () {toggleMenu()},
-                accelerator: 'f12'
             }
             ]
         },
@@ -112,6 +125,10 @@ var createMenu = function(){
             {
                 label: 'Learn More',
                 click () { require('electron').shell.openExternal('https://github.com/deltodon/ShowApp/wiki') }
+            },
+            {
+                label: 'About',
+                click: () => aboutDialog()
             }
             ]
         }
@@ -122,23 +139,116 @@ var createMenu = function(){
 
 }
 
-var toggleMenu = function(){
+//------------------------------------------------------------------------------
 
-    if (menuIsActive === true)
-    {
-        //console.log('menu off');
-        Menu.setApplicationMenu(null);
-        menuIsActive = false;
-    }
-    else
-    {
-        //console.log('menu on');
-        Menu.setApplicationMenu(myMenu);
-        menuIsActive = true;
-    }
+var createProject = function(){
+    dialog.showSaveDialog({
+        title: "Create Project"
+    }, function (projectPath) {
+        
+        if (projectPath){
+            projectPath = projectPath.replace(/(\\)/g, "/");
 
+            var projectName = projectPath.substr(projectPath.lastIndexOf('/') + 1)
+
+            makeDirectory(projectPath);
+            makeDirectory(projectPath.concat("/audio"));
+            makeDirectory(projectPath.concat("/video"));
+            makeDirectory(projectPath.concat("/images"));
+            makeDirectory(projectPath.concat("/binaries"));
+            makeDirectory(projectPath.concat("/documents"));
+
+            var filePath = projectPath.concat("/", projectName, ".json");
+
+            // projectPath += ".json";
+
+            fs.writeFile(filePath, jsonFile, "utf8", function(err) {
+                if (err) {
+                    errorMessage("error writing file\n" + err);
+                } 
+            });
+
+
+            dialog.showMessageBox({
+                message: 'Create Project\n' + String(projectPath),
+                // message: 'Create Project\n' + String(temp),
+                buttons: []
+            });
+        } 
+    });
+
+};
+
+//------------------------------------------------------------------------------
+
+var openProject = function(){
+    dialog.showOpenDialog({properties: ['openDirectory']}, function (projectPath) {
+            if (projectPath){
+                    dialog.showMessageBox({
+                        message: 'Open Project\n' + String(projectPath),
+                        buttons: []
+                    })
+            } 
+    })
 }
 
+//------------------------------------------------------------------------------ 
+
+var aboutDialog = function(){
+    dialog.showMessageBox({
+        type: 'info',
+        title: "About ShowApp",
+        message:    'This is the About section\n\n\nfgdfgdfg',
+        buttons: []
+    });
+};
+
+//------------------------------------------------------------------------------ 
+
+var makeDirectory = function(path){
+    fs.mkdir(path, function (err) {
+        if (err) {
+            errorMessage("failed to create directory\n" + err);
+            //console.log('failed to create directory', err);
+        }
+    });
+};
+
+//------------------------------------------------------------------------------ 
+
+var errorMessage = function(msgstring){
+    dialog.showMessageBox({
+        type: 'error',
+        title: "Error",
+        message: msgstring,
+        buttons: []
+    });
+};
+
+//------------------------------------------------------------------------------ 
 
 
-module.exports.createMenu = createMenu;
+/*
+fs.writeFile('myjsonfile.json', json, 'utf8', callback);
+
+if you want to append it read the json file and convert it back to an object
+
+fs.readFile('myjsonfile.json', 'utf8', function readFileCallback(err, data){
+    if (err){
+        console.log(err);
+    } else {
+    obj = JSON.parse(data); //now it an object
+    obj.table.push({id: 2, square:3}); //add some data
+    json = JSON.stringify(obj); //convert it back to json
+    fs.writeFile('myjsonfile.json', json, 'utf8', callback); // write it back 
+}});
+
+
+*/
+
+
+
+
+
+
+// 80 //////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,6 @@
+#Compiled Release builds
+release-builds
+
 # Logs
 logs
 *.log
