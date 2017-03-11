@@ -5,7 +5,7 @@ const dialog = electron.dialog;
 const path = require('path');
 const ipc = electron.ipcMain;
 
-const appMenu = require('./main-process/js/app-menu');
+const topMenu = require('./main-process/menu/top-menu');
 
 var mainWindow = null;
 
@@ -21,7 +21,7 @@ app.on('ready', () => {
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     })
 
-    appMenu.createMenu();
+    topMenu.createMenu();
 
     mainWindow.loadURL('file://' + __dirname + '/index.html');
     
