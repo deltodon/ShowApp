@@ -1,6 +1,7 @@
 const electron = require('electron');
 const dialog = electron.dialog;
 const fs = require('fs');
+const messageBox = require('../system/message-box');
 
 
 var obj = {
@@ -23,17 +24,6 @@ var obj = {
 
 obj.entry.push({path: "Anna", text: true});
 var jsonFile = JSON.stringify(obj);
-
-//------------------------------------------------------------------------------
-
-// // catch events from main process
-// ipc.on('new-project', () => {
-//     createProject();
-// });
-
-// ipc.on('open-project', () => {
-//     openProject();
-// });
 
 //------------------------------------------------------------------------------
 
@@ -65,10 +55,12 @@ module.exports.createProject = function(){
             });
 
 
-            dialog.showMessageBox({
-                message: 'Create Project\n' + String(projectPath),
-                buttons: []
-            });
+            messageBox.emit('project-created');
+
+            // dialog.showMessageBox({
+            //     message: 'Create Project\n' + String(projectPath),
+            //     buttons: []
+            // });
         } 
     });
 
@@ -79,12 +71,14 @@ module.exports.createProject = function(){
 module.exports.openProject = function(){
 // var openProject = function(){
     dialog.showOpenDialog({properties: ['openDirectory']}, function (projectPath) {
-            if (projectPath){
-                    dialog.showMessageBox({
-                        message: 'Open Project\n' + String(projectPath),
-                        buttons: []
-                    })
-            } 
+        if (projectPath){
+            messageBox.emit('project-loaded');
+
+            // dialog.showMessageBox({
+            //     message: 'Open Project\n' + String(projectPath),
+            //     buttons: []
+            // })
+        } 
     })
 }
 

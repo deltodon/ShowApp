@@ -1,8 +1,11 @@
 const electron = require('electron');
 const Menu = electron.Menu;
 const dialog = electron.dialog;
-const myproject = require("./project");
+const projectMenu = require("./project-menu");
 
+
+
+//------------------------------------------------------------------------------
 
 module.exports.createMenu = function(){
 
@@ -12,7 +15,7 @@ module.exports.createMenu = function(){
             submenu: [
             {
                 label: 'New Project',
-                click: () => myproject.createProject()
+                click: () => projectMenu.createProject()
                 // click: () => {
                 //     var focusedWindow = BrowserWindow.getFocusedWindow();
                 //     focusedWindow.webContents.send("new-project");
@@ -20,7 +23,7 @@ module.exports.createMenu = function(){
             },
             {
                 label: 'Open Project',
-                click: () => myproject.openProject()
+                click: () => projectMenu.openProject()
                 // click: () => {
                 //     var focusedWindow = BrowserWindow.getFocusedWindow();
                 //     focusedWindow.webContents.send("open-project");

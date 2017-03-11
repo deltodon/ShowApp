@@ -6,8 +6,11 @@ const path = require('path');
 const ipc = electron.ipcMain;
 
 const topMenu = require('./main-process/menu/top-menu');
+const messageBox = require('./main-process/system/message-box');
 
 var mainWindow = null;
+
+
 
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
@@ -25,7 +28,18 @@ app.on('ready', () => {
 
     mainWindow.loadURL('file://' + __dirname + '/index.html');
     
-})
+});
+
+
+messageBox.on('project-created', () => {
+    console.log("project created!");
+});
+
+messageBox.on('project-loaded', () => {
+    console.log("project loaded!");
+});
+
+
 
 // Catch all nav-menu events
 ipc.on('home', () => {
@@ -63,3 +77,10 @@ ipc.on('preview', () => {
 // BrowserWindow.maximize()
 // To run your application in full-screen, you can use
 // BrowserWindow.setFullScreen(true)
+
+
+// const window = require('electron').BrowserWindow;
+
+// ipc.on('menuItem-selected', function(){
+//     var focusedWindow    = window.getFocusedWindow();
+// }
