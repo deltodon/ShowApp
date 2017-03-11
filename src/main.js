@@ -1,8 +1,9 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-const appMenu = require('./js/app-menu');
 const path = require('path');
+
+const appMenu = require('./js/app-menu');
 
 var mainWindow = null;
 
@@ -25,3 +26,10 @@ app.on('ready', () => {
 
     
 })
+
+
+
+// To maximize your application window, you can use
+// BrowserWindow.maximize()
+// To run your application in full-screen, you can use
+// BrowserWindow.setFullScreen(true)

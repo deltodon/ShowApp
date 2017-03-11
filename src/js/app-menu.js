@@ -1,24 +1,17 @@
 const electron = require('electron');
-const app = electron.app;
+// const app = electron.app;
 const Menu = electron.Menu;
 const dialog = electron.dialog;
 const fs = require('fs');
 
+const myproject = require("./project");
 
-var obj = {
-   people: [
-       {
-           name: "Alex",
-           online: true
-       },
-       {
-           name: "Billy",
-           online: false
-       }
-   ]
-};
 
-obj.people.push({name: "Anna", online: true});
+
+var obj = myproject.createProject();
+
+
+obj.entry.push({path: "Anna", text: true});
 var jsonFile = JSON.stringify(obj);
 
 
@@ -41,8 +34,8 @@ module.exports.createMenu = function(){
             },
             {
                 label: 'Quit',
-                click: () => app.quit(),
-                //role: 'quit',
+                // click: () => app.quit(),
+                role: 'quit',
                 accelerator: 'ctrl+q'                
             }
             ]
