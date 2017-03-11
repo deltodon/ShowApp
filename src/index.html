@@ -10,14 +10,26 @@
 <body>
     <div id="wrapper">
         <div id="side-nav">
-            <ul style="list-style:none">
-                <li><a href="#"><i class="fa fa-home"></i></a></li>
-                <li><a href="#"><i class="fa fa-list"></i></a></li>
-                <li><a href="#"><i class="fa fa-search"></i></a></li>
-                <li><a href="#"><i class="fa fa-user"></i></a></li>
+             <!--<button type="button" class="fa fa-home" id="btn-home"></button>
+             <button type="button" class="fa fa-list" id="btn-list"></button>
+             <button type="button" class="fa fa-search" id="btn-search"></button>
+             <button type="button" class="fa fa-user" id="btn-user"></button>
+             <button type="button" class="fa fa-play-circle-o" aria-hidden="true" id="btn-preview"></button>-->
+
+            <!--<ul style="list-style:none">
+                <li><a href="#"><i class="fa fa-home" id="btn-home"></i></a></li>
+                <li><a href="#"><i class="fa fa-list" id="btn-list"></i></a></li>
+                <li><a href="#"><i class="fa fa-search" id="btn-search"></i></a></li>
+                <li><a href="#"><i class="fa fa-user" id="btn-user"></i></a></li>
                 <li><a href="#"><i class="fa fa-play-circle-o" aria-hidden="true" id="btn-preview"></i></a></li>
+            </ul>-->
 
-
+            <ul style="list-style:none">
+                <li><i title="home" class="fa fa-home fa-fw" id="btn-home"></i></li>
+                <li><i title="list" class="fa fa-list fa-fw" id="btn-list"></i></li>
+                <!--<li><i title="search" class="fa fa-search fa-fw" id="btn-search"></i></li>-->
+                <li><i title="multiple users" class="fa fa-users fa-fw" id="btn-user"></i></li>
+                <li><i title="preview" class="fa fa-television fa-fw" aria-hidden="true" id="btn-preview"></i></li>
             </ul>
         </div>
 
@@ -29,6 +41,7 @@
 
   <script>
     require('./render-process/js/nav-menu');
+    require("./main-process/js/project");
   </script>
 </body>
 

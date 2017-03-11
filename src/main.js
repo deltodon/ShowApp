@@ -1,7 +1,9 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const dialog = electron.dialog;
 const path = require('path');
+const ipc = electron.ipcMain;
 
 const appMenu = require('./main-process/js/app-menu');
 
@@ -22,12 +24,40 @@ app.on('ready', () => {
     appMenu.createMenu();
 
     mainWindow.loadURL('file://' + __dirname + '/index.html');
-
-
     
 })
 
+// Catch all nav-menu events
+ipc.on('home', () => {
+    console.log("home clicked!");
+});
 
+ipc.on('list', () => {
+    console.log("list clicked!");
+});
+
+// ipc.on('search', () => {
+//     console.log("search clicked!");
+// });
+
+ipc.on('user', () => {
+    console.log("user clicked!");
+});
+
+ipc.on('preview', () => {
+    //   const modalPath = path.join('file://', __dirname, '../../sections/windows/modal.html')
+    //   let win = new BrowserWindow({ width: 400, height: 320 })
+    //   win.on('close', function () { win = null })
+    //   win.loadURL(modalPath)
+    //   win.show()
+    dialog.showMessageBox({
+        message: 'Preview Window',
+        buttons: []
+    });
+
+
+    // console.log("preview clicked!");
+});
 
 // To maximize your application window, you can use
 // BrowserWindow.maximize()

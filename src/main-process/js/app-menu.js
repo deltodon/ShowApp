@@ -1,18 +1,7 @@
 const electron = require('electron');
-// const app = electron.app;
 const Menu = electron.Menu;
 const dialog = electron.dialog;
-const fs = require('fs');
-
 const myproject = require("./project");
-
-
-
-var obj = myproject.createProject();
-
-
-obj.entry.push({path: "Anna", text: true});
-var jsonFile = JSON.stringify(obj);
 
 
 module.exports.createMenu = function(){
@@ -23,18 +12,25 @@ module.exports.createMenu = function(){
             submenu: [
             {
                 label: 'New Project',
-                click: () => createProject()
+                click: () => myproject.createProject()
+                // click: () => {
+                //     var focusedWindow = BrowserWindow.getFocusedWindow();
+                //     focusedWindow.webContents.send("new-project");
+                // }
             },
             {
                 label: 'Open Project',
-                click: () => openProject()
+                click: () => myproject.openProject()
+                // click: () => {
+                //     var focusedWindow = BrowserWindow.getFocusedWindow();
+                //     focusedWindow.webContents.send("open-project");
+                // }
             },
             {
                 type: 'separator'
             },
             {
                 label: 'Quit',
-                // click: () => app.quit(),
                 role: 'quit',
                 accelerator: 'ctrl+q'                
             }
@@ -134,59 +130,6 @@ module.exports.createMenu = function(){
 
 //------------------------------------------------------------------------------
 
-var createProject = function(){
-    dialog.showSaveDialog({
-        title: "Create Project"
-    }, function (projectPath) {
-        
-        if (projectPath){
-            projectPath = projectPath.replace(/(\\)/g, "/");
-
-            var projectName = projectPath.substr(projectPath.lastIndexOf('/') + 1)
-
-            makeDirectory(projectPath);
-            makeDirectory(projectPath.concat("/audio"));
-            makeDirectory(projectPath.concat("/video"));
-            makeDirectory(projectPath.concat("/images"));
-            makeDirectory(projectPath.concat("/binaries"));
-            makeDirectory(projectPath.concat("/documents"));
-
-            var filePath = projectPath.concat("/", projectName, ".json");
-
-            // projectPath += ".json";
-
-            fs.writeFile(filePath, jsonFile, "utf8", function(err) {
-                if (err) {
-                    errorMessage("error writing file\n" + err);
-                } 
-            });
-
-
-            dialog.showMessageBox({
-                message: 'Create Project\n' + String(projectPath),
-                // message: 'Create Project\n' + String(temp),
-                buttons: []
-            });
-        } 
-    });
-
-};
-
-//------------------------------------------------------------------------------
-
-var openProject = function(){
-    dialog.showOpenDialog({properties: ['openDirectory']}, function (projectPath) {
-            if (projectPath){
-                    dialog.showMessageBox({
-                        message: 'Open Project\n' + String(projectPath),
-                        buttons: []
-                    })
-            } 
-    })
-}
-
-//------------------------------------------------------------------------------ 
-
 var aboutDialog = function(){
     dialog.showMessageBox({
         type: 'info',
@@ -197,49 +140,6 @@ var aboutDialog = function(){
 };
 
 //------------------------------------------------------------------------------ 
-
-var makeDirectory = function(path){
-    fs.mkdir(path, function (err) {
-        if (err) {
-            errorMessage("failed to create directory\n" + err);
-            //console.log('failed to create directory', err);
-        }
-    });
-};
-
-//------------------------------------------------------------------------------ 
-
-var errorMessage = function(msgstring){
-    dialog.showMessageBox({
-        type: 'error',
-        title: "Error",
-        message: msgstring,
-        buttons: []
-    });
-};
-
-//------------------------------------------------------------------------------ 
-
-
-/*
-fs.writeFile('myjsonfile.json', json, 'utf8', callback);
-
-if you want to append it read the json file and convert it back to an object
-
-fs.readFile('myjsonfile.json', 'utf8', function readFileCallback(err, data){
-    if (err){
-        console.log(err);
-    } else {
-    obj = JSON.parse(data); //now it an object
-    obj.table.push({id: 2, square:3}); //add some data
-    json = JSON.stringify(obj); //convert it back to json
-    fs.writeFile('myjsonfile.json', json, 'utf8', callback); // write it back 
-}});
-
-
-*/
-
-
 
 
 

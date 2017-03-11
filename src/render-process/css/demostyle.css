@@ -18,31 +18,29 @@ h1 {
 
 #side-nav {
     background: #333333;
-    /*padding-top: 18px;*/
-    height: 100%;
+    padding-top: 12px;
+    height: auto;
     width: 50px;
     position: absolute;
     top: 0;
     bottom: 0;
 }
 
-#side-nav a {
-    font-size: 1.8rem;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-#side-nav a:hover {
-    color: rgba(255, 255, 255, 1.0);
-}
-
 #side-nav ul {
     list-style: none;
-    padding: 12px;
+    padding: 7px;
     margin: 0;
 }
 
 #side-nav li {
+    font-size: 1.8rem;
+    margin: auto;
+    color: rgba(255, 255, 255, 0.5);
     padding-bottom: 8px;
+}
+
+#side-nav li:hover {
+    color: rgba(255, 255, 255, 1.0);
 }
 
 #wrapper {
