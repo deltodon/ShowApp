@@ -40,24 +40,6 @@ messageBox.on('project-loaded', () => {
 });
 
 
-
-// Catch all nav-menu events
-ipc.on('home', () => {
-    console.log("home clicked!");
-});
-
-ipc.on('list', () => {
-    console.log("list clicked!");
-});
-
-// ipc.on('search', () => {
-//     console.log("search clicked!");
-// });
-
-ipc.on('user', () => {
-    console.log("user clicked!");
-});
-
 ipc.on('preview', () => {
     //   const modalPath = path.join('file://', __dirname, '../../sections/windows/modal.html')
     //   let win = new BrowserWindow({ width: 400, height: 320 })
@@ -68,6 +50,9 @@ ipc.on('preview', () => {
         message: 'Preview Window',
         buttons: []
     });
+
+    let x = 1 / 3 * 100;
+    console.log(x);
 
 
     // console.log("preview clicked!");
@@ -87,6 +72,12 @@ ipc.on('preview', () => {
 
 
 //------------------------------------------------------------------------------ 
+
+
+// // Remove all the children
+// while (node.hasChildNodes()) {
+//     node.removeChild(node.lastChild);
+// }
 
 
 
