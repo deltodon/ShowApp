@@ -2,46 +2,34 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="render-process/css/demostyle.css" />
+    <link rel="stylesheet" href="assets/css/app-style.css" />
+    <link rel="stylesheet" href="assets/css/section.css">
     <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+
+
+    <link rel="import" href="sections/home.html">
+    <link rel="import" href="sections/users.html">
+    <link rel="import" href="sections/content.html">
 
 
 </head>
 <body>
     <div id="wrapper">
         <div id="side-nav">
-             <!--<button type="button" class="fa fa-home" id="btn-home"></button>
-             <button type="button" class="fa fa-list" id="btn-list"></button>
-             <button type="button" class="fa fa-search" id="btn-search"></button>
-             <button type="button" class="fa fa-user" id="btn-user"></button>
-             <button type="button" class="fa fa-play-circle-o" aria-hidden="true" id="btn-preview"></button>-->
-
-            <!--<ul style="list-style:none">
-                <li><a href="#"><i class="fa fa-home" id="btn-home"></i></a></li>
-                <li><a href="#"><i class="fa fa-list" id="btn-list"></i></a></li>
-                <li><a href="#"><i class="fa fa-search" id="btn-search"></i></a></li>
-                <li><a href="#"><i class="fa fa-user" id="btn-user"></i></a></li>
-                <li><a href="#"><i class="fa fa-play-circle-o" aria-hidden="true" id="btn-preview"></i></a></li>
-            </ul>-->
-
             <ul style="list-style:none">
                 <li><i title="home" class="fa fa-home fa-fw" id="btn-home"></i></li>
-                <li><i title="content" class="fa fa-list fa-fw" id="btn-list"></i></li>
-                <!--<li><i title="search" class="fa fa-search fa-fw" id="btn-search"></i></li>-->
                 <li><i title="users" class="fa fa-users fa-fw" id="btn-user"></i></li>
+                <li><i title="content" class="fa fa-list fa-fw" id="btn-content"></i></li>
                 <li><i title="preview" class="fa fa-television fa-fw" aria-hidden="true" id="btn-preview"></i></li>
             </ul>
         </div>
 
-        <div id="main">
-            <h1>Hello ShowApp!</h1>
-            <p>dlfkgdfg dfgkdjfglkdgf dfgkdfg;dlgfk;d</p>
-        </div>
+        <main id="main"></main>
     </div>
 
   <script>
-    require('./render-process/js/nav-menu');
-    require("./main-process/js/project");
+    require('./render-process/imports');
+    require('./render-process/nav-menu');
   </script>
 </body>
 
