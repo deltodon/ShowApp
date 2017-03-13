@@ -1,16 +1,19 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const globalShortcut = electron.globalShortcut;
 const dialog = electron.dialog;
 const path = require('path');
 const ipc = electron.ipcMain;
+
 
 const topMenu = require('./main-process/menu/top-menu');
 const messageBox = require('./main-process/system/message-box');
 
 var mainWindow = null;
+var previewWindow = null;
 
-
+//------------------------------------------------------------------------------
 
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
@@ -27,14 +30,24 @@ app.on('ready', () => {
     topMenu.createMenu();
 
     mainWindow.loadURL('file://' + __dirname + '/index.html');
-    
+
+    globalShortcut.register('CommandOrControl+F12', function () {
+        previewWindow.close();
+        previewWindow.on('closed', function () {
+            previewWindow = null
+        });
+    });    
+       
 });
 
+//------------------------------------------------------------------------------
+
 app.on('window-all-closed', () => {
+    globalShortcut.unregisterAll();
     app.quit();
-})
+});
 
-
+//------------------------------------------------------------------------------
 
 messageBox.on('project-created', () => {
     console.log("project created!");
@@ -44,24 +57,29 @@ messageBox.on('project-loaded', () => {
     console.log("project loaded!");
 });
 
+//------------------------------------------------------------------------------
 
 ipc.on('preview', () => {
-    //   const modalPath = path.join('file://', __dirname, '../../sections/windows/modal.html')
-    //   let win = new BrowserWindow({ width: 400, height: 320 })
-    //   win.on('close', function () { win = null })
-    //   win.loadURL(modalPath)
-    //   win.show()
     dialog.showMessageBox({
-        message: 'Preview Window',
-        buttons: []
+        type: 'info',
+        title: "ShowApp Presentation",
+        message: 'ShowApp Presentation',
+        detail: 'You are entering the ShowApp Presentation full screen mode.\n In order to leave the presentation press Ctrl + F12',
+        buttons: ['OK']
     });
 
-    let x = 1 / 3 * 100;
-    console.log(x);
+    previewWindow = new BrowserWindow({
+        title: app.getName() + " " + app.getVersion(),
+        backgroundColor: "#222222",
+        fullscreen: true
+    })
 
+    previewWindow.setMenu(null)
 
-    // console.log("preview clicked!");
+    previewWindow.loadURL('file://' + __dirname + '/sections/view-index.html');
+
 });
+
 
 // To maximize your application window, you can use
 // BrowserWindow.maximize()
