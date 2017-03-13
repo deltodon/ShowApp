@@ -30,6 +30,11 @@ app.on('ready', () => {
     
 });
 
+app.on('window-all-closed', () => {
+    app.quit();
+})
+
+
 
 messageBox.on('project-created', () => {
     console.log("project created!");
