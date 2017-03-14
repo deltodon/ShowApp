@@ -5,6 +5,7 @@ const globalShortcut = electron.globalShortcut;
 const dialog = electron.dialog;
 const path = require('path');
 const ipc = electron.ipcMain;
+const shell = electron.shell;
 
 
 const topMenu = require('./main-process/menu/top-menu');
@@ -71,14 +72,24 @@ ipc.on('preview', () => {
     previewWindow = new BrowserWindow({
         title: app.getName() + " " + app.getVersion(),
         backgroundColor: "#222222",
-        fullscreen: true
-    })
+        // fullscreen: true
+        kiosk: true
+    });
 
     previewWindow.setMenu(null)
 
     previewWindow.loadURL('file://' + __dirname + '/sections/view-index.html');
 
 });
+
+//------------------------------------------------------------------------------ 
+
+ipc.on('run-app', function() {
+    console.log("Run App!");
+    // shell.openItem('C:/Users/Leinsaviik/Desktop/exe/Release/W14_Coursework.exe');
+});
+
+//------------------------------------------------------------------------------ 
 
 
 // To maximize your application window, you can use

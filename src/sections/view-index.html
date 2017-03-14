@@ -22,9 +22,16 @@
         <h1>
             Hellow Grad Show!
         </h1>
+
+        <button onclick="runApp()">Run software</button>
     </div>
 
   <script>
+      const ipc = require('electron').ipcRenderer;
+
+      function runApp() {
+          ipc.send('run-app');
+      }
 
   </script>
 </body>
