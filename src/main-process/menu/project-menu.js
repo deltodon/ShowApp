@@ -2,25 +2,10 @@ const electron = require('electron');
 const dialog = electron.dialog;
 const fs = require('fs');
 const messageBox = require('../system/message-box');
+const project = require('../system/project');
 
 
-var obj = {
-    header: {
-        student: "name",
-        title: "dissertation",
-        cover: "image/path/pic.jpg"
-    },
-    entry: [
-        {
-            path: "Alex",
-            text: true
-        },
-        {
-            path: "Billy",
-            text: false
-        }
-    ]
-};
+obj = project.projectTemplate();
 
 obj.entry.push({path: "Anna", text: true});
 var jsonFile = JSON.stringify(obj);

@@ -85,8 +85,9 @@ ipc.on('preview', () => {
 //------------------------------------------------------------------------------ 
 
 ipc.on('run-app', function() {
-    console.log("Run App!");
+    // console.log("Run App!");
     // shell.openItem('C:/Users/Leinsaviik/Desktop/exe/Release/W14_Coursework.exe');
+    shell.openItem('D:/SHOWAPP/release-builds/Marine/MarineAquariumTime.scr');
 });
 
 //------------------------------------------------------------------------------ 
