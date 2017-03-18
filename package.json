@@ -28,5 +28,8 @@
     "electron": "^1.4.15",
     "electron-packager": "^8.5.2",
     "rimraf": "^2.6.1"
+  },
+  "dependencies": {
+    "fs-extra": "^2.1.2"
   }
 }

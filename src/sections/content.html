@@ -6,6 +6,8 @@
                 Content
             </h1>
         </header>
+            <button id="add-image" onclick="addImage()">Add Image</button>
+
             <p>
                 Lorem ipsum dolor sit amet, vim velit omittantur te, ei pro dicat persecuti. Duo cu perfecto menandri scribentur. Eam ei vitae aperiam laboramus.
                 Eu quot forensibus assueverit cum. Fastidii tacimates id has, sea eu diam facer veritus. Vim et nonumy tempor. Nulla phaedrum imperdiet an duo,
@@ -18,4 +20,13 @@
                 Putent accumsan sit ea, cu veri aeterno eum. Unum postea fabulas cu sit, sit ut quot nemore.
             </p>
     </section>
+
+    <script>
+        const ipc = require('electron').ipcRenderer;
+        function addImage() {
+            ipc.send('add-image');
+        }
+
+    </script>
+
 </template>

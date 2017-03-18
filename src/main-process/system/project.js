@@ -1,10 +1,6 @@
-
-
-
-
-
-module.exports.projectTemplate = function () {
-    let temp = {
+var projectObj = {
+    path: "",
+    data: {
         header: {
             student: "name",
             title: "dissertation",
@@ -20,6 +16,13 @@ module.exports.projectTemplate = function () {
                 text: false
             }
         ]
-    };
+    }
+};
+
+
+
+
+module.exports.projectTemplate = function () {
+    let temp = projectObj;
     return temp;
 }

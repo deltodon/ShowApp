@@ -92,6 +92,12 @@ ipc.on('run-app', function() {
 
 //------------------------------------------------------------------------------ 
 
+ipc.on('add-image', function() {
+    messageBox.emit('add-image');
+});
+
+
+
 
 // To maximize your application window, you can use
 // BrowserWindow.maximize()

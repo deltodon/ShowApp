@@ -1,14 +1,14 @@
 const electron = require('electron');
 const dialog = electron.dialog;
-const fs = require('fs');
+const fse = require('fs-extra');
 const messageBox = require('../system/message-box');
 const project = require('../system/project');
 
 
 obj = project.projectTemplate();
 
-obj.entry.push({path: "Anna", text: true});
-var jsonFile = JSON.stringify(obj);
+obj.data.entry.push({path: "Anna", text: true});
+var jsonFile = JSON.stringify(obj.data);
 
 //------------------------------------------------------------------------------
 
@@ -20,7 +20,9 @@ module.exports.createProject = function(){
         if (projectPath){
             projectPath = projectPath.replace(/(\\)/g, "/");
 
-            var projectName = projectPath.substr(projectPath.lastIndexOf('/') + 1)
+            obj.path = projectPath;
+
+            var projectName = projectPath.substr(projectPath.lastIndexOf('/') + 1);
 
             makeDirectory(projectPath);
             makeDirectory(projectPath.concat("/audio"));
@@ -33,7 +35,7 @@ module.exports.createProject = function(){
 
             // projectPath += ".json";
 
-            fs.writeFile(filePath, jsonFile, "utf8", function(err) {
+            fse.writeFile(filePath, jsonFile, "utf8", function(err) {
                 if (err) {
                     errorMessage("error writing file\n" + err);
                 } 
@@ -70,7 +72,7 @@ module.exports.openProject = function(){
 //------------------------------------------------------------------------------
 
 var makeDirectory = function(path){
-    fs.mkdir(path, function (err) {
+    fse.mkdir(path, function (err) {
         if (err) {
             errorMessage("failed to create directory\n" + err);
             //console.log('failed to create directory', err);
@@ -91,7 +93,24 @@ var errorMessage = function(msgstring){
 
 //------------------------------------------------------------------------------ 
 
+messageBox.on('add-image', function () {
+    dialog.showOpenDialog({properties: ['openFile']}, function (filePath) {
+        if (filePath){
+            // console.log(filePath[0]);
+            filePath[0] = filePath[0].replace(/(\\)/g, "/");
+            let fileName = filePath[0].substr(filePath[0].lastIndexOf('/') + 1);
+            // console.log(fileName);
+            let src = filePath[0];
+            let dest = obj.path.concat("/images/", fileName);
 
+            fse.copy(src, dest, err => {
+                if (err) return console.error(err)
+                console.log("success!")
+            });         
+        }
+    });
+
+});
 
 //------------------------------------------------------------------------------
 
