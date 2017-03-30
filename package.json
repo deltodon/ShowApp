@@ -30,6 +30,8 @@
     "rimraf": "^2.6.1"
   },
   "dependencies": {
-    "fs-extra": "^2.1.2"
+    "fs-extra": "^2.1.2",
+    "jquery": "^3.2.1",
+    "jquery-ui": "^1.12.1"
   }
 }
