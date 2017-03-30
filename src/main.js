@@ -7,12 +7,18 @@ const path = require('path');
 const ipc = electron.ipcMain;
 const shell = electron.shell;
 
+const childProcess = require('child_process');
+// const spawn = require('child_process').spawn;
+// const execFile = require('child_process').execFile;
+
 
 const topMenu = require('./main-process/menu/top-menu');
 const messageBox = require('./main-process/system/message-box');
 
 var mainWindow = null;
 var previewWindow = null;
+
+var child = null;
 
 //------------------------------------------------------------------------------
 
@@ -72,7 +78,8 @@ ipc.on('preview', () => {
     previewWindow = new BrowserWindow({
         title: app.getName() + " " + app.getVersion(),
         backgroundColor: "#222222",
-        // fullscreen: true
+        // fullscreen: false,
+        skipTaskbar: true,
         kiosk: true
     });
 
@@ -80,14 +87,34 @@ ipc.on('preview', () => {
 
     previewWindow.loadURL('file://' + __dirname + '/sections/view-index.html');
 
+    previewWindow.setKiosk(true);
+
+    
+
 });
 
 //------------------------------------------------------------------------------ 
 
-ipc.on('run-app', function() {
+ipc.on('run-app', () => {
     // console.log("Run App!");
     // shell.openItem('C:/Users/Leinsaviik/Desktop/exe/Release/W14_Coursework.exe');
-    shell.openItem('D:/SHOWAPP/release-builds/Marine/MarineAquariumTime.scr');
+    // shell.openItem('D:/SHOWAPP/release-builds/Marine/MarineAquariumTime.scr');
+    // child = spawn('ls', ['-lh', '/usr']);
+    // child = spawn('D:/SHOWAPP/release-builds/GPU-Z.exe');
+    // child = execFile('D:/GPU-Z.exe');
+    // child = childProcess.spawn('D:/GPU-Z.exe');
+    child = childProcess.execFile('C:/Windows/System32/notepad.exe');
+    // child = childProcess.execFile('D:/GPU-Z.exe');
+
+
+    child.on('close', function(code) {
+        // console.log('closing code: ' + code);
+        previewWindow.focus();
+    });
+
+    
+
+
 });
 
 //------------------------------------------------------------------------------ 

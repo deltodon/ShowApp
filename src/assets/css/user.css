@@ -45,6 +45,13 @@
     font-size: 20px;
     font-weight: bold;
     color: yellow;
+    /*-webkit-user-select: none;*/
+    /*user-select: none; */
+}
+
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
     -webkit-user-select: none;
-    user-select: none; 
+    user-select: none;
 }

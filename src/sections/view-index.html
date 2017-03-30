@@ -23,13 +23,19 @@
             Hellow Grad Show!
         </h1>
 
-        <button onclick="runApp()">Run software</button>
+        <button class="fa fa-picture-o" aria-hidden="true" onclick="runApp()">Run software</button>
+
+        <!--<iframe id="my-frame"></iframe>-->
     </div>
 
   <script>
       const ipc = require('electron').ipcRenderer;
 
       function runApp() {
+        // let frm = document.getElementById('my-frame');
+        // frm.src = "file:///C:/Windows/System32/notepad.exe"
+
+
           ipc.send('run-app');
       }
 
