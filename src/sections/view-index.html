@@ -29,15 +29,16 @@
     </div>
 
   <script>
-      const ipc = require('electron').ipcRenderer;
+    
+    
 
-      function runApp() {
-        // let frm = document.getElementById('my-frame');
-        // frm.src = "file:///C:/Windows/System32/notepad.exe"
+    const ipc = require('electron').ipcRenderer;
 
-
-          ipc.send('run-app');
-      }
+    function runApp() {
+    // let frm = document.getElementById('my-frame');
+    // frm.src = "file:///C:/Windows/System32/notepad.exe"
+        ipc.send('run-app');
+    }
 
   </script>
 </body>

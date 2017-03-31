@@ -6,12 +6,14 @@
     <link rel="stylesheet" href="assets/css/section.css">
     <link rel="stylesheet" href="assets/css/user.css">
     <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/jquery-ui/jquery-ui.css">
 
     <link rel="import" href="sections/home.html">
     <link rel="import" href="sections/users.html">
     <link rel="import" href="sections/content.html">
-
+	
+	<!--<script type="text/javascript" src="js/jquery-ui-1.11.4/jquery-ui.min.js"></script>-->
 
 </head>
 <body>
@@ -29,11 +31,36 @@
         <main id="main"></main>
     </div>
 
-  <script>
-    require('./render-process/imports');
-    require('./render-process/nav-menu');
-    require('./render-process/users');
-  </script>
+
+    <!--<script src="assets/jquery-ui/external/jquery/jquery.js"></script>-->
+    <script>
+        window.$ = window.jQuery = require('./assets/jquery-ui/external/jquery/jquery');
+    </script>
+
+    <script src="assets/jquery-ui/jquery-ui.js"></script>
+    <script>
+        // window.$ = window.jQuery = require('jquery');
+        // window.$.ui = window.jQuery.ui = require('jquery-ui');
+        // window.$.ui = window.jQuery.ui = require('./assets/jquery-ui/jquery-ui');
+        require('./render-process/imports');
+        require('./render-process/nav-menu');
+        require('./render-process/users');
+
+        
+
+        console.log("version: " + jQuery.fn.jquery );
+        console.log("ui-version: " + $.ui.version );
+
+        $( function() {
+            var tabs = $( "#tabs" ).tabs();
+            tabs.find( ".ui-tabs-nav" ).sortable({
+                axis: "x",
+                stop: function() {
+                    tabs.tabs( "refresh" );
+                }
+            });
+        } );
+    </script>
 </body>
 
 
