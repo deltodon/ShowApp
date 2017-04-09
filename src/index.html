@@ -42,36 +42,18 @@
     </div>
 
 
-    <!--<script src="assets/jquery-ui/external/jquery/jquery.js"></script>-->
     <script>
         window.$ = window.jQuery = require('./assets/jquery-ui/external/jquery/jquery');
     </script>
 
     <script src="assets/jquery-ui/jquery-ui.js"></script>
     <script>
-        // window.$ = window.jQuery = require('jquery');
-        // window.$.ui = window.jQuery.ui = require('jquery-ui');
-        // window.$.ui = window.jQuery.ui = require('./assets/jquery-ui/jquery-ui');
         require('./render-process/imports');
         require('./render-process/nav-menu');
         require('./render-process/users');
 
-        
-
         console.log("version: " + jQuery.fn.jquery );
         console.log("ui-version: " + $.ui.version );
-
-        // ------------------------------------------------------
-
-        // $( function() {
-        //     var tabs = $( "#tabs" ).tabs();
-        //     tabs.find( ".ui-tabs-nav" ).sortable({
-        //         axis: "x",
-        //         stop: function() {
-        //             tabs.tabs( "refresh" );
-        //         }
-        //     });
-        // } );
 
         // ------------------------------------------------------
 
@@ -106,8 +88,8 @@
             var tabTitle = $( "#tab_title" ),
             tabContent = $( "#tab_content" ),
             tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
-            tabCounter = 2;
-        
+            tabCounter = 1;
+            
             var tabs = $( "#tabs" ).tabs();
             tabs.find( ".ui-tabs-nav" ).sortable({
                 axis: "x",
@@ -115,6 +97,7 @@
                     tabs.tabs( "refresh" );
                 }
             });
+
         
             // Modal dialog init: custom buttons and a "close" callback resetting the form inside
             var dialog = $( "#dialog" ).dialog({
@@ -151,6 +134,12 @@
                 tabs.find( ".ui-tabs-nav" ).append( li );
                 tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
                 tabs.tabs( "refresh" );
+
+                var index = $('#tabs a[href="#' + id + '"]').parent().index();
+                $("#tabs").tabs("option", "active", index);
+                
+
+                // $( "#foo" ).trigger( "click" );
                 tabCounter++;
             }
         
