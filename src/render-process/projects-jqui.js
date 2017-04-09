@@ -1,6 +1,8 @@
 // console.log("version: " + jQuery.fn.jquery );
 // console.log("ui-version: " + $.ui.version );
 
+const maxProjects = 2;
+
 // --------------------------------------------------------------
 
 $( function() {
@@ -81,6 +83,13 @@ function initTabs () {
         event.preventDefault();
     });
 
+    // AddTab button: just opens the dialog
+    var btnAddProject = $( "#btn-addproject" )
+                            .button()
+                            .on( "click", function() {
+                                dialog.dialog( "open" );
+    });
+
     // Actual addTab function: adds new tab using the input from the form above
     function addTab() {
         var label = tabTitle.val() || "Tab " + tabCounter,
@@ -93,25 +102,22 @@ function initTabs () {
         tabs.tabs( "refresh" );
 
         var index = $('#tabs a[href="#' + id + '"]').parent().index();
-        $("#tabs").tabs("option", "active", index);
-        
+        tabs.tabs("option", "active", index);
 
-        // $( "#foo" ).trigger( "click" );
+        if( $('#tabs > ul > li').length > maxProjects) {
+            btnAddProject.button( "disable" );
+        }
+
         tabCounter++;
     }
-
-    // AddTab button: just opens the dialog
-    $( "#add_tab" )
-        .button()
-        .on( "click", function() {
-            dialog.dialog( "open" );
-    });
 
     // Close icon: removing the tab on click
     tabs.on( "click", "span.ui-icon-close", function() {
         var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
         $( "#" + panelId ).remove();
         tabs.tabs( "refresh" );
+
+        btnAddProject.button( "enable" );
     });
 
     tabs.on( "keyup", function( event ) {
