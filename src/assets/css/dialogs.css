@@ -1,0 +1,42 @@
+#dialog label, #dialog input {
+    display:block;
+}
+
+#dialog label {
+    margin-top: 0.5em;
+}
+
+/*#dialog input, #dialog textarea {
+    width: 95%;
+}*/
+
+#tabs {
+    margin-top: 1em;
+}
+
+#tabs li .ui-icon-close {
+    float: left;
+    margin: 0.4em 0.2em 0 0;
+    cursor: pointer;
+}
+
+#add_tab {
+    cursor: pointer;
+}
+
+
+#dialog-tabs div {
+    height: 180px;
+}
+
+#dialog-tab-1 form input {
+    width: 95%;
+    margin-bottom: 10px;
+    resize: none;
+}
+
+#dialog-tab-1 form textarea {
+    width: 95%;
+    height: 100px;
+    resize: none;
+}

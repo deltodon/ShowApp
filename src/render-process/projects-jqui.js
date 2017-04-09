@@ -52,7 +52,7 @@ function initTabs () {
 
 
     // Modal dialog init: custom buttons and a "close" callback resetting the form inside
-    var dialog = $( "#dialog" ).dialog({
+    var dialog = $( "#proj-dialog" ).dialog({
         autoOpen: false,
         modal: true,
         height: 400,

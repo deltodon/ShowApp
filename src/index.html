@@ -5,36 +5,26 @@
     <link rel="stylesheet" href="assets/css/app-style.css" />
     <link rel="stylesheet" href="assets/css/section.css">
     <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="assets/css/dialogs.css">
     <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/jquery-ui/jquery-ui.css">
 
-    <link rel="import" href="sections/home.html">
-    <link rel="import" href="sections/users.html">
+    <link rel="import" href="sections/projects.html">
     <link rel="import" href="sections/content.html">
-	
-	<!--<script type="text/javascript" src="js/jquery-ui-1.11.4/jquery-ui.min.js"></script>-->
-
-    <style>
-        #dialog label, #dialog input { display:block; }
-        #dialog label { margin-top: 0.5em; }
-        #dialog input, #dialog textarea { width: 95%; }
-        #tabs { margin-top: 1em; }
-        #tabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
-        #add_tab { cursor: pointer; }
-    </style>
-
-
+    <link rel="import" href="sections/settings.html">
 </head>
 <body>
     <div id="wrapper">
         <div id="side-nav">
             <ul style="list-style:none">
-                <li><i title="home" class="fa fa-home fa-fw" id="btn-home"></i></li>
-                <li><i title="users" class="fa fa-users fa-fw" id="btn-user"></i></li>
+                <li><i title="save" class="fa fa-floppy-o fa-fw" id="btn-save"></i></li>
+                <li><i title="projects" class="fa fa-users fa-fw" id="btn-projects"></i></li>
                 <li><i title="content" class="fa fa-list fa-fw" id="btn-content"></i></li>
                 <li><i title="preview" class="fa fa-television fa-fw" aria-hidden="true" id="btn-preview"></i></li>
-                <li><i title="multi user" class="fa fa-sitemap fa-fw" aria-hidden="true" id="btn-multi"></i></li>
+                <!--<li><hr></li>-->
+                <!--<li><i title="multi user" class="fa fa-sitemap fa-fw" aria-hidden="true" id="btn-multi"></i></li>-->
+                <li><i title="settings" class="fa fa-cog fa-fw" aria-hidden="true" id="btn-settings"></i></li>
             </ul>
         </div>
 
@@ -52,7 +42,8 @@
         require('./render-process/imports');
         require('./render-process/nav-menu');
         require('./render-process/users');
-        require('./render-process/my-jqui');
+        require('./render-process/projects-jqui');
+        require('./render-process/content-jqui');
     </script>
 </body>
 

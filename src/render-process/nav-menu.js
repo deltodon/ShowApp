@@ -1,23 +1,23 @@
 const ipc = require('electron').ipcRenderer;
 
-const homeButton = document.getElementById('btn-home');
-const userButton = document.getElementById('btn-user');
+const saveButton = document.getElementById('btn-save');
+const projectsButton = document.getElementById('btn-projects');
 const contentButton = document.getElementById('btn-content');
 const previewButton = document.getElementById('btn-preview');
-
+const settingsButton = document.getElementById('btn-settings');
 
 
 
 //------------------------------------------------------------------------------
 
-homeButton.addEventListener('click', function (event) {
-    hideAllSections();
-    document.getElementById('home-section').classList.add('is-shown');
+saveButton.addEventListener('click', function (event) {
+    // hideAllSections();
+    // document.getElementById('home-section').classList.add('is-shown');
 });
 
-userButton.addEventListener('click', function (event) {
+projectsButton.addEventListener('click', function (event) {
     hideAllSections();
-    document.getElementById('users-section').classList.add('is-shown');
+    document.getElementById('projects-section').classList.add('is-shown');
 });
 
 contentButton.addEventListener('click', function (event) {
@@ -29,6 +29,10 @@ previewButton.addEventListener('click', function (event) {
     ipc.send('preview');
 });
 
+settingsButton.addEventListener('click', function (event) {
+    hideAllSections();
+    document.getElementById('settings-section').classList.add('is-shown');
+});
 
 activateDefaultSection();
 
@@ -44,7 +48,7 @@ function hideAllSections () {
 //------------------------------------------------------------------------------ 
 
 function activateDefaultSection () {
-  homeButton.click();
+  projectsButton.click();
 }
 
 
