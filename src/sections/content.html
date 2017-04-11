@@ -6,95 +6,103 @@
                 <i class="fa fa-list fa-fw"></i> Content
             </h1>
         </header>
-            <!--<button id="add-image" onclick="addImage()">Add Image</button>-->
 
-        <!--<div id="proj-dialog" title="Add Project">
-                <div id="dialog-tabs">
-                    <ul>
-                        <li><a href="#dialog-tab-1">New</a></li>
-                        <li><a href="#dialog-tab-2">Open</a></li>
-                    </ul>
-                    <div id="dialog-tab-1">
-                        <form>
-                            <fieldset class="ui-helper-reset">
-                            <label for="tab_title">Student Name</label>
-                            <input type="text" name="tab_title" id="tab_title" value="Tab Title" class="ui-widget-content ui-corner-all">
-                            <label for="tab_content">Content</label>
-                            <textarea name="tab_content" id="tab_content" class="ui-widget-content ui-corner-all">Tab content</textarea>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div id="dialog-tab-2">
-                        slkdfjslkdfjslkdfjlskfdjlskfdj
-                    </div>
-                </div>
-    
-            </div>-->
-            
-            <button id="btn-addcontent"><i class="fa fa-folder-open fa-fw"></i> Add Content</button>
+        <div id="content-dialog" title="Add Content">
+            <div>
+                <fieldset id="content-buttonset">
+                    <legend>Select File Type:</legend>
 
-            <hr>
+                    <label for="opt-image"><i class="fa fa-picture-o fa-fw"></i> Image</label>
+                    <input type="radio" id="opt-image" name="radio-1" checked>
 
+                    <label for="opt-audio"><i class="fa fa-music fa-fw"></i> Audio</label>
+                    <input type="radio" id="opt-audio" name="radio-1">
 
-            <div id="accordion">
-                <div class="group">
-                    <h3 ><i class="fa fa-picture-o fa-fw" style="margin: 0px 10px; font-size: 20px;"></i>
-                        Section 1                        
-                    </h3>
-                    <div>
-                    <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
-                    </div>
-                </div>
-                <div class="group">
-                    <h3><i class="fa fa-music fa-fw" style="margin: 0px 10px; font-size: 20px;"></i>
-                        Section 2
-                    </h3>
-                    <div>
-                    <p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
-                    </div>
-                </div>
-                <div class="group">
-                    <h3><i class="fa fa-film fa-fw" style="margin: 0px 10px; font-size: 20px;"></i>
-                        Section 3
-                    </h3>
-                    <div>
-                    <p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
-                    <ul>
-                        <li>List item one</li>
-                        <li>List item two</li>
-                        <li>List item three</li>
-                    </ul>
-                    </div>
-                </div>
-                <div class="group">
-                    <h3><i class="fa fa-cubes fa-fw fa-fw" style="margin: 0px 10px; font-size: 20px;"></i>
-                        Section 4
-                    </h3>
-                    <div>
-                    <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
-                    </div>
-                </div>
-                <div class="group">
-                    <h3><i class="fa fa-cogs fa-fw" style="margin: 0px 10px; font-size: 20px;"></i>
-                        Section 5
-                    </h3>
-                    <div>
-                    <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
-                    </div>
-                </div>
+                    <label for="opt-video"><i class="fa fa-film fa-fw"></i> Video</label>
+                    <input type="radio" id="opt-video" name="radio-1">
+
+                    <label for="opt-3d"><i class="fa fa-cubes fa-fw"></i> 3D</label>
+                    <input type="radio" id="opt-3d" name="radio-1" disabled>    
+
+                    <label for="opt-app"><i class="fa fa-cogs fa-fw"></i> App</label>
+                    <input type="radio" id="opt-app" name="radio-1">                                         
+                </fieldset>
             </div>
 
-            <p>
-                Lorem ipsum dolor sit amet, vim velit omittantur te, ei pro dicat persecuti. Duo cu perfecto menandri scribentur. Eam ei vitae aperiam laboramus.
-                Eu quot forensibus assueverit cum. Fastidii tacimates id has, sea eu diam facer veritus. Vim et nonumy tempor. Nulla phaedrum imperdiet an duo,
-                ex vis illum veniam labore. Aeque harum altera vix id, ea solet libris accusam vim, decore bonorum deseruisse nam at. Eu mel vide iuvaret posidonium.
-                Clita fierent eos ex, malorum luptatum assentior ut est. Dicit fierent voluptatibus duo ei. Magna dolor ea vel, vis novum scriptorem id.
-            </p>
-            <p>
-                Delenit inermis sea eu, eam cu liber conceptam. Case convenire ad vel, ei esse brute duo. Mea ei vivendo vituperatoribus, ea cibo viris vim. Ei per aperiam fierent.
-                Ad duo virtute omnesque accusamus. Mea ea alia inani meliore, ei posse debet mel. Suavitate expetendis duo te, qui augue dicit ei. Voluptua vituperatoribus pro ea.
-                Putent accumsan sit ea, cu veri aeterno eum. Unum postea fabulas cu sit, sit ut quot nemore.
-            </p>
+            <div id="content-preview"></div>
+
+            <div>
+                <label for="opt-path">Path: </label>
+                <input type="text" id="opt-path" class="text-path" name="opt-path">
+
+                <button id="opt-path-btn">...</button>
+            </div>
+    
+        </div>
+            
+        <button id="btn-addcontent"><i class="fa fa-folder-open fa-fw"></i> Add Content</button>
+
+        <hr>
+
+        <div id="accordion">
+            <div class="group">
+                <h3 ><i class="fa fa-picture-o fa-fw" style="margin: 0px 10px; font-size: 20px;"></i>
+                    Section 1                        
+                </h3>
+                <div>
+                <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+                </div>
+            </div>
+            <div class="group">
+                <h3><i class="fa fa-music fa-fw" style="margin: 0px 10px; font-size: 20px;"></i>
+                    Section 2
+                </h3>
+                <div>
+                <p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
+                </div>
+            </div>
+            <div class="group">
+                <h3><i class="fa fa-film fa-fw" style="margin: 0px 10px; font-size: 20px;"></i>
+                    Section 3
+                </h3>
+                <div>
+                <p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
+                <ul>
+                    <li>List item one</li>
+                    <li>List item two</li>
+                    <li>List item three</li>
+                </ul>
+                </div>
+            </div>
+            <div class="group">
+                <h3><i class="fa fa-cubes fa-fw" style="margin: 0px 10px; font-size: 20px;"></i>
+                    Section 4
+                </h3>
+                <div>
+                <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
+                </div>
+            </div>
+            <div class="group">
+                <h3><i class="fa fa-cogs fa-fw" style="margin: 0px 10px; font-size: 20px;"></i>
+                    Section 5
+                </h3>
+                <div>
+                <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
+                </div>
+            </div>
+        </div>
+
+        <p>
+            Lorem ipsum dolor sit amet, vim velit omittantur te, ei pro dicat persecuti. Duo cu perfecto menandri scribentur. Eam ei vitae aperiam laboramus.
+            Eu quot forensibus assueverit cum. Fastidii tacimates id has, sea eu diam facer veritus. Vim et nonumy tempor. Nulla phaedrum imperdiet an duo,
+            ex vis illum veniam labore. Aeque harum altera vix id, ea solet libris accusam vim, decore bonorum deseruisse nam at. Eu mel vide iuvaret posidonium.
+            Clita fierent eos ex, malorum luptatum assentior ut est. Dicit fierent voluptatibus duo ei. Magna dolor ea vel, vis novum scriptorem id.
+        </p>
+        <p>
+            Delenit inermis sea eu, eam cu liber conceptam. Case convenire ad vel, ei esse brute duo. Mea ei vivendo vituperatoribus, ea cibo viris vim. Ei per aperiam fierent.
+            Ad duo virtute omnesque accusamus. Mea ea alia inani meliore, ei posse debet mel. Suavitate expetendis duo te, qui augue dicit ei. Voluptua vituperatoribus pro ea.
+            Putent accumsan sit ea, cu veri aeterno eum. Unum postea fabulas cu sit, sit ut quot nemore.
+        </p>
     </section>
 
     <script>

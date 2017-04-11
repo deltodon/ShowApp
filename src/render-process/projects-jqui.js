@@ -88,7 +88,7 @@ function initTabs () {
                             .button()
                             .on( "click", function() {
                                 dialog.dialog( "open" );
-    });
+                            });
 
     // Actual addTab function: adds new tab using the input from the form above
     function addTab() {
