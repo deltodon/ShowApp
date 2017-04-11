@@ -2,14 +2,19 @@
     display: inline-block;
 }
 
+#accordion-wrapper {
+    /*height: auto;*/
+    position: absolute;
+    top: 123px;
+    bottom: 22px;
+    left: 0;
+    right: 0;
+    overflow-y: scroll;
+}
 
-
-/*#content-buttonset {
-    width: 500;
-    display: flex;
-    align-content: center;
-    margin-bottom: 50px;
-}*/
+#accordion {
+    width: 98%;
+}
 
 #content-preview {
     height: 230px;
