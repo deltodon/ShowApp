@@ -30,7 +30,8 @@ function initAccordions () {
 
     // Actual addTab function: adds new tab using the input from the form above
     function addContent() {
-        contentList.append("<div class=\"group\"><h3 ><i class=\"fa fa-picture-o fa-fw\" style=\"margin: 0px 10px; font-size: 20px;\"></i>Section 1</h3><div>\
+        contentList.append("<div class=\"group\"><h3 ><i class=\"fa fa-picture-o fa-fw\" style=\"margin: 0px 10px; font-size: 20px;\"></i>Section 1\
+                            <span class=\"ui-icon ui-icon-close\" role=\"presentation\">Remove Tab</span></h3><div>\
                             <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in,\
                                 condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada.\
                                 Vestibulum a velit eu ante scelerisque vulputate.</p></div></div>");
@@ -58,6 +59,14 @@ function initAccordions () {
     }
 
     // --------------------------------------------------------------
+
+
+    // Close icon: removing the content on click
+    contentList.on( "click", "span.ui-icon-close", function() {
+        $( this ).closest( "div .group" ).remove();
+        // $( "#" + panelId ).remove();
+        contentList.accordion( "refresh" );
+    });
 
     var contentDialog = $( "#content-dialog" ).dialog({
             autoOpen: false,

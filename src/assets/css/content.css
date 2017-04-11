@@ -16,6 +16,16 @@
     width: 98%;
 }
 
+#accordion div h3 {
+    cursor: move;
+}
+
+#accordion div h3 .ui-icon-close {
+    float: right;
+    margin: 0.2em 0.2em 0 0;
+    cursor: pointer;
+}
+
 #content-preview {
     height: 230px;
     /*background-color: red;*/
