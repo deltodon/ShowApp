@@ -29,6 +29,19 @@
     height: 180px;
 }
 
+#dialog-tab-1 {
+    display: flex;    
+}
+
+
+#dlg-tab-1-left {
+    flex: 1;
+}
+
+#dlg-tab-1-right {
+    flex: 0.5;
+}
+
 #dialog-tab-1 form input {
     width: 95%;
     margin-bottom: 10px;

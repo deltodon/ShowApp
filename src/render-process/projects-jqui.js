@@ -58,7 +58,7 @@ function initTabs () {
         autoOpen: false,
         modal: true,
         height: 400,
-        width: 500,
+        width: 700,
         resizable: false,
         buttons: {
             Add: function() {
