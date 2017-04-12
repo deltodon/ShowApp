@@ -30,6 +30,39 @@ function initAccordions () {
 
     // Actual addTab function: adds new tab using the input from the form above
     function addContent() {
+        var fileOption = $('input[name=radio-1]:checked', '#content-buttonset').val();
+        console.log( fileOption );
+
+
+        switch ( fileOption ) {
+            case "image":
+                console.log( "1" );
+                break;
+
+            case "audio":
+                console.log( "2" );
+                break;
+
+            case "video":
+                console.log( "3" );
+                break;
+
+            case "3d":
+                console.log( "4" );
+                break;
+
+            case "app":
+                console.log( "5" );
+                break;
+
+            default:
+                console.log( "D" );
+
+        }
+
+
+
+
         contentList.append("<div class=\"group\"><h3 ><i class=\"fa fa-picture-o fa-fw\" style=\"margin: 0px 10px; font-size: 20px;\"></i>Section 1\
                             <span class=\"ui-icon ui-icon-close\" role=\"presentation\">Remove Tab</span></h3><div>\
                             <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in,\
