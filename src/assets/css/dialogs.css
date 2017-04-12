@@ -42,13 +42,13 @@
     flex: 0.5;
 }
 
-#dialog-tab-1 form input {
+form input {
     width: 95%;
     margin-bottom: 10px;
     resize: none;
 }
 
-#dialog-tab-1 form textarea {
+form textarea {
     width: 95%;
     height: 100px;
     resize: none;

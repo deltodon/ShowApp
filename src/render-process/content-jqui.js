@@ -1,3 +1,10 @@
+const {dialog} = require('electron').remote;
+const imageIcon = "<i class='fa fa-picture-o fa-fw content-icon'></i>";
+const audioIcon = "<i class='fa fa-music fa-fw content-icon'></i>";
+const videoIcon = "<i class='fa fa-film fa-fw content-icon'></i>";
+const modelIcon = "<i class='fa fa-cubes fa-fw content-icon'></i>";
+const appIcon = "<i class='fa fa-cubes fa-fw content-icon'></i>";
+
 // --------------------------------------------------------------
 
 $( function() {
@@ -30,65 +37,54 @@ function initAccordions () {
 
     // Actual addTab function: adds new tab using the input from the form above
     function addContent() {
-        var fileOption = $('input[name=radio-1]:checked', '#content-buttonset').val();
-        console.log( fileOption );
+        var contentTitle = $( "#content_title" );
+        var contentText = $( "#content_txt" );
+        var fileIcon = "";
+
+        var banner = contentTitle.val() || "No name";
+        var textContentHtml = contentText.val() || "Text content.";
 
 
-        switch ( fileOption ) {
+        var btnFileOption = $('input[name=radio-1]:checked', '#content-buttonset').val();
+        console.log( btnFileOption );
+
+        switch ( btnFileOption ) {
             case "image":
+                fileIcon = imageIcon;
                 console.log( "1" );
                 break;
 
             case "audio":
+                fileIcon = audioIcon;
                 console.log( "2" );
                 break;
 
             case "video":
+                fileIcon = videoIcon;
                 console.log( "3" );
                 break;
 
             case "3d":
+                fileIcon = modelIcon;
                 console.log( "4" );
                 break;
 
             case "app":
+                fileIcon = appIcon;
                 console.log( "5" );
                 break;
 
             default:
+                fileIcon = "??";
                 console.log( "D" );
 
         }
 
-
-
-
-        contentList.append("<div class=\"group\"><h3 ><i class=\"fa fa-picture-o fa-fw\" style=\"margin: 0px 10px; font-size: 20px;\"></i>Section 1\
-                            <span class=\"ui-icon ui-icon-close\" role=\"presentation\">Remove Tab</span></h3><div>\
-                            <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in,\
-                                condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada.\
-                                Vestibulum a velit eu ante scelerisque vulputate.</p></div></div>");
+        contentList.append("<div class='group'><h3>" + fileIcon + banner + "<span class=\"ui-icon ui-icon-close\" role=\"presentation\">Remove Tab</span></h3>\
+                            <div><p>" + textContentHtml + "</p></div></div>");
 
         contentList.accordion( "refresh" );
 
-
-        // var label = tabTitle.val() || "Tab " + tabCounter,
-        //     id = "tabs-" + tabCounter,
-        //     li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
-        //     tabContentHtml = tabContent.val() || "Tab " + tabCounter + " content.";
-
-        // tabs.find( ".ui-tabs-nav" ).append( li );
-        // tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
-        // tabs.tabs( "refresh" );
-
-        // var index = $('#tabs a[href="#' + id + '"]').parent().index();
-        // tabs.tabs("option", "active", index);
-
-        // if( $('#tabs > ul > li').length > maxProjects) {
-        //     btnAddProject.button( "disable" );
-        // }
-
-        // tabCounter++;
     }
 
     // --------------------------------------------------------------
@@ -102,26 +98,24 @@ function initAccordions () {
     });
 
     var contentDialog = $( "#content-dialog" ).dialog({
-            autoOpen: false,
-            modal: true,
-            height: 500,
-            width: 560,
-            resizable: false,
-            buttons: {
-                Add: function() {
-                    addContent();
-                    $( this ).dialog( "close" );
-                },
-                Cancel: function() {
-                    $( this ).dialog( "close" );
-                }
-            },
-            close: function() {
-                // form[ 0 ].reset();
-            }
-        });
-
-
+                                autoOpen: false,
+                                modal: true,
+                                height: 500,
+                                width: 560,
+                                resizable: false,
+                                buttons: {
+                                    Add: function() {
+                                        addContent();
+                                        $( this ).dialog( "close" );
+                                    },
+                                    Cancel: function() {
+                                        $( this ).dialog( "close" );
+                                    }
+                                },
+                                close: function() {
+                                    // form[ 0 ].reset();
+                                }
+                            });
 
 
     // AddTab button: just opens the dialog
@@ -138,11 +132,11 @@ function initAccordions () {
             
     });
 
-    var fileTypes = $("#content-buttonset > input").checkboxradio({
+    var fileTypeButtons = $("#content-buttonset > input").checkboxradio({
         icon: false
     });
 
-    fileTypes.checkboxradio('option', 'position', 'center');                        
+    // fileTypes.checkboxradio('option', 'position', 'center');                        
     
 }
 

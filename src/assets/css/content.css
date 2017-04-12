@@ -1,5 +1,6 @@
 #content-buttonset {
     display: inline-block;
+    margin-bottom: 10px;
 }
 
 #accordion-wrapper {
@@ -26,8 +27,13 @@
     cursor: pointer;
 }
 
+.content-icon {
+    margin: 0px 10px;
+    /*font-size: 20px;*/
+}
+
 #content-preview {
-    height: 230px;
+    /*height: 230px;*/
     /*background-color: red;*/
     width: 95%;
     margin-top: 10px;
