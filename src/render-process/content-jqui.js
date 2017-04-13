@@ -3,7 +3,7 @@ const imageIcon = "<i class='fa fa-picture-o fa-fw content-icon'></i>";
 const audioIcon = "<i class='fa fa-music fa-fw content-icon'></i>";
 const videoIcon = "<i class='fa fa-film fa-fw content-icon'></i>";
 const modelIcon = "<i class='fa fa-cubes fa-fw content-icon'></i>";
-const appIcon = "<i class='fa fa-cubes fa-fw content-icon'></i>";
+const appIcon = "<i class='fa fa-cogs fa-fw content-icon'></i>";
 
 // --------------------------------------------------------------
 
@@ -98,27 +98,34 @@ function initAccordions () {
     });
 
     var contentDialog = $( "#content-dialog" ).dialog({
-                                autoOpen: false,
-                                modal: true,
-                                height: 500,
-                                width: 560,
-                                resizable: false,
-                                buttons: {
-                                    Add: function() {
-                                        addContent();
-                                        $( this ).dialog( "close" );
-                                    },
-                                    Cancel: function() {
-                                        $( this ).dialog( "close" );
-                                    }
-                                },
-                                close: function() {
-                                    // form[ 0 ].reset();
-                                }
-                            });
+        autoOpen: false,
+        modal: true,
+        height: 500,
+        width: 560,
+        resizable: false,
+        buttons: {
+            Add: function() {
+                addContent();
+                $( this ).dialog( "close" );
+            },
+            Cancel: function() {
+                $( this ).dialog( "close" );
+            }
+        },
+        close: function() {
+            contentForm[ 0 ].reset();
+        }
+    });
+
+    // AddTab form: calls addTab function on submit and closes the dialog
+    var contentForm = contentDialog.find( "form" ).on( "submit", function( event ) {
+        addContent();
+        contentDialog.dialog( "close" );
+        event.preventDefault();
+    });
 
 
-    // AddTab button: just opens the dialog
+    // AddContent button: just opens the dialog
     $( "#btn-addcontent" )
         .button()
         .on( "click", function() {
