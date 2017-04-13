@@ -97,7 +97,7 @@ ipc.on('preview', () => {
 
 //------------------------------------------------------------------------------ 
 
-ipc.on('run-app', () => {
+ipc.on('run-app', function(event, arg) {
     // console.log("Run App!");
     // shell.openItem('C:/Users/Leinsaviik/Desktop/exe/Release/W14_Coursework.exe');
     // shell.openItem('D:/SHOWAPP/release-builds/Marine/MarineAquariumTime.scr');
@@ -105,18 +105,17 @@ ipc.on('run-app', () => {
     // child = spawn('D:/SHOWAPP/release-builds/GPU-Z.exe');
     // child = execFile('D:/GPU-Z.exe');
     // child = childProcess.spawn('D:/GPU-Z.exe');
-    child = childProcess.execFile('C:/Windows/System32/notepad.exe');
+    child = childProcess.execFile(arg);
     // child = childProcess.execFile('D:/GPU-Z.exe');
 
 
     child.on('close', function(code) {
         // console.log('closing code: ' + code);
-        previewWindow.focus();
+        if ( previewWindow ) {
+            previewWindow.focus();
+        }        
     });
-
     
-
-
 });
 
 //------------------------------------------------------------------------------ 

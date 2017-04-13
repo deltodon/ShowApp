@@ -23,7 +23,7 @@
             Hellow Grad Show!
         </h1>
 
-        <button class="fa fa-picture-o" aria-hidden="true" onclick="runApp()">Run software</button>
+        <!--<button class="fa fa-picture-o" aria-hidden="true" onclick="runApp()">Run software</button>-->
 
         <!--<iframe id="my-frame"></iframe>-->
     </div>
@@ -32,13 +32,13 @@
     
     
 
-    const ipc = require('electron').ipcRenderer;
+    // const ipc = require('electron').ipcRenderer;
 
-    function runApp() {
-    // let frm = document.getElementById('my-frame');
-    // frm.src = "file:///C:/Windows/System32/notepad.exe"
-        ipc.send('run-app');
-    }
+    // function runApp() {
+    // // let frm = document.getElementById('my-frame');
+    // // frm.src = "file:///C:/Windows/System32/notepad.exe"
+    //     ipc.send('run-app', 'C:/Windows/System32/notepad.exe');
+    // }
 
   </script>
 </body>

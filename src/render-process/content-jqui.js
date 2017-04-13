@@ -1,5 +1,6 @@
 const electron = require('electron').remote;
 const openDialog = electron.dialog;
+const ipc = require('electron').ipcRenderer;
 
 const imageIcon = "<i class='fa fa-picture-o fa-fw content-icon'></i>";
 const audioIcon = "<i class='fa fa-music fa-fw content-icon'></i>";
@@ -22,7 +23,8 @@ function initAccordions () {
     var fileFilter = {};
     var fileSource = "";
     var optionPathText = $( "#opt-path" );
-    var optionPath = ""; 
+    var optionPath = "";
+    var btnFileOption = "";
 
 
 
@@ -61,6 +63,10 @@ function initAccordions () {
 
         contentList.append("<div class='group'><h3>" + fileIcon + banner + "<span class=\"ui-icon ui-icon-close\" role=\"presentation\">Remove Tab</span></h3>\
                             <div>" + fileSource + "<p>" + textContentHtml + "</p></div></div>");
+
+        if ( btnFileOption == "app") {
+            $("button", contentList.last()).button().click( function(){ ipc.send( 'run-app', optionPath ); });
+        }
 
         contentList.accordion( "refresh" );
 
@@ -162,7 +168,7 @@ function initAccordions () {
 
 
     function updateFileFilter() {
-        var btnFileOption = $('input[name=radio-1]:checked', '#content-buttonset').val();
+        btnFileOption = $('input[name=radio-1]:checked', '#content-buttonset').val();
         // console.log( btnFileOption );
 
         switch ( btnFileOption ) {
@@ -195,8 +201,8 @@ function initAccordions () {
 
             case "app":
                 fileIcon = appIcon;
-                fileFilter = {name: 'Application [.exe]', extensions: ['exe']};
-                fileSource = "<img src='#{source}' class='preview-source'>";
+                fileFilter = {name: 'Application (*.exe)', extensions: ['exe']};
+                fileSource = "<button>Play App</button>";
                 // console.log( "5" );
                 break;
 
