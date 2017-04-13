@@ -1,9 +1,14 @@
-const {dialog} = require('electron').remote;
+const electron = require('electron').remote;
+const openDialog = electron.dialog;
+
 const imageIcon = "<i class='fa fa-picture-o fa-fw content-icon'></i>";
 const audioIcon = "<i class='fa fa-music fa-fw content-icon'></i>";
 const videoIcon = "<i class='fa fa-film fa-fw content-icon'></i>";
 const modelIcon = "<i class='fa fa-cubes fa-fw content-icon'></i>";
 const appIcon = "<i class='fa fa-cogs fa-fw content-icon'></i>";
+
+var fileIcon = "";
+var fileFilter = {};
 
 // --------------------------------------------------------------
 
@@ -39,46 +44,11 @@ function initAccordions () {
     function addContent() {
         var contentTitle = $( "#content_title" );
         var contentText = $( "#content_txt" );
-        var fileIcon = "";
+        var contentPreview = $( "#content-preview" );
+        
 
         var banner = contentTitle.val() || "No name";
         var textContentHtml = contentText.val() || "Text content.";
-
-
-        var btnFileOption = $('input[name=radio-1]:checked', '#content-buttonset').val();
-        console.log( btnFileOption );
-
-        switch ( btnFileOption ) {
-            case "image":
-                fileIcon = imageIcon;
-                console.log( "1" );
-                break;
-
-            case "audio":
-                fileIcon = audioIcon;
-                console.log( "2" );
-                break;
-
-            case "video":
-                fileIcon = videoIcon;
-                console.log( "3" );
-                break;
-
-            case "3d":
-                fileIcon = modelIcon;
-                console.log( "4" );
-                break;
-
-            case "app":
-                fileIcon = appIcon;
-                console.log( "5" );
-                break;
-
-            default:
-                fileIcon = "??";
-                console.log( "D" );
-
-        }
 
         contentList.append("<div class='group'><h3>" + fileIcon + banner + "<span class=\"ui-icon ui-icon-close\" role=\"presentation\">Remove Tab</span></h3>\
                             <div><p>" + textContentHtml + "</p></div></div>");
@@ -93,7 +63,6 @@ function initAccordions () {
     // Close icon: removing the content on click
     contentList.on( "click", "span.ui-icon-close", function() {
         $( this ).closest( "div .group" ).remove();
-        // $( "#" + panelId ).remove();
         contentList.accordion( "refresh" );
     });
 
@@ -114,6 +83,7 @@ function initAccordions () {
         },
         close: function() {
             contentForm[ 0 ].reset();
+            // contentPreview.empty();
         }
     });
 
@@ -136,16 +106,91 @@ function initAccordions () {
     $( "#opt-path-btn" )
         .button()
         .on( "click", function() {
-            
+            // contentPreview.empty();
+            selectFile();            
     });
+
+    // get intial values
+    contentDialog.on( "open", updateFileFilter);
+
+    // bind event handler
+    $( "[name='radio-1']").on( "change", updateFileFilter );
+
+
+    function selectFile() {
+        openDialog.showOpenDialog({ properties: ['openFile'],
+                                    filters: [ fileFilter ] }, function (filePath) {
+            if (filePath){
+                console.log(filePath[0]);
+                // filePath[0] = filePath[0].replace(/(\\)/g, "/");
+                // let fileName = filePath[0].substr(filePath[0].lastIndexOf('/') + 1);
+                // // console.log(fileName);
+                // let src = filePath[0];
+                // let dest = obj.path.concat("/images/", fileName);
+
+                // fse.copy(src, dest, err => {
+                //     if (err) return console.error(err)
+                //     console.log("success!")
+                // });         
+            }
+        });
+    }
 
     var fileTypeButtons = $("#content-buttonset > input").checkboxradio({
         icon: false
     });
 
-    // fileTypes.checkboxradio('option', 'position', 'center');                        
+
+
+
+
+    function updateFileFilter() {
+        var btnFileOption = $('input[name=radio-1]:checked', '#content-buttonset').val();
+        console.log( btnFileOption );
+
+        switch ( btnFileOption ) {
+            case "image":
+                fileIcon = imageIcon;
+                fileFilter = {name: 'Image', extensions: ['jpg', 'png', 'gif']};
+                console.log( "1" );
+                break;
+
+            case "audio":
+                fileIcon = audioIcon;
+                fileFilter = {name: 'Audio', extensions: ['mp3', 'wav', 'ogg']};
+                console.log( "2" );
+                break;
+
+            case "video":
+                fileIcon = videoIcon;
+                fileFilter = {name: 'Video', extensions: ['mkv', 'avi', 'mp4']};
+                console.log( "3" );
+                break;
+
+            case "3d":
+                fileIcon = modelIcon;
+                // fileFilter = {name: 'Web GL', extensions: ['jpg', 'png', 'gif']};
+                console.log( "4" );
+                break;
+
+            case "app":
+                fileIcon = appIcon;
+                fileFilter = {name: 'Application', extensions: ['exe']};
+                console.log( "5" );
+                break;
+
+            default:
+                fileIcon = "??";
+                console.log( "D" );
+
+        }
+
+
+    }                        
     
 }
+
+
 
 // --------------------------------------------------------------
 
