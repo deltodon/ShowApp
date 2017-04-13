@@ -51,5 +51,7 @@ form input {
 form textarea {
     width: 95%;
     height: 100px;
+    margin-bottom: 10px;
     resize: none;
 }
+

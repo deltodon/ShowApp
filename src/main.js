@@ -34,6 +34,8 @@ app.on('ready', () => {
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     })
 
+    console.log( __dirname);
+
     topMenu.createMenu();
 
     mainWindow.loadURL('file://' + __dirname + '/index.html');
