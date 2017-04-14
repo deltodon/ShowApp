@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="assets/css/app-style.css" />
     <link rel="stylesheet" href="assets/css/section.css">
-    <link rel="stylesheet" href="assets/css/user.css">
     <link rel="stylesheet" href="assets/css/dialogs.css">
     <link rel="stylesheet" href="assets/css/content.css">
     <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
@@ -32,6 +31,8 @@
         <main id="main"></main>
     </div>
 
+    <!--<div id="view-main"> skjdhfskjdfhskjdfhskjdfh </div>-->
+
 
     <script>
         window.$ = window.jQuery = require('./assets/jquery-ui/external/jquery/jquery');
@@ -42,9 +43,10 @@
     <script>
         require('./render-process/imports');
         require('./render-process/nav-menu');
-        require('./render-process/users');
         require('./render-process/projects-jqui');
         require('./render-process/content-jqui');
+
+        // $("#wrapper").hide();
     </script>
 </body>
 
