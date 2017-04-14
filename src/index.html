@@ -13,6 +13,7 @@
     <link rel="import" href="sections/projects.html">
     <link rel="import" href="sections/content.html">
     <link rel="import" href="sections/settings.html">
+    <link rel="import" href="sections/view.html">
 </head>
 <body>
     <div id="wrapper">
@@ -31,9 +32,6 @@
         <main id="main"></main>
     </div>
 
-    <!--<div id="view-main"> skjdhfskjdfhskjdfhskjdfh </div>-->
-
-
     <script>
         window.$ = window.jQuery = require('./assets/jquery-ui/external/jquery/jquery');
     </script>
@@ -46,7 +44,16 @@
         require('./render-process/projects-jqui');
         require('./render-process/content-jqui');
 
-        // $("#wrapper").hide();
+
+        // function hideEditor() {
+        //     $("#wrapper").hide();
+        //     // $("#view-main").show();
+        // }
+
+        // function showEditor() {
+        //     $("#wrapper").show();
+        //     // $("#view-main").hide();
+        // }
     </script>
 </body>
 

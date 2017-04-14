@@ -25,14 +25,29 @@ contentButton.addEventListener('click', function (event) {
     document.getElementById('content-section').classList.add('is-shown');
 });
 
+
 previewButton.addEventListener('click', function (event) {
-    ipc.send('preview');
+    hideAllSections();
+    document.getElementById('view-section').classList.add('is-shown');
+    $("#side-nav").hide();
+    ipc.send('preview-on');
 });
+
+ipc.on('preview-off', function() {
+    $("#side-nav").show();
+    hideAllSections();
+    document.getElementById('projects-section').classList.add('is-shown');    
+});
+
+
 
 settingsButton.addEventListener('click', function (event) {
     hideAllSections();
     document.getElementById('settings-section').classList.add('is-shown');
 });
+
+
+
 
 activateDefaultSection();
 

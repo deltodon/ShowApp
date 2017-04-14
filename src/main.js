@@ -16,8 +16,6 @@ const topMenu = require('./main-process/menu/top-menu');
 const messageBox = require('./main-process/system/message-box');
 
 var mainWindow = null;
-var previewWindow = null;
-
 var child = null;
 
 //------------------------------------------------------------------------------
@@ -41,10 +39,12 @@ app.on('ready', () => {
     mainWindow.loadURL('file://' + __dirname + '/index.html');
 
     globalShortcut.register('CommandOrControl+F12', function () {
-        previewWindow.close();
-        previewWindow.on('closed', function () {
-            previewWindow = null
-        });
+        mainWindow.webContents.send('preview-off');
+        mainWindow.setFullScreen(false);
+        // previewWindow.close();
+        // previewWindow.on('closed', function () {
+        //     previewWindow = null
+        // });
     });    
        
 });
@@ -68,7 +68,7 @@ messageBox.on('project-loaded', () => {
 
 //------------------------------------------------------------------------------
 
-ipc.on('preview', () => {
+ipc.on('preview-on', function() {
     dialog.showMessageBox({
         type: 'info',
         title: "ShowApp Presentation",
@@ -77,21 +77,9 @@ ipc.on('preview', () => {
         buttons: ['OK']
     });
 
-    previewWindow = new BrowserWindow({
-        title: app.getName() + " " + app.getVersion(),
-        backgroundColor: "#222222",
-        // fullscreen: false,
-        skipTaskbar: true,
-        kiosk: true
-    });
-
-    previewWindow.setMenu(null)
-
-    previewWindow.loadURL('file://' + __dirname + '/sections/view-index.html');
-
-    previewWindow.setKiosk(true);
-
-    
+    // mainWindow.webContents.executeJavaScript("hideEditor();");
+    mainWindow.setFullScreen(true);
+    // mainWindow.setKiosk(true);
 
 });
 
@@ -111,9 +99,11 @@ ipc.on('run-app', function(event, arg) {
 
     child.on('close', function(code) {
         // console.log('closing code: ' + code);
-        if ( previewWindow ) {
-            previewWindow.focus();
-        }        
+
+        mainWindow.focus();
+        // if ( previewWindow ) {
+        //     previewWindow.focus();
+        // }        
     });
     
 });
