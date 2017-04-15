@@ -25,7 +25,7 @@ h1 {
 
 #side-nav {
     background: var(--color-bgr);
-    padding-top: 12px;
+    padding-top: 5px;
     height: auto;
     width: 50px;
     position: absolute;

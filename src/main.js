@@ -8,15 +8,12 @@ const ipc = electron.ipcMain;
 const shell = electron.shell;
 
 const childProcess = require('child_process');
-// const spawn = require('child_process').spawn;
-// const execFile = require('child_process').execFile;
 
-
-const topMenu = require('./main-process/menu/top-menu');
+const debugMenu = require('./main-process/menu/debug-menu');
 const messageBox = require('./main-process/system/message-box');
 
 var mainWindow = null;
-var child = null;
+var childApp = null;
 
 //------------------------------------------------------------------------------
 
@@ -34,18 +31,22 @@ app.on('ready', () => {
 
     console.log( __dirname);
 
-    topMenu.createMenu();
+    // Create hidden debug menu
+    debugMenu.createMenu();
+    mainWindow.setMenuBarVisibility(false);
 
     mainWindow.loadURL('file://' + __dirname + '/index.html');
 
     globalShortcut.register('CommandOrControl+F12', function () {
         mainWindow.webContents.send('preview-off');
         mainWindow.setFullScreen(false);
-        // previewWindow.close();
-        // previewWindow.on('closed', function () {
-        //     previewWindow = null
-        // });
-    });    
+    });
+
+    globalShortcut.register('CommandOrControl+Alt+M', function () {
+        // Toggle Top Menu
+        let visible = !mainWindow.isMenuBarVisible();
+        mainWindow.setMenuBarVisibility(visible);
+    });       
        
 });
 
@@ -77,10 +78,8 @@ ipc.on('preview-on', function() {
         buttons: ['OK']
     });
 
-    // mainWindow.webContents.executeJavaScript("hideEditor();");
     mainWindow.setFullScreen(true);
     // mainWindow.setKiosk(true);
-
 });
 
 //------------------------------------------------------------------------------ 
@@ -93,19 +92,12 @@ ipc.on('run-app', function(event, arg) {
     // child = spawn('D:/SHOWAPP/release-builds/GPU-Z.exe');
     // child = execFile('D:/GPU-Z.exe');
     // child = childProcess.spawn('D:/GPU-Z.exe');
-    child = childProcess.execFile(arg);
-    // child = childProcess.execFile('D:/GPU-Z.exe');
+    childApp = childProcess.execFile(arg);
 
-
-    child.on('close', function(code) {
+    childApp.on('close', function(code) {
         // console.log('closing code: ' + code);
-
-        mainWindow.focus();
-        // if ( previewWindow ) {
-        //     previewWindow.focus();
-        // }        
-    });
-    
+        mainWindow.focus();     
+    });    
 });
 
 //------------------------------------------------------------------------------ 
@@ -114,29 +106,8 @@ ipc.on('add-image', function() {
     messageBox.emit('add-image');
 });
 
-
-
-
-// To maximize your application window, you can use
-// BrowserWindow.maximize()
-// To run your application in full-screen, you can use
-// BrowserWindow.setFullScreen(true)
-
-
-// const window = require('electron').BrowserWindow;
-
-// ipc.on('menuItem-selected', function(){
-//     var focusedWindow    = window.getFocusedWindow();
-// }
-
-
 //------------------------------------------------------------------------------ 
 
-
-// // Remove all the children
-// while (node.hasChildNodes()) {
-//     node.removeChild(node.lastChild);
-// }
 
 
 
