@@ -34,7 +34,7 @@
 
     <div id="view-main" hidden>
         <header>
-            <div id="back-nav">
+            <div id="back-nav" hidden>
                 <button id="btn-back-to-main"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>
                 <span id="back-label">Back to Main Menu</span>
             </div>
@@ -43,9 +43,22 @@
                 <span>This is title</span>
             </div>
         </header>
-
+        
         <div id="view-body">
-            dfgdfgdfgdfg dfgdfg dfgdfgdfg
+            <div>
+                <div id="view-main-proj">
+                    <div>
+                        <div id="view-proj-1" class="proj-card">
+                        </div>
+
+                        <div id="view-proj-2" class="proj-card">
+                        </div>
+
+                        <div id="view-proj-3" class="proj-card">
+                        </div>   
+                    </div>                             
+                </div>
+            </div>
         </div>
 
         <footer>ShowApp presentation software © 2017 Jiri Klic &lt;deltodon.com&gt;</footer>
@@ -65,7 +78,7 @@
         require('./render-process/jqui/view');
 
 
-        $("#back-nav").hide();
+        // $("#back-nav").hide();
     </script>
 </body>
 
