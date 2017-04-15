@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="assets/css/section.css">
     <link rel="stylesheet" href="assets/css/dialogs.css">
     <link rel="stylesheet" href="assets/css/content.css">
+    <link rel="stylesheet" href="assets/css/view.css">
     <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/jquery-ui/jquery-ui.css">
@@ -35,7 +36,7 @@
         <header>
 
             <button id="btn-back-to-main"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>
-            <h1>Back to Main Menu</h1>
+            <span>Back to Main Menu</span>
 
         </header>
 
@@ -55,19 +56,9 @@
     <script>
         require('./render-process/imports');
         require('./render-process/nav-menu');
-        require('./render-process/projects-jqui');
-        require('./render-process/content-jqui');
-
-
-        // function hideEditor() {
-        //     $("#wrapper").hide();
-        //     // $("#view-main").show();
-        // }
-
-        // function showEditor() {
-        //     $("#wrapper").show();
-        //     // $("#view-main").hide();
-        // }
+        require('./render-process/jqui/projects');
+        require('./render-process/jqui/content');
+        require('./render-process/jqui/view');
     </script>
 </body>
 
