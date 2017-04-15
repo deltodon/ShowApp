@@ -1,0 +1,55 @@
+#view-main header {
+    padding-top: 9px;
+    margin-left: 20px;
+    margin-right: 20px;
+    min-width: 500px;  
+}
+
+#view-main span {
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    color: var(--color-head);      
+}
+
+#back-label {
+    position: absolute;
+    left: 70px;
+    top: 15px;
+    font-size: 18px;
+}
+
+#view-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 5px;
+    text-align: center;
+}
+
+#view-title span {
+    font-size: 38px;
+    letter-spacing: 1px;
+    display: inline-block;
+}
+
+#view-body {
+    min-width: 500px;
+    position: absolute;
+    left: 0;
+    top: 50px;
+    bottom: 23px;
+    background-color: gray;
+    right: 0;
+}
+
+#view-main footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 5px;
+  font-size: 10px;  
+  text-align: center;
+  color: var(--color-head);
+  opacity: 0.5;
+}
