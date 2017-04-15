@@ -27,27 +27,21 @@ contentButton.addEventListener('click', function (event) {
 
 
 previewButton.addEventListener('click', function (event) {
-    hideAllSections();
-    document.getElementById('view-section').classList.add('is-shown');
-    $("#side-nav").hide();
+    $("#wrapper").hide();
+    $("#view-main").show();
     ipc.send('preview-on');
 });
 
 ipc.on('preview-off', function() {
-    $("#side-nav").show();
-    hideAllSections();
-    document.getElementById('projects-section').classList.add('is-shown');    
+    $("#view-main").hide();
+    $("#wrapper").show(); 
 });
-
 
 
 settingsButton.addEventListener('click', function (event) {
     hideAllSections();
     document.getElementById('settings-section').classList.add('is-shown');
 });
-
-
-
 
 activateDefaultSection();
 
