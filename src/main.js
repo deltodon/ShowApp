@@ -85,14 +85,11 @@ ipc.on('preview-on', function() {
 //------------------------------------------------------------------------------ 
 
 ipc.on('run-app', function(event, arg) {
-    // console.log("Run App!");
-    // shell.openItem('C:/Users/Leinsaviik/Desktop/exe/Release/W14_Coursework.exe');
-    // shell.openItem('D:/SHOWAPP/release-builds/Marine/MarineAquariumTime.scr');
-    // child = spawn('ls', ['-lh', '/usr']);
-    // child = spawn('D:/SHOWAPP/release-builds/GPU-Z.exe');
-    // child = execFile('D:/GPU-Z.exe');
-    // child = childProcess.spawn('D:/GPU-Z.exe');
-    childApp = childProcess.execFile(arg);
+    // START is windows only command
+    // TODO: create cross-platform support in the future
+    let command = "START /MAX /WAIT " + arg;
+    let workDir = arg.substring(0, arg.lastIndexOf("/")+1);
+    childApp = childProcess.exec( command, {cwd: workDir} );
 
     childApp.on('close', function(code) {
         // console.log('closing code: ' + code);

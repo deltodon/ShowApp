@@ -202,6 +202,7 @@ function initAccordions () {
             case "app":
                 fileIcon = appIcon;
                 fileFilter = {name: 'Application (*.exe)', extensions: ['exe']};
+                // fileFilter = {name: 'Application (*.exe; *.bat)', extensions: ['exe', 'bat']};
                 fileSource = "<button>Play App</button>";
                 // console.log( "5" );
                 break;
