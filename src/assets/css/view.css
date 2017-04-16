@@ -38,24 +38,30 @@
     left: 0;
     top: 50px;
     bottom: 23px;
-    background-color: gray;
     right: 0;
 }
 
-#view-body > div {
+
+#view-front {
     display: table;
     position: absolute;
     height: 100%;
     width: 100%;
+    /*background-color: gray;*/
+    /*background: #466368;
+    background: radial-gradient(#648880, #293f50);*/
+    /*background: linear-gradient(to bottom, red, orange, yellow, green, blue, indigo, violet);*/
+    background: linear-gradient(to bottom,#6190E8 0%, #a7bfe8 30%, white 50%,  #977b69 51%,   #3a2d24 100%);
 }
 
-#view-main-proj {
+#view-front > div {
     display: table-cell;
     vertical-align: middle;
 }
 
-#view-main-proj > div {
+#view-proj-wrapper {
     text-align: center;
+    /*transform: perspective(100px);*/
     transform: perspective(50px);
     transform-style: preserve-3d;
 }
