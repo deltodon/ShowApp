@@ -15,6 +15,7 @@ function initView() {
                         $("#view-front").show();
                         $("#back-label").hide();
                         $( this ).hide();
+                        $("#slideshow-1").hide();
                     })
                     .hide();
 
@@ -23,6 +24,7 @@ function initView() {
         $("#view-front").hide();
         backBtn.show();
         $("#back-label").show();
+        $("#slideshow-1").show();        
     });
 }
 
