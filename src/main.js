@@ -46,7 +46,7 @@ app.on('ready', () => {
         // Toggle Top Menu
         let visible = !mainWindow.isMenuBarVisible();
         mainWindow.setMenuBarVisibility(visible);
-    });       
+    });  
        
 });
 

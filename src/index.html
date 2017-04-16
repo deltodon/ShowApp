@@ -33,31 +33,39 @@
     </div>
 
     <div id="view-main" hidden>
-        <header>
-            <div id="back-nav" hidden>
-                <button id="btn-back-to-main"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>
-                <span id="back-label">Back to Main Menu</span>
-            </div>
+        <div id="view-header">
+            <span id="back-label" hidden>Back to Main Menu</span>
 
             <div id="view-title">
                 <span>This is title</span>
             </div>
-        </header>
+        </div>
+
+        <button id="btn-back-to-main"><i class="fa fa-angle-double-left"></i></button>
         
         <div id="view-body">
 
             <div id="view-front">
                 <div>
-                    <div id="view-proj-wrapper">
-                        <div id="view-proj-1" class="proj-card">
-                        </div>
+                    <div id="proj-card-wrapper">
+                        <div id="proj-card-1" class="proj-card"></div>
 
-                        <div id="view-proj-2" class="proj-card">
-                        </div>
+                        <div id="proj-card-2" class="proj-card"></div>
 
-                        <div id="view-proj-3" class="proj-card">
-                        </div>   
+                        <div id="proj-card-3" class="proj-card"></div>   
                     </div>                             
+                </div>
+            </div>
+
+            <div id="slideshow-1" class="slideshow-group" hidden>
+                <div class="slide-window">
+
+                </div>
+
+                <hr>
+
+                <div class="thumb-outer">
+
                 </div>
             </div>
 
@@ -78,10 +86,7 @@
         require('./render-process/nav-menu');
         require('./render-process/jqui/projects');
         require('./render-process/jqui/content');
-        require('./render-process/jqui/view');
-
-
-        // $("#view-front").hide();
+        require('./render-process/jqui/view');        
     </script>
 </body>
 

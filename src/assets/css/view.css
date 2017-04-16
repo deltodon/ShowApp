@@ -1,8 +1,12 @@
-#view-main header {
+#view-header {
     padding-top: 9px;
     margin-left: 20px;
     margin-right: 20px;
     min-width: 500px;  
+}
+
+#btn-back-to-main {
+    margin-left: 20px;
 }
 
 #view-main span {
@@ -24,6 +28,7 @@
     right: 0;
     top: 5px;
     text-align: center;
+    user-select: none;
 }
 
 #view-title span {
@@ -52,14 +57,16 @@
     background: radial-gradient(#648880, #293f50);*/
     /*background: linear-gradient(to bottom, red, orange, yellow, green, blue, indigo, violet);*/
     background: linear-gradient(to bottom,#6190E8 0%, #a7bfe8 30%, white 50%,  #977b69 51%,   #3a2d24 100%);
+    /*background: linear-gradient(to bottom,#2F80ED 0%, #56CCF2 30%, white 50%,  #977b69 51%,   #3a2d24 100%);*/
 }
+
 
 #view-front > div {
     display: table-cell;
     vertical-align: middle;
 }
 
-#view-proj-wrapper {
+#proj-card-wrapper {
     text-align: center;
     /*transform: perspective(100px);*/
     transform: perspective(50px);
@@ -84,6 +91,20 @@
     transform: translateZ(5px);
     box-shadow: 0 36px 24px -9px rgba(0, 0, 0, 0.3);
 }
+
+
+.slideshow-group {
+    height: 100%;
+    width: 100%;   
+}
+
+
+
+
+
+
+
+
 
 #view-main footer {
   position: absolute;
