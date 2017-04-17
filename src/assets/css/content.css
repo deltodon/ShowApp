@@ -33,8 +33,9 @@
 }
 
 .preview-source {
-    width: 50%;
-    max-height: 300px;
+    /*width: 50%;*/
+    max-width: 50%;
+    max-height: 500px;
     margin-right: 20px;
     float: left;
 }

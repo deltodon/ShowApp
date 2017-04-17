@@ -10,7 +10,6 @@ const shell = electron.shell;
 const childProcess = require('child_process');
 
 const debugMenu = require('./main-process/menu/debug-menu');
-const messageBox = require('./main-process/system/message-box');
 
 var mainWindow = null;
 var childApp = null;
@@ -59,16 +58,6 @@ app.on('window-all-closed', () => {
 
 //------------------------------------------------------------------------------
 
-messageBox.on('project-created', () => {
-    console.log("project created!");
-});
-
-messageBox.on('project-loaded', () => {
-    console.log("project loaded!");
-});
-
-//------------------------------------------------------------------------------
-
 ipc.on('preview-on', function() {
     dialog.showMessageBox({
         type: 'info',
@@ -95,12 +84,6 @@ ipc.on('run-app', function(event, arg) {
         // console.log('closing code: ' + code);
         mainWindow.focus();     
     });    
-});
-
-//------------------------------------------------------------------------------ 
-
-ipc.on('add-image', function() {
-    messageBox.emit('add-image');
 });
 
 //------------------------------------------------------------------------------ 

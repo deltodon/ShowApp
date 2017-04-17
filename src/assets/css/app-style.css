@@ -24,12 +24,6 @@ h1 {
     color: var(--color-head);
 }
 
-/*.section-header {
-    float: right;
-    font-family: 'Times New Roman', Times, serif;
-    color: var(--color-head);
-}*/
-
 #side-nav {
     background: var(--color-bgr);
     padding-top: 5px;

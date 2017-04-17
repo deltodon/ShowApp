@@ -1,7 +1,6 @@
 const electron = require('electron');
 const dialog = electron.dialog;
 const fse = require('fs-extra');
-const messageBox = require('../system/message-box');
 const project = require('../system/project');
 
 
@@ -40,14 +39,6 @@ module.exports.createProject = function(){
                     errorMessage("error writing file\n" + err);
                 } 
             });
-
-
-            messageBox.emit('project-created');
-
-            // dialog.showMessageBox({
-            //     message: 'Create Project\n' + String(projectPath),
-            //     buttons: []
-            // });
         } 
     });
 
@@ -59,8 +50,6 @@ module.exports.openProject = function(){
 // var openProject = function(){
     dialog.showOpenDialog({properties: ['openDirectory']}, function (projectPath) {
         if (projectPath){
-            messageBox.emit('project-loaded');
-
             // dialog.showMessageBox({
             //     message: 'Open Project\n' + String(projectPath),
             //     buttons: []
@@ -93,24 +82,24 @@ var errorMessage = function(msgstring){
 
 //------------------------------------------------------------------------------ 
 
-messageBox.on('add-image', function () {
-    dialog.showOpenDialog({properties: ['openFile']}, function (filePath) {
-        if (filePath){
-            // console.log(filePath[0]);
-            filePath[0] = filePath[0].replace(/(\\)/g, "/");
-            let fileName = filePath[0].substr(filePath[0].lastIndexOf('/') + 1);
-            // console.log(fileName);
-            let src = filePath[0];
-            let dest = obj.path.concat("/images/", fileName);
+// messageBox.on('add-image', function () {
+//     dialog.showOpenDialog({properties: ['openFile']}, function (filePath) {
+//         if (filePath){
+//             // console.log(filePath[0]);
+//             filePath[0] = filePath[0].replace(/(\\)/g, "/");
+//             let fileName = filePath[0].substr(filePath[0].lastIndexOf('/') + 1);
+//             // console.log(fileName);
+//             let src = filePath[0];
+//             let dest = obj.path.concat("/images/", fileName);
 
-            fse.copy(src, dest, err => {
-                if (err) return console.error(err)
-                console.log("success!")
-            });         
-        }
-    });
+//             fse.copy(src, dest, err => {
+//                 if (err) return console.error(err)
+//                 console.log("success!")
+//             });         
+//         }
+//     });
 
-});
+// });
 
 //------------------------------------------------------------------------------
 
