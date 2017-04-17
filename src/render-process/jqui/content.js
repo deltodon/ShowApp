@@ -64,7 +64,7 @@ function initAccordions () {
         contentList.append("<div class='group'><h3>" + fileIcon + banner + "<span class=\"ui-icon ui-icon-close\" role=\"presentation\">Remove Tab</span></h3>\
                             <div>" + fileSource + "<p>" + textContentHtml + "</p></div></div>");
 
-        if ( btnFileOption == "app") {
+        if ( btnFileOption == "App") {
             $("button", contentList.last()).button().click( function(){ ipc.send( 'run-app', optionPath ); });
         }
 
@@ -111,9 +111,11 @@ function initAccordions () {
 
 
     // AddContent button: just opens the dialog
-    $( "#btn-addcontent" )
+    $( "#content-buttonset > button" )
         .button()
         .on( "click", function() {
+            btnFileOption = $( this ).val();
+            // console.log( value );
             updateFileFilter();
             contentDialog.dialog( "open" );
     });
@@ -125,9 +127,6 @@ function initAccordions () {
             optionPathText.empty();
             selectFile();            
     });
-
-    // bind event handler
-    $( "[name='radio-1']").on( "change", updateFileFilter );
 
 
     function selectFile() {
@@ -159,47 +158,41 @@ function initAccordions () {
         });
     }
 
-    var fileTypeButtons = $("#content-buttonset > input").checkboxradio({
-        icon: false
-    });
-
-
-
-
-
     function updateFileFilter() {
-        btnFileOption = $('input[name=radio-1]:checked', '#content-buttonset').val();
+        // btnFileOption = $('input[name=radio-1]:checked', '#content-buttonset').val();
+        let newTitle = "Add " + btnFileOption;
+        contentDialog.dialog('option', 'title', newTitle);
         // console.log( btnFileOption );
 
         switch ( btnFileOption ) {
-            case "image":
+            case "Image":
                 fileIcon = imageIcon;
                 fileFilter = {name: 'Image (*.jpg; *.png; *.bmp)', extensions: ['jpg', 'png', 'bmp']};
                 fileSource = "<img src='#{source}' class='preview-source'>";
                 // console.log( "1" );
                 break;
 
-            case "audio":
+            case "Audio":
                 fileIcon = audioIcon;
                 fileFilter = {name: 'Audio (*.mp3; *.wav; *.ogg)', extensions: ['mp3', 'wav', 'ogg']};
                 fileSource = "<audio src='#{source}' controls></audio>";
                 // console.log( "2" );
                 break;
 
-            case "video":
+            case "Video":
                 fileIcon = videoIcon;
                 fileFilter = {name: 'Video (*.mkv; *.avi; *.mp4)', extensions: ['mkv', 'avi', 'mp4']};
                 fileSource = "<video src='#{source}' class='preview-source' controls></video>";
                 // console.log( "3" );
                 break;
 
-            case "3d":
+            case "3D":
                 fileIcon = modelIcon;
                 // fileFilter = {name: 'Web GL', extensions: ['jpg', 'png', 'gif']};
                 // console.log( "4" );
                 break;
 
-            case "app":
+            case "App":
                 fileIcon = appIcon;
                 fileFilter = {name: 'Application (*.exe)', extensions: ['exe']};
                 // fileFilter = {name: 'Application (*.exe; *.bat)', extensions: ['exe', 'bat']};

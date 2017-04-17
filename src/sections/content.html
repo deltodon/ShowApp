@@ -7,30 +7,11 @@
             </h1>
         </header>
 
-        <div id="content-dialog" title="Add Content">
+        <div id="content-dialog" title="Add">
             <div>
-                <fieldset id="content-buttonset">
-                    <legend>Select File Type:</legend>
-
-                    <label for="opt-image"><i class="fa fa-picture-o fa-fw"></i> Image</label>
-                    <input type="radio" id="opt-image" name="radio-1" value="image" checked>
-
-                    <label for="opt-audio"><i class="fa fa-music fa-fw"></i> Audio</label>
-                    <input type="radio" id="opt-audio" name="radio-1" value="audio">
-
-                    <label for="opt-video"><i class="fa fa-film fa-fw"></i> Video</label>
-                    <input type="radio" id="opt-video" name="radio-1" value="video">
-
-                    <label for="opt-3d"><i class="fa fa-cubes fa-fw"></i> 3D</label>
-                    <input type="radio" id="opt-3d" name="radio-1" value="3d" disabled>    
-
-                    <label for="opt-app"><i class="fa fa-cogs fa-fw"></i> App</label>
-                    <input type="radio" id="opt-app" name="radio-1" value="app">                                         
-                </fieldset>
-
                 <form>
                     <fieldset class="ui-helper-reset">
-                        <label for="content_title">Content Title:</label>
+                        <label for="content_title">Title:</label>
                         <input type="text" name="content_title" id="content_title" value="" class="ui-widget-content ui-corner-all">
 
                         <label for="content_txt">Text:</label>
@@ -45,9 +26,15 @@
     
         </div>
             
-        <button id="btn-addcontent"><i class="fa fa-folder-open fa-fw"></i> Add Content</button>
+        <fieldset id="content-buttonset">
+            <legend><i class="fa fa-folder-open fa-fw"></i> Add File:</legend>
 
-        <hr>
+            <button id="opt-image" value="Image"><i class="fa fa-picture-o fa-fw"></i> Image</button>
+            <button id="opt-audio" value="Audio"><i class="fa fa-music fa-fw"></i> Audio</button>
+            <button id="opt-video" value="Video"><i class="fa fa-film fa-fw"></i> Video</button>
+            <button id="opt-3d" value="3D" disabled><i class="fa fa-cubes fa-fw"></i> 3D</button>
+            <button id="opt-app" value="App"><i class="fa fa-cogs fa-fw"></i> App</button>
+        </fieldset>
 
         <div id="accordion-wrapper">
             <div id="accordion"></div>

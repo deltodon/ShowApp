@@ -19,9 +19,16 @@ body {
 
 
 h1 {
+    float: right;
     font-family: 'Times New Roman', Times, serif;
     color: var(--color-head);
 }
+
+/*.section-header {
+    float: right;
+    font-family: 'Times New Roman', Times, serif;
+    color: var(--color-head);
+}*/
 
 #side-nav {
     background: var(--color-bgr);
@@ -65,6 +72,10 @@ h1 {
     top: 0;
     bottom: 0;
     right: 0;
+}
+
+#btn-addproject {
+    margin-top: 20px;
 }
 
 
