@@ -2,11 +2,11 @@
 // console.log("ui-version: " + $.ui.version );
 const electron = require('electron').remote;
 const dialog = electron.dialog;
+const BrowserWindow = electron.BrowserWindow;
 const fse = require('fs-extra');
 
-
-
 const maxProjects = 2;
+var openProjects = {};
 
 // --------------------------------------------------------------
 
@@ -32,41 +32,49 @@ function initTabs () {
 
 
     // Modal dialog init: custom buttons and a "close" callback resetting the form inside
-    var dialog = $( "#proj-dialog" ).dialog({
-        autoOpen: false,
-        modal: true,
-        height: 400,
-        width: 700,
-        resizable: false,
-        buttons: {
-            Add: function() {
-                addTab();
-                $( this ).dialog( "close" );
-            },
-            Cancel: function() {
-                $( this ).dialog( "close" );
-            }
-        },
-        close: function() {
-            form[ 0 ].reset();
-        }
-    });
+    // var dialog = $( "#proj-dialog" ).dialog({
+    //     autoOpen: false,
+    //     modal: true,
+    //     height: 400,
+    //     width: 700,
+    //     resizable: false,
+    //     buttons: {
+    //         Add: function() {
+    //             addTab();
+    //             $( this ).dialog( "close" );
+    //         },
+    //         Cancel: function() {
+    //             $( this ).dialog( "close" );
+    //         }
+    //     },
+    //     close: function() {
+    //         form[ 0 ].reset();
+    //     }
+    // });
 
-    $( "#dialog-tabs" ).tabs();
+    // $( "#dialog-tabs" ).tabs();
 
     // AddTab form: calls addTab function on submit and closes the dialog
-    var form = dialog.find( "form" ).on( "submit", function( event ) {
-        addTab();
-        dialog.dialog( "close" );
-        event.preventDefault();
-    });
+    // var form = dialog.find( "form" ).on( "submit", function( event ) {
+    //     addTab();
+    //     dialog.dialog( "close" );
+    //     event.preventDefault();
+    // });
 
     // AddTab button: just opens the dialog
-    var btnAddProject = $( "#btn-addproject" )
+    var btnAddProject = $( "#btn-new-proj" )
                             .button()
                             .on( "click", function() {
-                                dialog.dialog( "open" );
+                                createProject();
+                                // dialog.dialog( "open" );
                             });
+
+    var btnAddProject = $( "#btn-open-proj" )
+                            .button()
+                            .on( "click", function() {
+                                console.log('open \n\nproject');
+                                // dialog.dialog( "open" );
+                            });                            
 
     // Actual addTab function: adds new tab using the input from the form above
     function addTab() {
@@ -112,34 +120,36 @@ function initTabs () {
 
 // MENU ---------------------------------------------------------
 
-var obj = {
-    path: "",
-    data: {
-        header: {
-            student: "name",
-            title: "dissertation",
-            cover: "image/path/pic.jpg"
-        },
-        entry: [
-            {
-                path: "Alex",
-                text: true
-            },
-            {
-                path: "Billy",
-                text: false
-            }
-        ]
-    }
-};
 
-obj.data.entry.push({path: "Anna", text: true});
-var jsonFile = JSON.stringify(obj.data);
-
-//------------------------------------------------------------------------------
 
 function createProject(){
-    dialog.showSaveDialog({
+    let win = BrowserWindow.getFocusedWindow();
+
+    let obj = {
+        path: "",
+        data: {
+            header: {
+                student: "name",
+                title: "dissertation",
+                cover: "image/path/pic.jpg"
+            },
+            entry: [
+                {
+                    path: "Alex",
+                    text: true
+                },
+                {
+                    path: "Billy",
+                    text: false
+                }
+            ]
+        }
+    };
+
+    obj.data.entry.push({path: "Anna", text: true});
+    let jsonFile = JSON.stringify(obj);
+
+    dialog.showSaveDialog(win, {
         title: "Create Project"
     }, function (projectPath) {
         
@@ -254,7 +264,38 @@ fs.readFile('myjsonfile.json', 'utf8', function readFileCallback(err, data){
 
 //------------------------------------------------------------------------------
 
+// Add/remove data from object
 
+    // var bigTest = {name: "Anna"};
+    // var test = {
+    //     path: "",
+    //     data: {
+    //         header: {
+    //             student: "name",
+    //             title: "dissertation",
+    //             cover: "image/path/pic.jpg"
+    //         },
+    //         entry: [
+    //             {
+    //                 path: "Alex",
+    //                 text: true
+    //             },
+    //             {
+    //                 path: "Billy",
+    //                 text: false
+    //             }
+    //         ]
+    //     }
+    // };
+
+    // test.data.entry.push({path: "Anna", text: true});
+    // // var test = {'red':'#FF0000', 'blue':'#0000FF'};
+    // // delete test.blue; // or use => delete test['blue'];
+    // bigTest.MyProject = test;
+    // // delete test.data.entry[1];
+    // console.log(bigTest);
+    // delete bigTest['MyProject'];
+    // console.log(bigTest);
 
 
 
