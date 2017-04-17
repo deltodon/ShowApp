@@ -8,7 +8,6 @@ const ipc = electron.ipcMain;
 const shell = electron.shell;
 
 const childProcess = require('child_process');
-
 const debugMenu = require('./main-process/menu/debug-menu');
 
 var mainWindow = null;
