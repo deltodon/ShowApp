@@ -32,22 +32,17 @@
     /*font-size: 20px;*/
 }
 
-#content-preview {
-    /*height: 230px;*/
-    /*background-color: red;*/
-    width: 400px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
+.preview-source {
+    width: 50%;
+    max-height: 300px;
+    margin-right: 20px;
+    float: left;
 }
 
-.preview-source {
-    max-width: 95%;
-    max-height: 300px;
+.preview-text {
+    width: auto;
 }
 
 .text-path {
-    /*width: 75%;*/
     margin-right: 10px;
 }

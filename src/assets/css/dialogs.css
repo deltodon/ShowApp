@@ -39,14 +39,14 @@
 }
 
 form input {
-    width: 95%;
+    width: 100%;
     margin-bottom: 10px;
     resize: none;
 }
 
 form textarea {
-    width: 95%;
-    height: 100px;
+    width: 100%;
+    height: 180px;
     margin-bottom: 10px;
     resize: none;
 }

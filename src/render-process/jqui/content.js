@@ -62,7 +62,7 @@ function initAccordions () {
         fileSource = fileSource.replace( /#\{source\}/g, 'file://' + optionPath );
 
         contentList.append("<div class='group'><h3>" + fileIcon + banner + "<span class=\"ui-icon ui-icon-close\" role=\"presentation\">Remove Tab</span></h3>\
-                            <div>" + fileSource + "<p>" + textContentHtml + "</p></div></div>");
+                            <div>" + fileSource + "<p class='preview-text'>" + textContentHtml + "</p></div></div>");
 
         if ( btnFileOption == "App") {
             $("button", contentList.last()).button().click( function(){ ipc.send( 'run-app', optionPath ); });
