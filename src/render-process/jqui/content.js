@@ -68,7 +68,10 @@ function initAccordions () {
 
         if ( btnFileOption == "App") {
             $("button", contentList.last()).button().click( function(){ ipc.send( 'run-app', optionPath ); });
-            // slideButton;
+
+            //update path to new button
+            slideButton.off( "click" );
+            slideButton.click( function(){ ipc.send( 'run-app', optionPath ); });
         }
 
         contentList.accordion( "refresh" );
