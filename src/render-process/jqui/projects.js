@@ -56,7 +56,7 @@ function initTabs () {
         var label = projectName || "Project " + tabCounter,
             id = "tabs-" + tabCounter,
             li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
-            tabContentHtml =  tabContent.replace( /#\{student\}/g, "student-" + id ).replace( /#\{project\}/g, "project-" + tabCounter );
+            tabContentHtml =  tabContent.replace( /#\{student\}/g, "student-" + tabCounter ).replace( /#\{project\}/g, "project-" + tabCounter );
     
         tabs.find( ".ui-tabs-nav" ).append( li );
         tabs.append( "<div id='" + id + "'>" + tabContentHtml + "</div>" );

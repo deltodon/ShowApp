@@ -1,9 +1,7 @@
-const ipc = require('electron').ipcRenderer;
-
 const saveButton = document.getElementById('btn-save');
 const projectsButton = document.getElementById('btn-projects');
 const contentButton = document.getElementById('btn-content');
-const previewButton = document.getElementById('btn-preview');
+
 const settingsButton = document.getElementById('btn-settings');
 
 
@@ -26,16 +24,7 @@ contentButton.addEventListener('click', function (event) {
 });
 
 
-previewButton.addEventListener('click', function (event) {
-    $("#wrapper").hide();
-    $("#view-main").show();
-    ipc.send('preview-on');
-});
 
-ipc.on('preview-off', function() {
-    $("#view-main").hide();
-    $("#wrapper").show(); 
-});
 
 
 settingsButton.addEventListener('click', function (event) {

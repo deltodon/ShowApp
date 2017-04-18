@@ -168,9 +168,11 @@
 
 .slide-text {
     height: 100%;
-    background: gray;
+    /*background: gray;*/
+    padding-right: 25px;
     margin: 0 25px;
     flex: 1;
+    overflow-y: auto;
 }
 
 
