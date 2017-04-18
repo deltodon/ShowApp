@@ -1,7 +1,7 @@
 {
   "name": "showapp",
   "productName": "ShowApp",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Desktop application for creating and viewing graduate showcase presentations",
   "main": "src/main.js",
   "scripts": {

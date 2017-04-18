@@ -17,10 +17,11 @@ $( function() {
 // --------------------------------------------------------------
 
 function initTabs () {
-    var tabTitle = $( "#tab_title" ),
-    tabContent = $( "#tab_content" ),
-    tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
-    tabCounter = 1;
+    var projectName = "";
+    var tabContent = "";
+    var tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>";
+    var tabCounter = 1;
+
     
     var tabs = $( "#tabs" ).tabs();
     tabs.find( ".ui-tabs-nav" ).sortable({
@@ -31,57 +32,27 @@ function initTabs () {
     });
 
 
-    // Modal dialog init: custom buttons and a "close" callback resetting the form inside
-    // var dialog = $( "#proj-dialog" ).dialog({
-    //     autoOpen: false,
-    //     modal: true,
-    //     height: 400,
-    //     width: 700,
-    //     resizable: false,
-    //     buttons: {
-    //         Add: function() {
-    //             addTab();
-    //             $( this ).dialog( "close" );
-    //         },
-    //         Cancel: function() {
-    //             $( this ).dialog( "close" );
-    //         }
-    //     },
-    //     close: function() {
-    //         form[ 0 ].reset();
-    //     }
-    // });
-
-    // $( "#dialog-tabs" ).tabs();
-
-    // AddTab form: calls addTab function on submit and closes the dialog
-    // var form = dialog.find( "form" ).on( "submit", function( event ) {
-    //     addTab();
-    //     dialog.dialog( "close" );
-    //     event.preventDefault();
-    // });
-
     // AddTab button: just opens the dialog
-    var btnAddProject = $( "#btn-new-proj" )
+    var btnNewProject = $( "#btn-new-proj" )
                             .button()
                             .on( "click", function() {
                                 createProject();
                                 // dialog.dialog( "open" );
                             });
 
-    var btnAddProject = $( "#btn-open-proj" )
+    var btnOpenProject = $( "#btn-open-proj" )
                             .button()
                             .on( "click", function() {
-                                console.log('open \n\nproject');
-                                // dialog.dialog( "open" );
+                                // console.log('open \n\nproject');
+                                openProject();
                             });                            
 
     // Actual addTab function: adds new tab using the input from the form above
     function addTab() {
-        var label = tabTitle.val() || "Tab " + tabCounter,
+        var label = projectName || "Tab " + tabCounter,
             id = "tabs-" + tabCounter,
             li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
-            tabContentHtml = tabContent.val() || "Tab " + tabCounter + " content.";
+            tabContentHtml = tabContent || "Tab " + tabCounter + " content.";
     
         tabs.find( ".ui-tabs-nav" ).append( li );
         tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
@@ -91,7 +62,8 @@ function initTabs () {
         tabs.tabs("option", "active", index);
 
         if( $('#tabs > ul > li').length > maxProjects) {
-            btnAddProject.button( "disable" );
+            btnNewProject.button( "disable" );
+            btnOpenProject.button( "disable" );
         }
 
         tabCounter++;
@@ -103,7 +75,8 @@ function initTabs () {
         $( "#" + panelId ).remove();
         tabs.tabs( "refresh" );
 
-        btnAddProject.button( "enable" );
+        btnNewProject.button( "enable" );
+        btnOpenProject.button( "enable" );
     });
 
     tabs.on( "keyup", function( event ) {
@@ -113,6 +86,81 @@ function initTabs () {
             tabs.tabs( "refresh" );
         }
     });
+
+    function createProject() {
+        let win = BrowserWindow.getFocusedWindow();
+        let obj = getObjTemplate();
+
+        obj.data.entry.push({path: "Anna", text: true});
+        let jsonFile = JSON.stringify(obj);
+
+        dialog.showSaveDialog(win, {
+            title: "Create Project"
+        }, function (projectPath) {
+            
+            if (projectPath){
+                projectPath = projectPath.replace(/(\\)/g, "/");
+
+                obj.path = projectPath;
+
+                projectName = projectPath.substr(projectPath.lastIndexOf('/') + 1);
+
+                makeDirectory(projectPath);
+                makeDirectory(projectPath.concat("/audio"));
+                makeDirectory(projectPath.concat("/video"));
+                makeDirectory(projectPath.concat("/images"));
+                makeDirectory(projectPath.concat("/binaries"));
+                makeDirectory(projectPath.concat("/documents"));
+
+                var filePath = projectPath.concat("/", projectName, ".json");
+
+                fse.writeFile(filePath, jsonFile, "utf8", function(err) {
+                    if (err) {
+                        errorMessage("error writing file\n" + err);
+                    } 
+                });
+
+                addTab();
+            } 
+        });
+    };
+
+    function openProject() {
+        let win = BrowserWindow.getFocusedWindow();
+        let obj = {};
+
+        dialog.showOpenDialog({ properties: ['openFile'],
+                                filters: [ {name: 'ShowApp Project (*.json)', extensions: ['json']} ] },
+                                function (optionPath) {
+
+            if (optionPath === undefined) {
+                console.log( "wrong optionPath" );
+                return;
+            }
+            else {
+                let filePath = optionPath[0].replace(/(\\)/g, "/");
+                projectName = filePath.slice(filePath.lastIndexOf('/') + 1, filePath.lastIndexOf('.'));
+                // console.log( projectName );
+                fse.readFile( filePath, 'utf8', function (err, data) {
+                    if (err) throw err;
+                    obj = JSON.parse(data);
+
+                    if (obj === undefined) {
+                        console.log( "wrong obj" );
+                        return;
+                    }
+                    else {
+                        // console.log( obj.data.header.student );
+                        addTab();
+                    }
+
+                });
+            }
+        });
+
+    }
+
+
 }
 
 // --------------------------------------------------------------
@@ -120,12 +168,8 @@ function initTabs () {
 
 // MENU ---------------------------------------------------------
 
-
-
-function createProject(){
-    let win = BrowserWindow.getFocusedWindow();
-
-    let obj = {
+function getObjTemplate() {
+    let objTemplate = {
         path: "",
         data: {
             header: {
@@ -146,54 +190,12 @@ function createProject(){
         }
     };
 
-    obj.data.entry.push({path: "Anna", text: true});
-    let jsonFile = JSON.stringify(obj);
-
-    dialog.showSaveDialog(win, {
-        title: "Create Project"
-    }, function (projectPath) {
-        
-        if (projectPath){
-            projectPath = projectPath.replace(/(\\)/g, "/");
-
-            obj.path = projectPath;
-
-            var projectName = projectPath.substr(projectPath.lastIndexOf('/') + 1);
-
-            makeDirectory(projectPath);
-            makeDirectory(projectPath.concat("/audio"));
-            makeDirectory(projectPath.concat("/video"));
-            makeDirectory(projectPath.concat("/images"));
-            makeDirectory(projectPath.concat("/binaries"));
-            makeDirectory(projectPath.concat("/documents"));
-
-            var filePath = projectPath.concat("/", projectName, ".json");
-
-            // projectPath += ".json";
-
-            fse.writeFile(filePath, jsonFile, "utf8", function(err) {
-                if (err) {
-                    errorMessage("error writing file\n" + err);
-                } 
-            });
-        } 
-    });
-
-};
+    return objTemplate;
+}
 
 //------------------------------------------------------------------------------
 
-function openProject(){
-// var openProject = function(){
-    dialog.showOpenDialog({properties: ['openDirectory']}, function (projectPath) {
-        if (projectPath){
-            // dialog.showMessageBox({
-            //     message: 'Open Project\n' + String(projectPath),
-            //     buttons: []
-            // })
-        } 
-    })
-}
+
 
 //------------------------------------------------------------------------------
 
