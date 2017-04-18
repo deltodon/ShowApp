@@ -129,7 +129,7 @@ function initTabs () {
         let win = BrowserWindow.getFocusedWindow();
         let obj = {};
 
-        dialog.showOpenDialog({ properties: ['openFile'],
+        dialog.showOpenDialog(win, { properties: ['openFile'],
                                 filters: [ {name: 'ShowApp Project (*.json)', extensions: ['json']} ] },
                                 function (optionPath) {
 
