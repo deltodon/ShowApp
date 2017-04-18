@@ -18,7 +18,11 @@ $( function() {
 
 function initTabs () {
     var projectName = "";
-    var tabContent = "";
+    var tabContent = "<form><label for='#{student}'>Student Name:</label>\
+                        <input type='text' name='#{student}' id='#{student}' value='' class='ui-widget-content ui-corner-all'>\
+                        <label for='#{project}'>Project Title:</label>\
+                        <input type='text' name='#{project}' id='#{project}' class='ui-widget-content ui-corner-all'></form>";
+
     var tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>";
     var tabCounter = 1;
 
@@ -49,13 +53,13 @@ function initTabs () {
 
     // Actual addTab function: adds new tab using the input from the form above
     function addTab() {
-        var label = projectName || "Tab " + tabCounter,
+        var label = projectName || "Project " + tabCounter,
             id = "tabs-" + tabCounter,
             li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
-            tabContentHtml = tabContent || "Tab " + tabCounter + " content.";
+            tabContentHtml =  tabContent.replace( /#\{student\}/g, "student-" + id ).replace( /#\{project\}/g, "project-" + tabCounter );
     
         tabs.find( ".ui-tabs-nav" ).append( li );
-        tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
+        tabs.append( "<div id='" + id + "'>" + tabContentHtml + "</div>" );
         tabs.tabs( "refresh" );
 
         var index = $('#tabs a[href="#' + id + '"]').parent().index();

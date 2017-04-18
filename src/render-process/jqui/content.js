@@ -26,6 +26,8 @@ function initAccordions () {
     var optionPath = "";
     var btnFileOption = "";
 
+    var slideButton = $("#slide-btn-app").button().click( function(){ console.log( 'slide-btn-app'); });
+
 
 
     var contentList = $( "#accordion" )
@@ -66,6 +68,7 @@ function initAccordions () {
 
         if ( btnFileOption == "App") {
             $("button", contentList.last()).button().click( function(){ ipc.send( 'run-app', optionPath ); });
+            // slideButton;
         }
 
         contentList.accordion( "refresh" );
