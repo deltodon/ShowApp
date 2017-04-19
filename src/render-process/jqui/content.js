@@ -16,6 +16,13 @@ $( function() {
     initAccordions();
 } );
 
+$( "#tabs" ).on( "tab-added", function( event, param ) {
+    $( ".btn-proj-img", "#" + param ).button()
+                                    .on( "click", function() {
+                                        addProjectImg( param );
+                                    });
+});
+
 // --------------------------------------------------------------
 
 function initAccordions () {
@@ -221,5 +228,9 @@ function initAccordions () {
 
 // --------------------------------------------------------------
 
-
+function addProjectImg( id ) {
+    console.log( "add image clicked!" );
+    console.log( id );
+    console.log( openProjects );
+}
 

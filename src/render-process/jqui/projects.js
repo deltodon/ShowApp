@@ -6,7 +6,7 @@ const BrowserWindow = electron.BrowserWindow;
 const fse = require('fs-extra');
 
 const maxProjects = 2;
-var openProjects = {};
+
 
 // --------------------------------------------------------------
 
@@ -18,7 +18,10 @@ $( function() {
 
 function initTabs () {
     var projectName = "";
-    var tabContent = "<form><label for='#{student}'>Student Name:</label>\
+    var tabContent = "<div class='tab-proj-cover'><img src=''></div><div class='tab-buttons'><button class='btn-proj-img'><i class='fa fa-picture-o fa-fw'></i> Add Image</button>\
+                        <button class='btn-proj-save'><i class='fa fa-floppy-o fa-fw'></i> Save Project</button>\
+                        <div class='tab-img-notice'><i class='fa fa-info-circle fa-fw'></i> Note: for the best result use a square image of minimum size 400x400 pixels.</div></div>\
+                        <form><label for='#{student}'>Student Name:</label>\
                         <input type='text' name='#{student}' id='#{student}' value='' class='ui-widget-content ui-corner-all'>\
                         <label for='#{project}'>Project Title:</label>\
                         <input type='text' name='#{project}' id='#{project}' class='ui-widget-content ui-corner-all'></form>";
@@ -41,7 +44,6 @@ function initTabs () {
                             .button()
                             .on( "click", function() {
                                 createProject();
-                                // dialog.dialog( "open" );
                             });
 
     var btnOpenProject = $( "#btn-open-proj" )
@@ -51,9 +53,28 @@ function initTabs () {
                                 openProject();
                             });                            
 
+    // Close icon: removing the tab on click
+    tabs.on( "click", "span.ui-icon-close", function() {
+        var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
+        $( "#" + panelId ).remove();
+        tabs.tabs( "refresh" );
+
+        btnNewProject.button( "enable" );
+        btnOpenProject.button( "enable" );
+    });
+
+    // tabs.on( "keyup", function( event ) {
+    //     if ( event.altKey && event.keyCode === $.ui.keyCode.BACKSPACE ) {
+    //         var panelId = tabs.find( ".ui-tabs-active" ).remove().attr( "aria-controls" );
+    //         $( "#" + panelId ).remove();
+    //         tabs.tabs( "refresh" );
+    //     }
+    // });
+
+    
     // Actual addTab function: adds new tab using the input from the form above
-    function addTab() {
-        var label = projectName || "Project " + tabCounter,
+    function addTab( openProj ) {
+        var label = projectName,
             id = "tabs-" + tabCounter,
             li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
             tabContentHtml =  tabContent.replace( /#\{student\}/g, "student-" + tabCounter ).replace( /#\{project\}/g, "project-" + tabCounter );
@@ -70,33 +91,25 @@ function initTabs () {
             btnOpenProject.button( "disable" );
         }
 
-        tabCounter++;
-    }
-
-    // Close icon: removing the tab on click
-    tabs.on( "click", "span.ui-icon-close", function() {
-        var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
-        $( "#" + panelId ).remove();
-        tabs.tabs( "refresh" );
-
-        btnNewProject.button( "enable" );
-        btnOpenProject.button( "enable" );
-    });
-
-    tabs.on( "keyup", function( event ) {
-        if ( event.altKey && event.keyCode === $.ui.keyCode.BACKSPACE ) {
-            var panelId = tabs.find( ".ui-tabs-active" ).remove().attr( "aria-controls" );
-            $( "#" + panelId ).remove();
-            tabs.tabs( "refresh" );
+        if ( openProj !== undefined ) {
+            $("#student-" + tabCounter).val( openProj.data.header.student );
+            $("#project-" + tabCounter).val( openProj.data.header.title );
         }
-    });
+
+        // send event to save.js and content.js
+        tabs.trigger( "tab-added", [ id ] );
+
+        tabCounter++;
+        return id;
+        
+    }
 
     function createProject() {
         let win = BrowserWindow.getFocusedWindow();
         let obj = getObjTemplate();
 
         obj.data.entry.push({path: "Anna", text: true});
-        let jsonFile = JSON.stringify(obj);
+        let jsonFile = JSON.stringify(obj.data);
 
         dialog.showSaveDialog(win, {
             title: "Create Project"
@@ -104,11 +117,11 @@ function initTabs () {
             
             if (projectPath){
                 projectPath = projectPath.replace(/(\\)/g, "/");
-
-                obj.path = projectPath;
-
                 projectName = projectPath.substr(projectPath.lastIndexOf('/') + 1);
 
+                obj.name = projectName;
+                obj.path = projectPath;
+                
                 makeDirectory(projectPath);
                 makeDirectory(projectPath.concat("/audio"));
                 makeDirectory(projectPath.concat("/video"));
@@ -124,14 +137,17 @@ function initTabs () {
                     } 
                 });
 
-                addTab();
+                let tabID = addTab();
+
+                openProjects[ tabID ] = obj;
+                
             } 
         });
     };
 
     function openProject() {
         let win = BrowserWindow.getFocusedWindow();
-        let obj = {};
+        let obj = getObjTemplate();
 
         dialog.showOpenDialog(win, { properties: ['openFile'],
                                 filters: [ {name: 'ShowApp Project (*.json)', extensions: ['json']} ] },
@@ -147,15 +163,18 @@ function initTabs () {
                 // console.log( projectName );
                 fse.readFile( filePath, 'utf8', function (err, data) {
                     if (err) throw err;
-                    obj = JSON.parse(data);
+                    let objData = JSON.parse(data);
 
-                    if (obj === undefined) {
+                    if (objData === undefined) {
                         console.log( "wrong obj" );
                         return;
                     }
                     else {
-                        // console.log( obj.data.header.student );
-                        addTab();
+                        obj.name = projectName;
+                        obj.path = filePath;
+                        obj.data = objData;
+                        let tabID = addTab( obj );
+                        openProjects[ tabID ] = obj;
                     }
 
                 });
@@ -174,23 +193,15 @@ function initTabs () {
 
 function getObjTemplate() {
     let objTemplate = {
+        name: "",
         path: "",
         data: {
             header: {
-                student: "name",
-                title: "dissertation",
-                cover: "image/path/pic.jpg"
+                student: "",
+                title: "",
+                cover: ""
             },
-            entry: [
-                {
-                    path: "Alex",
-                    text: true
-                },
-                {
-                    path: "Billy",
-                    text: false
-                }
-            ]
+            entry: []
         }
     };
 

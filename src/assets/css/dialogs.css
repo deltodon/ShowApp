@@ -16,9 +16,39 @@
     cursor: pointer;
 }
 
-#add_tab {
-    cursor: pointer;
+.tab-proj-cover {
+    width: 400px;
+    height: 400px;
+    background: gray;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    float: left;
+    /*display: inline-block;*/
 }
+
+.tab-proj-cover > img {
+    display: block;
+    /*max-width:400px;
+    max-height:400px;*/
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+.tab-buttons {
+    height: 400px;
+    margin-bottom: 20px;
+}
+
+.tab-img-notice {
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+/*#add_tab {
+    cursor: pointer;
+}*/
 
 
 #dialog-tabs div {

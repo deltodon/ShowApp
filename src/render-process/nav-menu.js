@@ -1,4 +1,3 @@
-const saveButton = document.getElementById('btn-save');
 const projectsButton = document.getElementById('btn-projects');
 const contentButton = document.getElementById('btn-content');
 
@@ -7,11 +6,6 @@ const settingsButton = document.getElementById('btn-settings');
 
 
 //------------------------------------------------------------------------------
-
-saveButton.addEventListener('click', function (event) {
-    // hideAllSections();
-    // document.getElementById('home-section').classList.add('is-shown');
-});
 
 projectsButton.addEventListener('click', function (event) {
     hideAllSections();

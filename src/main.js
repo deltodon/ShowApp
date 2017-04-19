@@ -20,10 +20,10 @@ app.on('ready', () => {
         //title: "ShowApp " + app.getVersion(),
         title: app.getName() + " " + app.getVersion(),
         backgroundColor: "#222222",
-        width: 1000,
-        height: 800,
-        minWidth: 640,
-        minHeight: 480,
+        width: 1020,
+        height: 720,
+        minWidth: 1020,
+        minHeight: 720,
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     })
 

@@ -19,12 +19,9 @@
     <div id="wrapper">
         <div id="side-nav">
             <ul style="list-style:none">
-                <li><i title="save" class="fa fa-floppy-o fa-fw" id="btn-save"></i></li>
                 <li><i title="projects" class="fa fa-users fa-fw" id="btn-projects"></i></li>
                 <li><i title="content" class="fa fa-list fa-fw" id="btn-content"></i></li>
                 <li><i title="preview" class="fa fa-television fa-fw" aria-hidden="true" id="btn-preview"></i></li>
-                <!--<li><hr></li>-->
-                <!--<li><i title="multi user" class="fa fa-sitemap fa-fw" aria-hidden="true" id="btn-multi"></i></li>-->
                 <li><i title="settings" class="fa fa-cog fa-fw" aria-hidden="true" id="btn-settings"></i></li>
             </ul>
         </div>
@@ -156,11 +153,14 @@
     <script src="assets/jquery-ui/jquery-ui.js"></script>
 
     <script>
+        var openProjects = {};
+
         require('./render-process/imports');
         require('./render-process/nav-menu');
         require('./render-process/jqui/projects');
         require('./render-process/jqui/content');
-        require('./render-process/jqui/view');        
+        require('./render-process/jqui/view');
+        require('./render-process/jqui/save');     
     </script>
 </body>
 
