@@ -2,6 +2,13 @@
     --color-bgr: #333333;
     --color-text: white;
     --color-head: burlywood;
+
+    --color-view-head: #d2cd0f;
+    --color-view-bgr: #242c5a;
+
+    --font-family-view: Calibri, Helvetica, sans-serif;
+    --color-student-view: #121528;
+    --color-project-view: #000033;
 }
 
 

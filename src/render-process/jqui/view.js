@@ -1,7 +1,7 @@
 const ipc = require('electron').ipcRenderer;
 const previewButton = document.getElementById('btn-preview');
 
-const projCardTemplate = "<div id='#{card}' class='proj-card'><div class='proj-image'>#{image}</div><div class='proj-label'>\
+const projCardTemplate = "<div id='#{card}' class='proj-card'><div class='proj-cover'>#{image}</div><div class='proj-label'>\
                           <div class='student-name-tag'>#{name}</div><div class='proj-name-tag'>#{title}</div></div></div>"
 
 // --------------------------------------------------------------
@@ -26,7 +26,7 @@ $( function() {
                     .on( "click", function() {
                         // console.log("clicked!");
                         $("#view-front").show();
-                        $("#view-title span").text("Abertay Graduate Show 2016/2017");
+                        $("#view-title span").text("");
                         $("#back-label").hide();
                         $( this ).hide();
                         $("#slideshow-1").hide();
@@ -52,15 +52,13 @@ $( function() {
                                         .replace( /#\{title\}/g, $("#project-" + id).val() );
 
                 $("#proj-card-wrapper").append( projCard );
-                // name = $("#student-" + id).val();
-                // console.log( name );
 
                 $( "#proj-card-" + id ).on( "click", function() {
                     // console.log("hide!");
                     $("#view-front").hide();
                     backBtn.show();
                     $("#back-label").show();
-                    $("#view-title span").text("Very Long Student Name");
+                    $("#view-title span").text( $("div .student-name-tag", this).text() );
                     $("#slideshow-1").show();        
                 });
 
