@@ -76,9 +76,6 @@ function initTabs () {
         tabs.append( "<div id='" + id + "'>" + tabContentHtml + "</div>" );
         tabs.tabs( "refresh" );
 
-        var index = $('#tabs a[href="#' + id + '"]').parent().index();
-        tabs.tabs("option", "active", index);
-
         if( $('#tabs > ul > li').length > maxProjects) {
             btnNewProject.button( "disable" );
             btnOpenProject.button( "disable" );
@@ -96,6 +93,9 @@ function initTabs () {
 
         // send event to save.js and content.js
         tabs.trigger( "tab-added", [ id ] );
+
+        var index = $('#tabs a[href="#' + id + '"]').parent().index();
+        tabs.tabs("option", "active", index);
 
         tabCounter++;
         return id;
@@ -311,6 +311,34 @@ fs.readFile('myjsonfile.json', 'utf8', function readFileCallback(err, data){
     // console.log(bigTest);
     // delete bigTest['MyProject'];
     // console.log(bigTest);
+
+
+//------------------------------------------------------------------------------
+
+    // Deferred example
+    // var FunctionOne = function () {
+    //     // create a deferred object
+    //     var r = $.Deferred();
+
+    //     // do whatever you want (e.g. ajax/animations other asyc tasks)
+
+    //     setTimeout(function () {
+    //         // and call `resolve` on the deferred object, once you're done
+    //         r.resolve();
+    //     }, 2500);
+
+    //     // return the deferred object
+    //     return r;
+    // };
+
+    // // define FunctionTwo as needed
+    // var FunctionTwo = function () {
+    //     console.log('FunctionTwo');
+    // };
+
+    // // call FunctionOne and use the `done` method
+    // // with `FunctionTwo` as it's parameter
+    // FunctionOne().done(FunctionTwo);
 
 
 

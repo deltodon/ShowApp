@@ -8,7 +8,7 @@ const videoIcon = "<i class='fa fa-film fa-fw content-icon'></i>";
 const modelIcon = "<i class='fa fa-cubes fa-fw content-icon'></i>";
 const appIcon = "<i class='fa fa-cogs fa-fw content-icon'></i>";
 
-
+const accordTemplate = "<div id='#{accord}' class='accord-select'></div>"
 
 // --------------------------------------------------------------
 
@@ -22,29 +22,18 @@ $( function() {
 
     var slideButton = $("#slide-btn-app").button().click( function(){ console.log( 'slide-btn-app'); });
 
-    var contentList = $( "#accordion" )
-                        .accordion({
-                            header: "> div > h3",
-                            // icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
-                            collapsible: true,
-                            active: false,
-                            heightStyle: "content"
-                        })
-                        .sortable({
-                            axis: "y",
-                            handle: "h3",
-                            stop: function( event, ui ) {
-                                // IE doesn't register the blur when sorting
-                                // so trigger focusout handlers to remove .ui-state-focus
-                                ui.item.children( "h3" ).triggerHandler( "focusout" );
-                        
-                                // Refresh accordion to handle new order
-                                $( this ).accordion( "refresh" );
-                            }
-                        });
+
 
     // Actual addTab function: adds new tab using the input from the form above
     function addContent() {
+        let accordArg = $(".accord-select:visible");
+
+        if ( accordArg === undefined ) {
+            console.log ( "no accord visible!");
+            return;
+        }
+
+
         var contentTitle = $( "#content_title" );
         var contentText = $( "#content_txt" );
         
@@ -55,29 +44,22 @@ $( function() {
 
         fileSource = fileSource.replace( /#\{source\}/g, 'file://' + optionPath );
 
-        contentList.append("<div class='group'><h3>" + fileIcon + banner + "<span class=\"ui-icon ui-icon-close\" role=\"presentation\">Remove Tab</span></h3>\
+        accordArg.append("<div class='group'><h3>" + fileIcon + banner + "<span class=\"ui-icon ui-icon-close\" role=\"presentation\">Remove Tab</span></h3>\
                             <div>" + fileSource + "<p class='preview-text'>" + textContentHtml + "</p></div></div>");
 
         if ( btnFileOption == "App") {
-            $("button", contentList.last()).button().click( function(){ ipc.send( 'run-app', optionPath ); });
+            $("button", accordArg.last()).button().click( function(){ ipc.send( 'run-app', optionPath ); });
 
             //update path to new button
             slideButton.off( "click" );
             slideButton.click( function(){ ipc.send( 'run-app', optionPath ); });
         }
 
-        contentList.accordion( "refresh" );
+        accordArg.accordion( "refresh" );
 
     }
 
     // --------------------------------------------------------------
-
-
-    // Close icon: removing the content on click
-    contentList.on( "click", "span.ui-icon-close", function() {
-        $( this ).closest( "div .group" ).remove();
-        contentList.accordion( "refresh" );
-    });
 
     var contentDialog = $( "#content-dialog" ).dialog({
         autoOpen: false,
@@ -225,9 +207,66 @@ $( function() {
                 $("> .tab-proj-cover img", "#" + id).attr("src","file://" + optionPath);
                 openProjects[ id ].data.header.cover = optionPath;
             }
+        });
+    }
 
+    $( "#tabs" ).on( "tab-added", function( event, param ) {
+        // console.log( "new " + param );
+        let counter = param.substr(param.lastIndexOf('-') + 1);
+        let newAccordDOM =  accordTemplate.replace( /#\{accord\}/g, "accordion-" + counter );
+        $( "#accordion-wrapper" ).append( newAccordDOM );
+
+        let newAccordion = $( "#accordion-" + counter )
+                    .accordion({
+                        header: "> div > h3",
+                        // icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
+                        collapsible: true,
+                        active: false,
+                        heightStyle: "content"
+                    })
+                    .sortable({
+                        axis: "y",
+                        handle: "h3",
+                        stop: function( event, ui ) {
+                            // IE doesn't register the blur when sorting
+                            // so trigger focusout handlers to remove .ui-state-focus
+                            ui.item.children( "h3" ).triggerHandler( "focusout" );
+                    
+                            // Refresh accordion to handle new order
+                            $( this ).accordion( "refresh" );
+                        }
+                    });
+
+        // Close icon: removing the content on click
+        newAccordion.on( "click", "span.ui-icon-close", function() {
+            $( this ).closest( "div .group" ).remove();
+            newAccordion.accordion( "refresh" );
         });
 
+    });
+
+    $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
+        // update content header
+        let counter = ui.newTab.context.hash.substr(ui.newTab.context.hash.lastIndexOf('-') + 1);
+        let projStr = $("a[href$='" + ui.newTab.context.hash + "']").text();
+        let studentStr = $( "#student-" + counter ).val();
+        let titleStr = $( "#project-" + counter ).val();
+        $( "#content-student-name" ).text( projStr + ": " + studentStr + " - " + titleStr );
+
+        // show active accordion
+        showAccordion( $( "#accordion-" + counter ) );        
+    });
+
+
+    function showAccordion( arg ) {
+        if ( arg === undefined ) {
+            // console.log( "showAccordion undefined" );
+            return;
+        }
+
+        $(".accord-select").hide();
+        arg.show();
+        // console.log( "visible " + $(".accord-select:visible").attr( "id" ) );
     }
     
 });

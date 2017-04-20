@@ -17,10 +17,6 @@ contentButton.addEventListener('click', function (event) {
     document.getElementById('content-section').classList.add('is-shown');
 });
 
-
-
-
-
 settingsButton.addEventListener('click', function (event) {
     hideAllSections();
     document.getElementById('settings-section').classList.add('is-shown');

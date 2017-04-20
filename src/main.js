@@ -34,6 +34,7 @@ app.on('ready', () => {
     mainWindow.setMenuBarVisibility(false);
 
     mainWindow.loadURL('file://' + __dirname + '/index.html');
+    mainWindow.maximize();
 
     globalShortcut.register('CommandOrControl+F12', function () {
         mainWindow.webContents.send('preview-off');

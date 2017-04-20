@@ -13,15 +13,15 @@
     overflow-y: scroll;
 }
 
-#accordion {
+.accord-select {
     width: 98%;
 }
 
-#accordion div h3 {
+.accord-select div h3 {
     cursor: move;
 }
 
-#accordion div h3 .ui-icon-close {
+.accord-select div h3 .ui-icon-close {
     float: right;
     margin: 0.2em 0.2em 0 0;
     cursor: pointer;
