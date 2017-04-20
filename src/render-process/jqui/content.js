@@ -213,10 +213,6 @@ $( function() {
     }); 
 
     function addProjectImg( id ) {
-        console.log( "add image clicked!" );
-        // console.log( id );
-        // console.log( openProjects );
-
         fileFilter = {name: 'Image (*.jpg; *.png; *.bmp)', extensions: ['jpg', 'png', 'bmp']};
 
         optionPath = "";
@@ -225,18 +221,12 @@ $( function() {
                                     filters: [ fileFilter ] }, function (filePath) {
             if (filePath){
                 optionPath = filePath[0].replace(/(\\)/g, "/");
-                // fileSource = "<img src='#{source}' class='preview-source'>";
-                // let tempImage = $("> .tab-proj-cover img", "#" + id);
-                // console.log( tempImage );
 
                 $("> .tab-proj-cover img", "#" + id).attr("src","file://" + optionPath);
-
-                // let imgAttr = $("> .tab-proj-cover img", "#" + id).attr("src");
-                // console.log( imgAttr );
+                openProjects[ id ].data.header.cover = optionPath;
             }
+
         });
-
-
 
     }
     

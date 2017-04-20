@@ -64,7 +64,7 @@ function initTabs () {
     });
 
     // Actual addTab function: adds new tab using the input from the form above
-    function addTab( openProj ) {
+    function addTab( openProjArg ) {
         var label = projectName,
             id = "tabs-" + tabCounter,
             li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
@@ -82,9 +82,14 @@ function initTabs () {
             btnOpenProject.button( "disable" );
         }
 
-        if ( openProj !== undefined ) {
-            $("#student-" + tabCounter).val( openProj.data.header.student );
-            $("#project-" + tabCounter).val( openProj.data.header.title );
+        if ( openProjArg !== undefined ) {
+            $("#student-" + tabCounter).val( openProjArg.data.header.student );
+            $("#project-" + tabCounter).val( openProjArg.data.header.title );
+
+            if ( openProjArg.data.header.cover !== "" ) {
+                $("> .tab-proj-cover img", "#" + id).attr("src","file://" + openProjArg.data.header.cover);
+            }
+
         }
 
         // send event to save.js and content.js
