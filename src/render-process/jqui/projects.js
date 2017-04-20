@@ -63,15 +63,6 @@ function initTabs () {
         btnOpenProject.button( "enable" );
     });
 
-    // tabs.on( "keyup", function( event ) {
-    //     if ( event.altKey && event.keyCode === $.ui.keyCode.BACKSPACE ) {
-    //         var panelId = tabs.find( ".ui-tabs-active" ).remove().attr( "aria-controls" );
-    //         $( "#" + panelId ).remove();
-    //         tabs.tabs( "refresh" );
-    //     }
-    // });
-
-    
     // Actual addTab function: adds new tab using the input from the form above
     function addTab( openProj ) {
         var label = projectName,

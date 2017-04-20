@@ -13,19 +13,6 @@ const appIcon = "<i class='fa fa-cogs fa-fw content-icon'></i>";
 // --------------------------------------------------------------
 
 $( function() {
-    initAccordions();
-} );
-
-$( "#tabs" ).on( "tab-added", function( event, param ) {
-    $( ".btn-proj-img", "#" + param ).button()
-                                    .on( "click", function() {
-                                        addProjectImg( param );
-                                    });
-});
-
-// --------------------------------------------------------------
-
-function initAccordions () {
     var fileIcon = "";
     var fileFilter = {};
     var fileSource = "";
@@ -34,8 +21,6 @@ function initAccordions () {
     var btnFileOption = "";
 
     var slideButton = $("#slide-btn-app").button().click( function(){ console.log( 'slide-btn-app'); });
-
-
 
     var contentList = $( "#accordion" )
                         .accordion({
@@ -218,19 +203,48 @@ function initAccordions () {
                 // console.log( "D" );
 
         }
+    }    
+
+    $( "#tabs" ).on( "tab-added", function( event, param ) {
+        $( ".btn-proj-img", "#" + param ).button()
+                                        .on( "click", function() {
+                                            addProjectImg( param );
+                                        });
+    }); 
+
+    function addProjectImg( id ) {
+        console.log( "add image clicked!" );
+        // console.log( id );
+        // console.log( openProjects );
+
+        fileFilter = {name: 'Image (*.jpg; *.png; *.bmp)', extensions: ['jpg', 'png', 'bmp']};
+
+        optionPath = "";
+
+        openDialog.showOpenDialog({ properties: ['openFile'],
+                                    filters: [ fileFilter ] }, function (filePath) {
+            if (filePath){
+                optionPath = filePath[0].replace(/(\\)/g, "/");
+                // fileSource = "<img src='#{source}' class='preview-source'>";
+                // let tempImage = $("> .tab-proj-cover img", "#" + id);
+                // console.log( tempImage );
+
+                $("> .tab-proj-cover img", "#" + id).attr("src","file://" + optionPath);
+
+                // let imgAttr = $("> .tab-proj-cover img", "#" + id).attr("src");
+                // console.log( imgAttr );
+            }
+        });
 
 
-    }                        
+
+    }
     
-}
+});
 
 
 
 // --------------------------------------------------------------
 
-function addProjectImg( id ) {
-    console.log( "add image clicked!" );
-    console.log( id );
-    console.log( openProjects );
-}
+
 

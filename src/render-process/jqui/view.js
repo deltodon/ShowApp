@@ -1,7 +1,7 @@
 const ipc = require('electron').ipcRenderer;
 const previewButton = document.getElementById('btn-preview');
 
-const projCardTemplate = "<div id='#{card}' class='proj-card'><div class='proj-cover'>#{image}</div><div class='proj-label'>\
+const projCardTemplate = "<div id='#{card}' class='proj-card'><div class='proj-cover'><img src='#{image}'></div><div class='proj-label'>\
                           <div class='student-name-tag'>#{name}</div><div class='proj-name-tag'>#{title}</div></div></div>"
 
 // --------------------------------------------------------------
@@ -36,18 +36,16 @@ $( function() {
 
     function generateSlideShow() {
         let list = $("#tabs ul li a");
-        let id, tempHash, projCard;
-        // name, title;
+        let id, projCard;
         
         if (list.length > 0)
         {
             $.each(list, function( index, value ) {
-                // console.log( value.hash );
-                tempHash = value.hash;
-                id = tempHash.substr(tempHash.lastIndexOf('-') + 1);
-                // console.log( id );
+                // console.log( "hash = " + value.hash );
+                id = value.hash.substr(value.hash.lastIndexOf('-') + 1);
+                // console.log( "id = " + id );
                 projCard = projCardTemplate.replace( /#\{card\}/g, "proj-card-" + id )
-                                        .replace( /#\{image\}/g, "" )
+                                        .replace( /#\{image\}/g, $("> .tab-proj-cover img", value.hash ).attr("src") )
                                         .replace( /#\{name\}/g, $("#student-" + id).val() )
                                         .replace( /#\{title\}/g, $("#project-" + id).val() );
 
