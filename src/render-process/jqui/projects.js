@@ -2,6 +2,7 @@
 // console.log("ui-version: " + $.ui.version );
 const electron = require('electron').remote;
 const dialog = electron.dialog;
+const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const fse = require('fs-extra');
 
@@ -105,12 +106,12 @@ function initTabs () {
     function createProject() {
         let win = BrowserWindow.getFocusedWindow();
         let obj = getObjTemplate();
+        let desktop = app.getPath( "desktop" );
 
-        obj.data.entry.push({path: "Anna", text: true});
         let jsonFile = JSON.stringify(obj.data);
 
         dialog.showSaveDialog(win, {
-            title: "Create Project"
+            title: "Create Project", defaultPath: desktop
         }, function (projectPath) {
             
             if (projectPath){
@@ -146,8 +147,9 @@ function initTabs () {
     function openProject() {
         let win = BrowserWindow.getFocusedWindow();
         let obj = getObjTemplate();
+        let desktop = app.getPath( "desktop" );
 
-        dialog.showOpenDialog(win, { properties: ['openFile'],
+        dialog.showOpenDialog(win, { defaultPath: desktop, properties: ['openFile'],
                                 filters: [ {name: 'ShowApp Project (*.json)', extensions: ['json']} ] },
                                 function (optionPath) {
 
@@ -199,7 +201,14 @@ function getObjTemplate() {
                 title: "",
                 cover: ""
             },
-            entry: []
+            entry: [
+                // {
+                //     name: "",
+                //     type: "",
+                //     path: "",
+                //     text: ""
+                // }
+            ]
         }
     };
 

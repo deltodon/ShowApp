@@ -17,9 +17,11 @@ $( function() {
     var fileFilter = {};
     var fileSource = "";
     var optionPathText = $( "#opt-path" );
+    var openDefPath = "";
     var optionPath = "";
     var btnFileOption = "";
 
+    // TODO: Remove before final!
     var slideButton = $("#slide-btn-app").button().click( function(){ console.log( 'slide-btn-app'); });
 
 
@@ -50,6 +52,7 @@ $( function() {
         if ( btnFileOption == "App") {
             $("button", accordArg.last()).button().click( function(){ ipc.send( 'run-app', optionPath ); });
 
+            // TODO: Remove before final!
             //update path to new button
             slideButton.off( "click" );
             slideButton.click( function(){ ipc.send( 'run-app', optionPath ); });
@@ -111,8 +114,7 @@ $( function() {
 
     function selectFile() {
         optionPath = "";
-
-        openDialog.showOpenDialog({ properties: ['openFile'],
+        openDialog.showOpenDialog({ defaultPath: openDefPath, properties: ['openFile'],
                                     filters: [ fileFilter ] }, function (filePath) {
             if (filePath){
                 optionPath = filePath[0].replace(/(\\)/g, "/");
@@ -141,6 +143,13 @@ $( function() {
     function updateFileFilter() {
         // btnFileOption = $('input[name=radio-1]:checked', '#content-buttonset').val();
         let newTitle = "Add " + btnFileOption;
+        let token = $(".accord-select:visible").data( "project" );
+        let tempPath = openProjects[ token ].path;
+        
+        openDefPath = tempPath.slice( 0, tempPath.lastIndexOf('/'));
+        // For Windows - convert path to required \\
+        openDefPath = openDefPath.replace(/(\/)/g, "\\");
+
         contentDialog.dialog('option', 'title', newTitle);
         // console.log( btnFileOption );
 
@@ -149,6 +158,7 @@ $( function() {
                 fileIcon = imageIcon;
                 fileFilter = {name: 'Image (*.jpg; *.png; *.bmp)', extensions: ['jpg', 'png', 'bmp']};
                 fileSource = "<img src='#{source}' class='preview-source'>";
+                openDefPath = openDefPath.concat( "\\images" );
                 // console.log( "1" );
                 break;
 
@@ -156,6 +166,7 @@ $( function() {
                 fileIcon = audioIcon;
                 fileFilter = {name: 'Audio (*.mp3; *.wav; *.ogg)', extensions: ['mp3', 'wav', 'ogg']};
                 fileSource = "<audio src='#{source}' controls></audio>";
+                openDefPath = openDefPath.concat( "\\audio" );
                 // console.log( "2" );
                 break;
 
@@ -163,12 +174,14 @@ $( function() {
                 fileIcon = videoIcon;
                 fileFilter = {name: 'Video (*.mkv; *.avi; *.mp4)', extensions: ['mkv', 'avi', 'mp4']};
                 fileSource = "<video src='#{source}' class='preview-source' controls></video>";
+                openDefPath = openDefPath.concat( "\\video" );
                 // console.log( "3" );
                 break;
 
             case "3D":
                 fileIcon = modelIcon;
                 // fileFilter = {name: 'Web GL', extensions: ['jpg', 'png', 'gif']};
+                // openDefPath = openDefPath.concat( "\\3d" );
                 // console.log( "4" );
                 break;
 
@@ -177,6 +190,7 @@ $( function() {
                 fileFilter = {name: 'Application (*.exe)', extensions: ['exe']};
                 // fileFilter = {name: 'Application (*.exe; *.bat)', extensions: ['exe', 'bat']};
                 fileSource = "<button>Play App</button>";
+                openDefPath = openDefPath.concat( "\\binaries" );
                 // console.log( "5" );
                 break;
 
@@ -242,6 +256,8 @@ $( function() {
             $( this ).closest( "div .group" ).remove();
             newAccordion.accordion( "refresh" );
         });
+
+        newAccordion.data( "project", param );
 
     });
 
