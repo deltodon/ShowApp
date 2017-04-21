@@ -23,7 +23,52 @@ function saveProject( id ) {
     let counter = id.substr(id.lastIndexOf('-') + 1);
     let accordContent = [];
 
-    let accordData = $(".accord-select:visible").data( "project" );
+
+    $( ".group", "#accordion-" + counter).each( function( index, value ) {
+        let tempEntry = {};
+
+        let tempStr =  $( "> h3", value ).text();
+        tempStr = tempStr.slice( 0, tempStr.indexOf( "Remove Tab" ) );
+        tempEntry.name = tempStr;
+
+        $( "> div", value ).children().each( function( index, childValue ) {
+
+            switch ( childValue.nodeName ) {
+                case "IMG":
+                    tempEntry.type = "Image";
+                    tempEntry.path = childValue.src.substr( 8 );
+                    break;
+
+                case "AUDIO":
+                    tempEntry.type = "Audio";
+                    tempEntry.path = childValue.src.substr( 8 );
+                    break;
+
+                case "VIDEO":
+                    tempEntry.type = "Video";
+                    tempEntry.path = childValue.src.substr( 8 );
+                    break;
+
+                case "BUTTON":
+                    tempEntry.type = "App";
+                    tempEntry.path = $( "> div > button", value ).data( "path" );
+                    break;
+
+                case "P":
+                    tempEntry.text = childValue.innerHTML;
+                    break;
+
+                default:
+                    console.log( "def" );
+
+            }
+        });
+
+        console.log ( tempEntry );
+        
+    });
+
+    // let accordData = $(".accord-select:visible").data( "project" );
     // console.log ( "accordData = " + accordData );
 
 

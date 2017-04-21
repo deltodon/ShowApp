@@ -40,7 +40,7 @@ $( function() {
         
         if (list.length > 0)
         {
-            $.each(list, function( index, value ) {
+            list.each( function( index, value ) {
                 // console.log( "hash = " + value.hash );
                 id = value.hash.substr(value.hash.lastIndexOf('-') + 1);
                 // console.log( "id = " + id );

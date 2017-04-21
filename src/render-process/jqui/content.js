@@ -50,7 +50,9 @@ $( function() {
                             <div>" + fileSource + "<p class='preview-text'>" + textContentHtml + "</p></div></div>");
 
         if ( btnFileOption == "App") {
-            $("button", accordArg.last()).button().click( function(){ ipc.send( 'run-app', optionPath ); });
+            $("button", accordArg.last()).button()
+                                         .data( "path", optionPath )
+                                         .click( function() { ipc.send( 'run-app', $( this).data( "path" ) ); });
 
             // TODO: Remove before final!
             //update path to new button
