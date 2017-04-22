@@ -64,20 +64,16 @@ function saveProject( id ) {
             }
         });
 
-        console.log ( tempEntry );
+        accordContent.push( tempEntry );
         
     });
 
-    // let accordData = $(".accord-select:visible").data( "project" );
-    // console.log ( "accordData = " + accordData );
-
-
-
+    // console.log ( accordContent );
+    openProjects[ id ].data.entry = accordContent;
 
     openProjects[ id ].data.header.student = $("#student-" + counter).val();
     openProjects[ id ].data.header.title = $("#project-" + counter).val();
 
-    //obj.data.entry.push({path: "Anna", text: true});
     let jsonFile = JSON.stringify( openProjects[ id ].data );
 
     fse.writeFile( openProjects[ id ].path, jsonFile, "utf8", function(err) {
