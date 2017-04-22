@@ -27,22 +27,31 @@ $( function() {
 
 
     // Actual addTab function: adds new tab using the input from the form above
-    function addContent() {
+    function addContent( entryArg ) {
         let accordArg = $(".accord-select:visible");
+        let banner = "";
+        let textContentHtml = "";
 
         if ( accordArg === undefined ) {
             console.log ( "no accord visible!");
             return;
         }
 
+        if ( entryArg === undefined )
+        {
+            let contentTitle = $( "#content_title" );
+            let contentText = $( "#content_txt" );
+            banner = contentTitle.val() || "No name";
 
-        var contentTitle = $( "#content_title" );
-        var contentText = $( "#content_txt" );
-        
-           
+            // TODO: if text === "" -> hide text area 
+            textContentHtml = contentText.val();
+        }
+        else {
+            banner = entryArg.name;
+            textContentHtml = entryArg.text;
+        }
 
-        var banner = contentTitle.val() || "No name";
-        var textContentHtml = contentText.val() || "Text content.";
+
 
         fileSource = fileSource.replace( /#\{source\}/g, 'file://' + optionPath );
 
@@ -155,6 +164,10 @@ $( function() {
         contentDialog.dialog('option', 'title', newTitle);
         // console.log( btnFileOption );
 
+        prepFileTokens();
+    }
+
+    function prepFileTokens() {
         switch ( btnFileOption ) {
             case "Image":
                 fileIcon = imageIcon;
@@ -201,14 +214,7 @@ $( function() {
                 // console.log( "D" );
 
         }
-    }    
-
-    $( "#tabs" ).on( "tab-added", function( event, param ) {
-        $( ".btn-proj-img", "#" + param ).button()
-                                        .on( "click", function() {
-                                            addProjectImg( param );
-                                        });
-    }); 
+    } 
 
     function addProjectImg( id ) {
         fileFilter = {name: 'Image (*.jpg; *.png; *.bmp)', extensions: ['jpg', 'png', 'bmp']};
@@ -226,7 +232,13 @@ $( function() {
         });
     }
 
+
     $( "#tabs" ).on( "tab-added", function( event, param ) {
+        $( ".btn-proj-img", "#" + param ).button()
+                                .on( "click", function() {
+                                    addProjectImg( param );
+                                });
+
         // console.log( "new " + param );
         let counter = param.substr(param.lastIndexOf('-') + 1);
         let newAccordDOM =  accordTemplate.replace( /#\{accord\}/g, "accordion-" + counter );
@@ -273,6 +285,19 @@ $( function() {
 
         // show active accordion
         showAccordion( $( "#accordion-" + counter ) );        
+    });
+
+
+    $( "#tabs" ).on( "tab-loaded", function( event, param ) {
+        // console.log( openProjects[ param ].data.entry );
+
+        openProjects[ param ].data.entry.forEach( function( item, index ) {
+            btnFileOption = item.type;
+            prepFileTokens();
+            
+            optionPath = item.path;
+            addContent( item );
+        });
     });
 
 

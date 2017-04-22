@@ -175,6 +175,9 @@ function initTabs () {
                         obj.data = objData;
                         let tabID = addTab( obj );
                         openProjects[ tabID ] = obj;
+
+                        // send event to content.js to load accordion
+                        tabs.trigger( "tab-loaded", [ tabID ] );
                     }
 
                 });
