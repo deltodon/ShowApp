@@ -118,9 +118,6 @@ function initTabs () {
                 projectPath = projectPath.replace(/(\\)/g, "/");
                 projectName = projectPath.substr(projectPath.lastIndexOf('/') + 1);
 
-                obj.name = projectName;
-                obj.path = projectPath;
-                
                 makeDirectory(projectPath);
                 makeDirectory(projectPath.concat("/audio"));
                 makeDirectory(projectPath.concat("/video"));
@@ -137,6 +134,9 @@ function initTabs () {
                 });
 
                 let tabID = addTab();
+
+                obj.name = projectName;
+                obj.path = filePath;
 
                 openProjects[ tabID ] = obj;
                 
