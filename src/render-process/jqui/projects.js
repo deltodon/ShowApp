@@ -159,28 +159,41 @@ function initTabs () {
             }
             else {
                 let filePath = optionPath[0].replace(/(\\)/g, "/");
-                projectName = filePath.slice(filePath.lastIndexOf('/') + 1, filePath.lastIndexOf('.'));
-                // console.log( projectName );
-                fse.readFile( filePath, 'utf8', function (err, data) {
-                    if (err) throw err;
-                    let objData = JSON.parse(data);
 
-                    if (objData === undefined) {
-                        console.log( "wrong obj" );
-                        return;
-                    }
-                    else {
-                        obj.name = projectName;
-                        obj.path = filePath;
-                        obj.data = objData;
-                        let tabID = addTab( obj );
-                        openProjects[ tabID ] = obj;
+                if ( projAlreadyOpen( filePath ) ) {
+                    // console.log( "Project already open!" );
+                    dialog.showMessageBox( win, {
+                        type: 'warning',
+                        title: "Warning!",
+                        message: 'Project is already open.',
+                        detail: 'You can have only one instance of each project open at the same time.',
+                        buttons: ['OK']
+                    });
+                    return;
+                }
+                else {
+                    projectName = filePath.slice(filePath.lastIndexOf('/') + 1, filePath.lastIndexOf('.'));
+                    // console.log( projectName );
+                    fse.readFile( filePath, 'utf8', function (err, data) {
+                        if (err) throw err;
+                        let objData = JSON.parse(data);
 
-                        // send event to content.js to load accordion
-                        tabs.trigger( "tab-loaded", [ tabID ] );
-                    }
+                        if (objData === undefined) {
+                            console.log( "wrong obj" );
+                            return;
+                        }
+                        else {
+                            obj.name = projectName;
+                            obj.path = filePath;
+                            obj.data = objData;
+                            let tabID = addTab( obj );
+                            openProjects[ tabID ] = obj;
 
-                });
+                            // send event to content.js to load accordion
+                            tabs.trigger( "tab-loaded", [ tabID ] );
+                        }
+                    });
+                }
             }
         });
 
@@ -190,6 +203,20 @@ function initTabs () {
 }
 
 // --------------------------------------------------------------
+
+function projAlreadyOpen( argPath ) {
+    let items = Object.keys(openProjects).length;
+    items++;
+
+    for ( id = 1; id < items; id++ ) {
+        if ( openProjects[ "tabs-" + id ].path === argPath ) {
+            return true;
+        }
+    }
+    // console.log( items );
+    return false
+}
+
 
 
 // MENU ---------------------------------------------------------
