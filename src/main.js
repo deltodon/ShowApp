@@ -68,16 +68,7 @@ app.on('window-all-closed', () => {
 //------------------------------------------------------------------------------
 
 ipc.on('preview-on', function() {
-    dialog.showMessageBox({
-        type: 'info',
-        title: "ShowApp Presentation",
-        message: 'ShowApp Presentation',
-        detail: 'You are entering the ShowApp Presentation full screen mode.\n In order to leave the presentation press Ctrl + F12',
-        buttons: ['OK']
-    });
-
     mainWindow.setFullScreen(true);
-    // mainWindow.setKiosk(true);
 });
 
 //------------------------------------------------------------------------------ 

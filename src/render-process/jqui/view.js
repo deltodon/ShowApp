@@ -1,3 +1,7 @@
+const electron = require('electron').remote;
+const dialog = electron.dialog;
+const BrowserWindow = electron.BrowserWindow;
+
 const ipc = require('electron').ipcRenderer;
 const previewButton = document.getElementById('btn-preview');
 
@@ -6,12 +10,36 @@ const projCardTemplate = "<div id='#{card}' class='proj-card'><div class='proj-c
 
 // --------------------------------------------------------------
 
+function confirmFullScreen() {
+    let win = BrowserWindow.getFocusedWindow();
+    let result = dialog.showMessageBox( win, {
+        type: 'info',
+        title: "ShowApp Presentation",
+        message: 'ShowApp Presentation',
+        detail: 'You are entering the ShowApp Presentation full screen mode.\n In order to leave the presentation press Ctrl + F12',
+        buttons: ['OK', 'CANCEL']
+    });
+
+    // console.log( result );
+
+    if ( result === 0 ) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+// --------------------------------------------------------------
+
 $( function() {
     previewButton.addEventListener('click', function (event) {
-        generateSlideShow();
-        $("#wrapper").hide();
-        $("#view-main").show();
-        ipc.send('preview-on');
+        if ( confirmFullScreen() ) {
+            generateSlideShow();
+            $("#wrapper").hide();
+            $("#view-main").show();
+            ipc.send('preview-on');
+        }
     });
 
     ipc.on('preview-off', function() {
