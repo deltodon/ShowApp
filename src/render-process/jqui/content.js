@@ -323,6 +323,7 @@ $( function() {
             prepFileTokens();
             
             optionPath = item.path;
+            optionThumbPath = item.thum;
             addContent( item );
         });
     });

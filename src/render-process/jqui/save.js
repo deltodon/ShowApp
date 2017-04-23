@@ -35,9 +35,14 @@ function saveProject( id ) {
 
             switch ( childValue.nodeName ) {
                 case "IMG":
-                    // className
-                    tempEntry.type = "Image";
-                    tempEntry.path = childValue.src.substr( 8 );
+                    if ( childValue.className === "preview-source" )
+                    {
+                        tempEntry.type = "Image";
+                        tempEntry.path = childValue.src.substr( 8 );
+                    }
+                    else if ( childValue.className === "thumb-content" ) {
+                        tempEntry.thum = childValue.src.substr( 8 );
+                    }
                     break;
 
                 case "AUDIO":
@@ -59,8 +64,11 @@ function saveProject( id ) {
                     tempEntry.text = childValue.innerHTML;
                     break;
 
+                case "BR":
+                    break;
+
                 default:
-                    console.log( "def" );
+                    console.log( "def " + childValue.nodeName );
 
             }
         });
