@@ -1,7 +1,7 @@
 const projectsButton = document.getElementById('btn-projects');
 const contentButton = document.getElementById('btn-content');
 
-const settingsButton = document.getElementById('btn-settings');
+// const settingsButton = document.getElementById('btn-settings');
 
 
 
@@ -17,10 +17,10 @@ contentButton.addEventListener('click', function (event) {
     document.getElementById('content-section').classList.add('is-shown');
 });
 
-settingsButton.addEventListener('click', function (event) {
-    hideAllSections();
-    document.getElementById('settings-section').classList.add('is-shown');
-});
+// settingsButton.addEventListener('click', function (event) {
+//     hideAllSections();
+//     document.getElementById('settings-section').classList.add('is-shown');
+// });
 
 activateDefaultSection();
 

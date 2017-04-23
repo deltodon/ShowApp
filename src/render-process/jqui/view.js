@@ -18,6 +18,7 @@ $( function() {
         $("#view-main").hide();
         $("#wrapper").show();
         $("#proj-card-wrapper").empty();
+        $(".slideshow-group").remove();
     });
 
 
@@ -57,78 +58,59 @@ $( function() {
 
                 $( "#view-body" ).append( "<div id='slideshow-" + id + "' class='slideshow-group' hidden><div class='thumb-outer'></div></div>" );
 
-                $( "#slideshow-" + id ).append( "<div id='slide-win-" + winCount + "' class='slide-window-sel'><div class='slide-data'>\
-                                                                    </div><div class='slide-text'>\
-                                                                    " + id + " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae malesuada quam. Donec mattis enim ac nunc venenatis dignissim. Suspendisse potenti. Nullam vehicula libero at ex rutrum, eget sagittis lectus interdum. Phasellus est justo, maximus eu hendrerit ac, egestas at ligula. Quisque non fringilla arcu, sed dapibus diam. Fusce sed purus nunc. Nulla vitae est et dolor lobortis luctus. Aliquam erat volutpat. Duis aliquet varius aliquet. Donec id fermentum dui. Phasellus ipsum diam, luctus quis fermentum nec, faucibus nec metus. Nulla at enim ultricies, pretium ante sed, tempus quam. Integer blandit posuere enim id tempus.\
-                                                                    </div></div>");
-                
-                for (var i = 0; i < id; i++) {
+
+                $( ".group > div", "#accordion-" + id ).each( function( index, item ) {
+                    $( "#slideshow-" + id ).append( "<div id='slide-win-" + winCount + "' class='slide-window-sel'><div class='slide-data'>\
+                                                                        </div><div class='slide-text'></div></div>");
+
+                    for (var i = 0; i < item.children.length; i++) {
+                        let childSrc = "";
+
+                        switch ( item.children[i].nodeName ) {
+                            case "IMG":
+                                console.log( "Image" );
+                                $( "> .slide-data", "#slide-win-" + winCount ).append( "<img src='" + item.children[i].src + "'>" );
+                                break;
+
+                            case "AUDIO":
+                                $( ">.slide-data", "#slide-win-" + winCount ).append( "<audio src='" + item.children[i].src + "' controls></audio>" );
+                                break;
+
+                            case "VIDEO":
+                                $( ".slide-data", "#slide-win-" + winCount ).append( "<video src='" + item.children[i].src + "' controls></video>" );
+                                break;
+
+                            case "BUTTON":
+                                let optionPath = $( "button", item ).data( "path" );
+                                $( ".slide-data", "#slide-win-" + winCount ).append( "<button id='win-btn-" + winCount + "'>Play App</button>" );
+                                console.log( optionPath );
+                                console.log( $( ".slide-data", "#slide-win-" + winCount ) );
+                                $( "#win-btn-" + winCount ).button().data( "path", optionPath )
+                                                        .click( function() { ipc.send( 'run-app', $( this).data( "path" ) ); });
+                                break;
+
+                            case "P":
+                                $( ".slide-text", "#slide-win-" + winCount ).append( "<p>" + item.children[i].innerHTML + "</p>" );
+                                break;
+
+                            default:
+                                console.log( "def" );
+
+                        }             
+                    }
+        
 
                     $( ".thumb-outer", "#slideshow-" + id ).append( "<div id='thumb-" + winCount + "' class='thumb-sel'><img src='' class='thumbImg'></div>" );
+
+                    $( "#thumb-" + winCount ).data( "open", "#slide-win-" + winCount);
+
+                    $( "#thumb-" + winCount ).on( "click", function() {
+                        $( ".slide-window-sel" ).hide();
+                        $( $( this ).data( "open" ) ).show();
+                    });
+
                     winCount++;
-                }
-                // $( ".group > div", "#accordion-" + id ).each( function( index, item ) {
-                //     $( "#slideshow-" + id ).append( "<div id='slide-win-" + winCount + "' class='slide-window-sel'><div class='slide-data'></div><div class='slide-text'></div></div>");
-
-                //     for (var i = 0; i < item.children.length; i++) {
-                //         let childSrc = "";
-
-                //         switch ( item.children[i].nodeName ) {
-                //             case "IMG":
-                //                 console.log( "Image" );
-                //                 // console.log( item.children[i].src );
-                //                 // childSrc = item.children[i].src
-                //                 $( ".slide-data", "#slide-win-" + winCount ).append( "<img src='" + item.children[i].src + "'>" );
-                //                 break;
-
-                //             case "AUDIO":
-                //                 // console.log( "Audio" );
-                //                 // console.log( item.children[i].src );
-                //                 $( ".slide-data", "#slide-win-" + winCount ).append( "<audio src='" + item.children[i].src + "' controls></audio>" );
-                //                 break;
-
-                //             case "VIDEO":
-                //                 // console.log( "Video" );
-                //                 // console.log( item.children[i].src );
-                //                 $( ".slide-data", "#slide-win-" + winCount ).append( "<video src='" + item.children[i].src + "' controls></video>" );
-                //                 break;
-
-                //             case "BUTTON":
-                //                 // console.log( "App" );
-                //                 // console.log( $( "button", item ) );
-                //                 let optionPath = $( "button", item ).data( "path" );
-                //                 $( ".slide-data", "#slide-win-" + winCount ).append( $( "<button id='win-btn-" + winCount + ">Play App</button>" ) );
-                //                 $( "#win-btn-" + winCount ).button().data( "path", optionPath )
-                //                                            .click( function() { ipc.send( 'run-app', $( this).data( "path" ) ); });        
-                //                 break;
-
-                //             case "P":
-                //                 // console.log( "Par" );
-                //                 // console.log( item.children[i].innerHTML );
-                //                 $( ".slide-text", "#slide-win-" + winCount ).append( "<p>" + item.children[i].innerHTML + "</p>" );
-                //                 break;
-
-                //             default:
-                //                 console.log( "def" );
-
-                //         }             
-                //     }
-
-                //     // console.log( item );
-
-
-                //     $( ".thumb-outer", "#slideshow-" + id ).append( "<div id='thumb-" + winCount + "' class='thumb-sel'><img src='' class='thumbImg'></div>" );
-                //     $( "#thumb-" + winCount ).on( "click", function() {
-                //         $( ".slide-window-sel:visible", "#slideshow-" + id ).hide();
-                //         $( "#slide-win-" + winCount ).show();
-                //     });
-
-                //     winCount++;
-
-                // });
-
-                // hide slideshows so they can be shown by clicking on proj-card
-                // $("#slideshow" +  + id ).hide();
+                });
 
 
                 $( "#proj-card-" + id ).on( "click", function() {
@@ -137,7 +119,11 @@ $( function() {
                     $("#back-label").show();
                     $("#view-title span").text( $("div .student-name-tag", this).text() );
                     // console.log( $( this ).data( "open" ) );
-                    $( $( this ).data( "open" ) ).show();      
+                    $( $( this ).data( "open" ) ).show();
+
+                    // $( ".slide-window-sel", $( this ).data( "open" ) ).hide();
+                    $( ".slide-window-sel" ).hide();
+                    $( ".slide-window-sel", $( this ).data( "open" ) ).first().show();      
                 });
 
             });
