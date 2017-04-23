@@ -21,7 +21,7 @@ function initTabs () {
     var projectName = "";
     var tabContent = "<div class='tab-proj-cover'><img src=''></div><div class='tab-buttons'><button class='btn-proj-img'><i class='fa fa-picture-o fa-fw'></i> Add Image</button>\
                         <button class='btn-proj-save'><i class='fa fa-floppy-o fa-fw'></i> Save Project</button>\
-                        <div class='tab-img-notice'><i class='fa fa-info-circle fa-fw'></i> Note: for the best result use a square image of minimum size 400x400 pixels.</div></div>\
+                        <div class='img-notice'><i class='fa fa-info-circle fa-fw'></i> Note: for the best result use a square image of minimum size 400x400 pixels.</div></div>\
                         <form><label for='#{student}'>Student Name:</label>\
                         <input type='text' name='#{student}' id='#{student}' value='' class='ui-widget-content ui-corner-all'>\
                         <label for='#{project}'>Project Title:</label>\

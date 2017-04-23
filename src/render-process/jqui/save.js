@@ -35,13 +35,15 @@ function saveProject( id ) {
 
             switch ( childValue.nodeName ) {
                 case "IMG":
-                    if ( childValue.className === "preview-source" )
-                    {
+                    if ( childValue.className === "preview-source" ) {
                         tempEntry.type = "Image";
                         tempEntry.path = childValue.src.substr( 8 );
                     }
                     else if ( childValue.className === "thumb-content" ) {
                         tempEntry.thum = childValue.src.substr( 8 );
+                    }
+                    else {
+                        console.log( "IMG with wrong class!" );
                     }
                     break;
 

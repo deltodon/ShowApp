@@ -101,13 +101,22 @@ $( function() {
                     $( "#slideshow-" + id ).append( "<div id='slide-win-" + winCount + "' class='slide-window-sel'><div class='slide-data'>\
                                                                         </div><div class='slide-text'></div></div>");
 
+                    let thumbSrc = "";
+
                     for (var i = 0; i < item.children.length; i++) {
-                        let childSrc = "";
+                        // let childSrc = "";
 
                         switch ( item.children[i].nodeName ) {
                             case "IMG":
-                                // console.log( "Image" );
-                                $( "> .slide-data", "#slide-win-" + winCount ).append( "<img src='" + item.children[i].src + "'>" );
+                                if ( item.children[i].className === "preview-source" ) {
+                                    $( "> .slide-data", "#slide-win-" + winCount ).append( "<img src='" + item.children[i].src + "'>" );
+                                }
+                                else if ( item.children[i].className === "thumb-content" ) {
+                                    thumbSrc = item.children[i].src;
+                                }
+                                else {
+                                    console.log( "IMG with wrong class!" );
+                                }                          
                                 break;
 
                             case "AUDIO":
@@ -144,7 +153,7 @@ $( function() {
                     }
         
 
-                    $( ".thumb-outer", "#slideshow-" + id ).append( "<div id='thumb-" + winCount + "' class='thumb-sel'><img src='' class='thumbImg'></div>" );
+                    $( ".thumb-outer", "#slideshow-" + id ).append( "<div id='thumb-" + winCount + "' class='thumb-sel'><img src='" + thumbSrc + "' class='thumbImg'></div>" );
 
                     $( "#thumb-" + winCount ).data( "open", "#slide-win-" + winCount);
 

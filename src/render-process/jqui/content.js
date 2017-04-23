@@ -84,7 +84,7 @@ $( function() {
     var contentDialog = $( "#content-dialog" ).dialog({
         autoOpen: false,
         modal: true,
-        height: 480,
+        height: 520,
         width: 570,
         resizable: false,
         buttons: {
