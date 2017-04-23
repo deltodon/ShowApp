@@ -68,7 +68,7 @@ $( function() {
 
                         switch ( item.children[i].nodeName ) {
                             case "IMG":
-                                console.log( "Image" );
+                                // console.log( "Image" );
                                 $( "> .slide-data", "#slide-win-" + winCount ).append( "<img src='" + item.children[i].src + "'>" );
                                 break;
 
@@ -83,14 +83,20 @@ $( function() {
                             case "BUTTON":
                                 let optionPath = $( "button", item ).data( "path" );
                                 $( ".slide-data", "#slide-win-" + winCount ).append( "<button id='win-btn-" + winCount + "'>Play App</button>" );
-                                console.log( optionPath );
-                                console.log( $( ".slide-data", "#slide-win-" + winCount ) );
+                                // console.log( optionPath );
+                                // console.log( $( ".slide-data", "#slide-win-" + winCount ) );
                                 $( "#win-btn-" + winCount ).button().data( "path", optionPath )
                                                         .click( function() { ipc.send( 'run-app', $( this).data( "path" ) ); });
                                 break;
 
                             case "P":
-                                $( ".slide-text", "#slide-win-" + winCount ).append( "<p>" + item.children[i].innerHTML + "</p>" );
+                                // $( ".slide-text", "#slide-win-" + winCount ).append( "<p>" + item.children[i].innerHTML + "</p>" );
+                                if ( item.children[i].innerHTML.length > 0 ) {
+                                    $( ".slide-text", "#slide-win-" + winCount ).append( "<p>" + item.children[i].innerHTML + "</p>" );
+                                }
+                                else {
+                                    $( ".slide-text", "#slide-win-" + winCount ).hide();
+                                }                                
                                 break;
 
                             default:
