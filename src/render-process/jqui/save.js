@@ -35,6 +35,7 @@ function saveProject( id ) {
 
             switch ( childValue.nodeName ) {
                 case "IMG":
+                    // className
                     tempEntry.type = "Image";
                     tempEntry.path = childValue.src.substr( 8 );
                     break;

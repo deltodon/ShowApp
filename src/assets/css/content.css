@@ -47,3 +47,10 @@
 .text-path {
     margin-right: 10px;
 }
+
+.thumb-content {
+  /*display: block;*/
+  margin-top: 10px;
+  height: 84px;
+  width: 150px;
+}

@@ -16,9 +16,12 @@ $( function() {
     var fileIcon = "";
     var fileFilter = {};
     var fileSource = "";
+    var fileThumb = "<img src='#{thumb-src}' class='thumb-content'>";
     var optionPathText = $( "#opt-path" );
+    var optionThumbPathText = $( "#opt-thumb-path" );
     var openDefPath = "";
     var optionPath = "";
+    var optionThumbPath = "";
     var btnFileOption = "";
 
 
@@ -51,8 +54,20 @@ $( function() {
 
         fileSource = fileSource.replace( /#\{source\}/g, 'file://' + optionPath );
 
+
+
+        if ( optionThumbPath === "" ) {
+            fileThumb = "";
+            console.log( "optionThumbPath is empty!" )
+        }
+        else {
+            fileThumb = fileThumb.replace( /#\{thumb-src\}/g, 'file://' + optionThumbPath );
+            // console.log( "fileThumb= " + fileThumb );
+        }
+        
+
         accordArg.append("<div class='group'><h3>" + fileIcon + banner + "<span class=\"ui-icon ui-icon-close\" role=\"presentation\">Remove Tab</span></h3>\
-                            <div>" + fileSource + "<p class='preview-text'>" + textContentHtml + "</p></div></div>");
+                            <div>" + fileSource + "<p class='preview-text'>" + textContentHtml + "</p>Thumbnail:<br>" + fileThumb + "</div></div>");
 
         if ( btnFileOption == "App") {
             $("button", accordArg.last()).button()
@@ -69,7 +84,7 @@ $( function() {
     var contentDialog = $( "#content-dialog" ).dialog({
         autoOpen: false,
         modal: true,
-        height: 450,
+        height: 480,
         width: 570,
         resizable: false,
         buttons: {
@@ -84,6 +99,7 @@ $( function() {
         close: function() {
             contentForm[ 0 ].reset();
             optionPathText.empty();
+            optionThumbPathText.empty();
         }
     });
 
@@ -113,7 +129,15 @@ $( function() {
             selectFile();            
     });
 
+    $( "#opt-path-thumb-btn" )
+        .button()
+        .on( "click", function() {
+            optionThumbPathText.empty();
+            selectThumbFile();            
+    });
 
+
+    // TODO: Refactor following two functions into one with args
     function selectFile() {
         optionPath = "";
         openDialog.showOpenDialog({ defaultPath: openDefPath, properties: ['openFile'],
@@ -126,20 +150,32 @@ $( function() {
                 }
                 else{
                     optionPathText.append( optionPath );
-                }
-
-                // console.log( filePath[0] );
-                // let fileName = filePath[0].substr(filePath[0].lastIndexOf('/') + 1);
-                // // console.log(fileName);
-                // let src = filePath[0];
-                // let dest = obj.path.concat("/images/", fileName);
-
-                // fse.copy(src, dest, err => {
-                //     if (err) return console.error(err)
-                //     console.log("success!")
-                // });         
+                }        
             }
         });
+    }
+
+    function selectThumbFile() {
+        optionThumbPath = "";
+        openDialog.showOpenDialog({ defaultPath: openDefPath, properties: ['openFile'],
+                                    filters: [ {name: 'Image (*.jpg; *.png; *.bmp)', extensions: ['jpg', 'png', 'bmp']} ] }, function (filePath) {
+
+            // console.log( "filePath= " + filePath );
+            if (filePath){
+                optionThumbPath = filePath[0].replace(/(\\)/g, "/");
+                if (optionThumbPath.length > 42 ) {
+                    let strSlice = optionThumbPath.slice(-39);
+                    optionThumbPathText.append( "..." + strSlice );
+                }
+                else{
+                    optionThumbPathText.append( optionThumbPath );
+                }
+
+                // console.log( "select " + optionThumbPath );        
+            }
+        });
+
+        
     }
 
     function updateFileFilter() {
@@ -164,7 +200,7 @@ $( function() {
                 fileIcon = imageIcon;
                 fileFilter = {name: 'Image (*.jpg; *.png; *.bmp)', extensions: ['jpg', 'png', 'bmp']};
                 fileSource = "<img src='#{source}' class='preview-source'>";
-                openDefPath = openDefPath.concat( "\\images" );
+                // openDefPath = openDefPath.concat( "\\images" );
                 // console.log( "1" );
                 break;
 
@@ -172,7 +208,7 @@ $( function() {
                 fileIcon = audioIcon;
                 fileFilter = {name: 'Audio (*.mp3; *.wav; *.ogg)', extensions: ['mp3', 'wav', 'ogg']};
                 fileSource = "<audio src='#{source}' controls></audio>";
-                openDefPath = openDefPath.concat( "\\audio" );
+                // openDefPath = openDefPath.concat( "\\audio" );
                 // console.log( "2" );
                 break;
 
@@ -180,7 +216,7 @@ $( function() {
                 fileIcon = videoIcon;
                 fileFilter = {name: 'Video (*.mkv; *.avi; *.mp4)', extensions: ['mkv', 'avi', 'mp4']};
                 fileSource = "<video src='#{source}' class='preview-source' controls></video>";
-                openDefPath = openDefPath.concat( "\\video" );
+                // openDefPath = openDefPath.concat( "\\video" );
                 // console.log( "3" );
                 break;
 
@@ -196,7 +232,7 @@ $( function() {
                 fileFilter = {name: 'Application (*.exe)', extensions: ['exe']};
                 // fileFilter = {name: 'Application (*.exe; *.bat)', extensions: ['exe', 'bat']};
                 fileSource = "<button>Play App</button>";
-                openDefPath = openDefPath.concat( "\\binaries" );
+                // openDefPath = openDefPath.concat( "\\binaries" );
                 // console.log( "5" );
                 break;
 

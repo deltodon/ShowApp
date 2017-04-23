@@ -209,6 +209,7 @@ function getObjTemplate() {
                 //     name: "",
                 //     type: "",
                 //     path: "",
+                //     thum: "",
                 //     text: ""
                 // }
             ]
