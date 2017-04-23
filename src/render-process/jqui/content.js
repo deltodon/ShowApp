@@ -248,7 +248,7 @@ $( function() {
 
         optionPath = "";
 
-        openDialog.showOpenDialog({ properties: ['openFile'],
+        openDialog.showOpenDialog({ defaultPath: openDefPath, properties: ['openFile'],
                                     filters: [ fileFilter ] }, function (filePath) {
             if (filePath){
                 optionPath = filePath[0].replace(/(\\)/g, "/");
@@ -263,6 +263,7 @@ $( function() {
     $( "#tabs" ).on( "tab-added", function( event, param ) {
         $( ".btn-proj-img", "#" + param ).button()
                                 .on( "click", function() {
+                                    updateFileFilter();
                                     addProjectImg( param );
                                 });
 
