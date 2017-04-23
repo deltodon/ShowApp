@@ -40,13 +40,12 @@ $( function() {
         
         if (list.length > 0)
         {
-            let winCount = 0;
+            let winCount = 1;
 
             list.each( function( index, value ) {
                 // console.log( "hash = " + value.hash );
                 id = value.hash.substr(value.hash.lastIndexOf('-') + 1);
-                // console.log( "id = " + id );
-                console.log( value.hash );
+
                 projCard = projCardTemplate.replace( /#\{card\}/g, "proj-card-" + id )
                                         .replace( /#\{image\}/g, $("> .tab-proj-cover img", value.hash ).attr("src") )
                                         .replace( /#\{name\}/g, $("#student-" + id).val() )
@@ -56,9 +55,18 @@ $( function() {
 
                 $( "#proj-card-" + id).data( "open", "#slideshow-" + id);
 
-                // $( "#view-body" ).append( "<div id='slideshow-" + id + "' class='slideshow-group'>Testing<div class='thumb-outer'></div></div>" );
+                $( "#view-body" ).append( "<div id='slideshow-" + id + "' class='slideshow-group' hidden><div class='thumb-outer'></div></div>" );
 
-                console.log( "id = " + id );
+                $( "#slideshow-" + id ).append( "<div id='slide-win-" + winCount + "' class='slide-window-sel'><div class='slide-data'>\
+                                                                    </div><div class='slide-text'>\
+                                                                    " + id + " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae malesuada quam. Donec mattis enim ac nunc venenatis dignissim. Suspendisse potenti. Nullam vehicula libero at ex rutrum, eget sagittis lectus interdum. Phasellus est justo, maximus eu hendrerit ac, egestas at ligula. Quisque non fringilla arcu, sed dapibus diam. Fusce sed purus nunc. Nulla vitae est et dolor lobortis luctus. Aliquam erat volutpat. Duis aliquet varius aliquet. Donec id fermentum dui. Phasellus ipsum diam, luctus quis fermentum nec, faucibus nec metus. Nulla at enim ultricies, pretium ante sed, tempus quam. Integer blandit posuere enim id tempus.\
+                                                                    </div></div>");
+                
+                for (var i = 0; i < id; i++) {
+
+                    $( ".thumb-outer", "#slideshow-" + id ).append( "<div id='thumb-" + winCount + "' class='thumb-sel'><img src='' class='thumbImg'></div>" );
+                    winCount++;
+                }
                 // $( ".group > div", "#accordion-" + id ).each( function( index, item ) {
                 //     $( "#slideshow-" + id ).append( "<div id='slide-win-" + winCount + "' class='slide-window-sel'><div class='slide-data'></div><div class='slide-text'></div></div>");
 
