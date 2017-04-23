@@ -162,7 +162,7 @@
 }
 
 
-.slide-window {
+.slide-window-sel {
     display: flex;
     position: absolute;
     top: 10px;
@@ -204,7 +204,7 @@
     overflow-x: auto;
 }
 
-.thumb {
+.thumb-sel {
   height: 84px;
   width: 150px;
   margin-right: 15px;
@@ -215,7 +215,7 @@
   display: inline-block;
 }
 
-.thumb:hover {
+.thumb-sel:hover {
   border: 5px solid rgba(0, 200, 255, 0.8);
 }
 

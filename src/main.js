@@ -16,6 +16,15 @@ var childApp = null;
 //------------------------------------------------------------------------------
 
 app.on('ready', () => {
+    // console.log( process.argv.length );
+    // console.log( process.argv );
+
+    // if ( process.argv.length > 1 ) {
+    //     if ( process.argv[1] === "--play" ) {
+    //         console.log( "play argument" );
+    //     }
+    // }
+
     mainWindow = new BrowserWindow({
         //title: "ShowApp " + app.getVersion(),
         title: app.getName() + " " + app.getVersion(),

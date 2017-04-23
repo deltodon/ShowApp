@@ -21,10 +21,6 @@ $( function() {
     var optionPath = "";
     var btnFileOption = "";
 
-    // TODO: Remove before final!
-    var slideButton = $("#slide-btn-app").button().click( function(){ console.log( 'slide-btn-app'); });
-
-
 
     // Actual addTab function: adds new tab using the input from the form above
     function addContent( entryArg ) {
@@ -62,11 +58,6 @@ $( function() {
             $("button", accordArg.last()).button()
                                          .data( "path", optionPath )
                                          .click( function() { ipc.send( 'run-app', $( this).data( "path" ) ); });
-
-            // TODO: Remove before final!
-            //update path to new button
-            slideButton.off( "click" );
-            slideButton.click( function(){ ipc.send( 'run-app', optionPath ); });
         }
 
         accordArg.accordion( "refresh" );
