@@ -31,6 +31,16 @@ $( function() {
                         $("#back-label").hide();
                         $( this ).hide();
                         $(".slideshow-group").hide();
+
+                        $( "audio" ).each( function( index, item ) {
+                            item.pause();
+                            item.currentTime = 0;
+                        });
+
+                        $( "video" ).each( function( index, item ) {
+                            item.pause();
+                            item.currentTime = 0;
+                        });
                     })
                     .hide();
 
@@ -112,6 +122,15 @@ $( function() {
 
                     $( "#thumb-" + winCount ).on( "click", function() {
                         $( ".slide-window-sel" ).hide();
+
+                        $( "audio" ).each( function( index, item ) {
+                            item.pause();
+                        });
+
+                        $( "video" ).each( function( index, item ) {
+                            item.pause();
+                        });
+
                         $( $( this ).data( "open" ) ).show();
                     });
 
@@ -129,6 +148,8 @@ $( function() {
 
                     // $( ".slide-window-sel", $( this ).data( "open" ) ).hide();
                     $( ".slide-window-sel" ).hide();
+                    // $( "audio" ).pause();
+                    // $( "video" ).pause();
                     $( ".slide-window-sel", $( this ).data( "open" ) ).first().show();      
                 });
 
