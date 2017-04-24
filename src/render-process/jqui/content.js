@@ -1,5 +1,6 @@
 const electron = require('electron').remote;
 const openDialog = electron.dialog;
+const BrowserWindow = electron.BrowserWindow;
 const ipc = require('electron').ipcRenderer;
 
 const imageIcon = "<i class='fa fa-picture-o fa-fw content-icon'></i>";
@@ -139,44 +140,67 @@ $( function() {
 
     // TODO: Refactor following two functions into one with args
     function selectFile() {
+        let win = BrowserWindow.getFocusedWindow();
         optionPath = "";
-        openDialog.showOpenDialog({ defaultPath: openDefPath, properties: ['openFile'],
+        openDialog.showOpenDialog( win, { defaultPath: openDefPath, properties: ['openFile'],
                                     filters: [ fileFilter ] }, function (filePath) {
             if (filePath){
                 optionPath = filePath[0].replace(/(\\)/g, "/");
-                if (optionPath.length > 42 ) {
-                    let strSlice = optionPath.slice(-39);
-                    optionPathText.append( "..." + strSlice );
+
+                let result = isInsideProjectDir( optionPath );
+
+                // console.log( result ); 
+
+                if ( result === "" ) {
+                    wrongPathAlert();
+                    optionPath = "";
+                    return;
                 }
-                else{
-                    optionPathText.append( optionPath );
-                }        
+                else {
+                    if (result.length > 42 ) {
+                        let strSlice = result.slice(-39);
+                        optionPathText.append( "..." + strSlice );
+                    }
+                    else{
+                        optionPathText.append( result );
+                    }
+                }       
             }
         });
     }
 
+
     function selectThumbFile() {
+        let win = BrowserWindow.getFocusedWindow();
         optionThumbPath = "";
-        openDialog.showOpenDialog({ defaultPath: openDefPath, properties: ['openFile'],
+        openDialog.showOpenDialog( win, { defaultPath: openDefPath, properties: ['openFile'],
                                     filters: [ {name: 'Image (*.jpg; *.png; *.bmp)', extensions: ['jpg', 'png', 'bmp']} ] }, function (filePath) {
 
             // console.log( "filePath= " + filePath );
             if (filePath){
                 optionThumbPath = filePath[0].replace(/(\\)/g, "/");
-                if (optionThumbPath.length > 42 ) {
-                    let strSlice = optionThumbPath.slice(-39);
-                    optionThumbPathText.append( "..." + strSlice );
-                }
-                else{
-                    optionThumbPathText.append( optionThumbPath );
-                }
 
+                let result = isInsideProjectDir( optionThumbPath );
+
+                if ( result === "" ) {
+                    wrongPathAlert();
+                    optionThumbPath = "";
+                    return;
+                }
+                else {
+                    if (result.length > 42 ) {
+                        let strSlice = result.slice(-39);
+                        optionThumbPathText.append( "..." + strSlice );
+                    }
+                    else{
+                        optionThumbPathText.append( result );
+                    }
+                }
                 // console.log( "select " + optionThumbPath );        
             }
-        });
-
-        
+        });        
     }
+
 
     function updateFileFilter() {
         // btnFileOption = $('input[name=radio-1]:checked', '#content-buttonset').val();
@@ -193,6 +217,7 @@ $( function() {
 
         prepFileTokens();
     }
+
 
     function prepFileTokens() {
         switch ( btnFileOption ) {
@@ -243,18 +268,31 @@ $( function() {
         }
     } 
 
+
     function addProjectImg( id ) {
+        let win = BrowserWindow.getFocusedWindow();
         fileFilter = {name: 'Image (*.jpg; *.png; *.bmp)', extensions: ['jpg', 'png', 'bmp']};
 
         optionPath = "";
 
-        openDialog.showOpenDialog({ defaultPath: openDefPath, properties: ['openFile'],
+        openDialog.showOpenDialog( win, { defaultPath: openDefPath, properties: ['openFile'],
                                     filters: [ fileFilter ] }, function (filePath) {
             if (filePath){
                 optionPath = filePath[0].replace(/(\\)/g, "/");
 
-                $("> .tab-proj-cover img", "#" + id).attr("src","file://" + optionPath);
-                openProjects[ id ].data.header.cover = optionPath;
+                let result = isInsideProjectDir( optionPath );
+
+                if ( result === "" ) {
+                    wrongPathAlert();
+                    optionPath = "";
+                    return;
+                }
+                else {
+                    $("> .tab-proj-cover img", "#" + id).attr("src","file://" + optionPath);
+                    openProjects[ id ].data.header.cover = optionPath;
+                }
+
+
             }
         });
     }
@@ -303,6 +341,7 @@ $( function() {
 
     });
 
+
     $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
         // update content header
         let counter = ui.newTab.context.hash.substr(ui.newTab.context.hash.lastIndexOf('-') + 1);
@@ -340,12 +379,37 @@ $( function() {
         arg.show();
         // console.log( "visible " + $(".accord-select:visible").attr( "id" ) );
     }
+
+
+    function isInsideProjectDir( argPath ) {
+        let ctrlPath = openDefPath.replace(/(\\)/g, "/");
+        // console.log( ctrlPath );
+        // console.log( argPath );
+        // console.log( argPath.indexOf( ctrlPath ) );
+        // console.log( argPath.replace( ctrlPath, "" ) );
+
+        if ( argPath.indexOf( ctrlPath ) === 0 ) {
+            return argPath.replace( ctrlPath, "" );
+        }
+        else {
+            return "";
+        }        
+    }
+
     
 });
 
-
-
 // --------------------------------------------------------------
 
+function wrongPathAlert() {
+    let win = BrowserWindow.getFocusedWindow();
 
+    openDialog.showMessageBox( win, {
+        type: 'warning',
+        title: "Wrong path!",
+        message: 'Your selected file is outside of project directory.',
+        detail: 'To prevent broken links the paths outside of project folder are not allowed. To use your file, copy it into your project folder before you link it to your slide show.',
+        buttons: ['OK']
+    });
+}
 
