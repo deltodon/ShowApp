@@ -49,6 +49,14 @@ $( function() {
         $(".slideshow-group").remove();
     });
 
+    ipc.on('cmd-play', function() {
+        console.log( 'cmd-play' );
+        generateSlideShow();
+        $("#wrapper").hide();
+        $("#view-main").show();
+        ipc.send('preview-on');
+    });
+
 
     var backBtn = $( "#btn-back-to-main" )
                     .button()
@@ -196,7 +204,7 @@ $( function() {
             });
         }
         else {
-            console.log( 'list undefined' );
+            console.log( 'list empty' );
         }
     }
 

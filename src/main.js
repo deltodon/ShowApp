@@ -17,18 +17,21 @@ var childApp = null;
 
 app.on('ready', () => {
 
+    let showMode = false;
+    // let showMode = true;
+
     // Handle CLI arguments
     for ( i = 1; i < process.argv.length; i++ ) {
         switch (process.argv[i]) {
             case '--play':
             case '-p':
-                console.log( "play" );
-                console.log( "str = " + process.argv[i + 1]);
-                i++
+                // console.log( "play" );
+                showMode = true;
                 break;
+
             case '--icon':
             case '-i':
-                console.log( "create shortcut" );
+                // console.log( "create shortcut" );
                 break;
 
             default:
@@ -57,17 +60,35 @@ app.on('ready', () => {
     mainWindow.loadURL('file://' + __dirname + '/index.html');
     // mainWindow.maximize();
 
-    globalShortcut.register('CommandOrControl+F12', function () {
-        mainWindow.webContents.send('preview-off');
-        mainWindow.setFullScreen(false);
-    });
+    if ( showMode ) {
+        globalShortcut.register('CommandOrControl+F12', function () {
+            globalShortcut.unregisterAll();
+            app.quit();           
+        });
 
-    globalShortcut.register('CommandOrControl+Alt+M', function () {
-        // Toggle Top Menu
-        let visible = !mainWindow.isMenuBarVisible();
-        mainWindow.setMenuBarVisibility(visible);
-    });  
-       
+        mainWindow.webContents.on('did-finish-load', function() {
+            console.log("main - ready-to-show");
+            mainWindow.setFullScreen(true);
+            mainWindow.webContents.send('cmd-play');
+        });        
+    }
+    else {
+
+
+        globalShortcut.register('CommandOrControl+F12', function () {
+            mainWindow.webContents.send('preview-off');
+            mainWindow.setFullScreen(false);
+        });
+
+        globalShortcut.register('CommandOrControl+Alt+M', function () {
+            // Toggle Top Menu
+            let visible = !mainWindow.isMenuBarVisible();
+            mainWindow.setMenuBarVisibility(visible);
+        });  
+    }
+
+
+
 });
 
 //------------------------------------------------------------------------------
