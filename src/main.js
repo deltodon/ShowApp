@@ -98,7 +98,12 @@ app.on('ready', () => {
         ipc.on('config-saved', function() {
             console.log("config saved");
             mainWindow.destroy();
-        }); 
+        });
+
+        // globalShortcut.register('CommandOrControl+F9', function () {
+        //     mainWindow.webContents.send('save-config');
+        //     // mainWindow.destroy();
+        // }); 
     }
 
 

@@ -8,6 +8,49 @@ const ipc = require('electron').ipcRenderer;
 //     console.log( "detected tabscreate" );
 // } );
 ipc.on('save-config', function() {
+    let list = $("#tabs ul li a");
+    let configObj = { projects: [] };
+    let configDir = configPath.slice( 0, configPath.lastIndexOf('/') );
+    // console.log( "configDir " + configDir );
+
+    if (list.length > 0)
+    {
+        list.each( function( index, value ) {
+            configObj.projects.push( openProjects[ value.hash.substr(1) ].path );
+        });
+
+        // console.log( configObj  );
+    }
+
+    let jsonFile = JSON.stringify( configObj );
+
+    if ( fse.existsSync( configPath ) ) {
+        // console.log( "config exist" );
+        fse.writeFile( configPath, jsonFile, "utf8", function(err) {
+            if (err) {
+                errorMessage("error writing file\n" + err);
+            } 
+        });
+    }
+    else {
+        if ( !fse.existsSync( configDir ) ) {
+            fse.mkdir( configDir, function (err) {
+                if (err) {
+                    errorMessage("failed to create directory\n" + err);
+                    //console.log('failed to create directory', err);
+                }
+            });
+        }
+
+        fse.writeFile( configPath, jsonFile, "utf8", function(err) {
+            if (err) {
+                errorMessage("error writing file\n" + err);
+            } 
+        });
+    }
+
+
+
     ipc.send('config-saved');
 });
  	

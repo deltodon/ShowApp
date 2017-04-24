@@ -23,9 +23,10 @@ function initTabs () {
     ipc.on('load-config', function() {
         let appDir = app.getAppPath();
         appDir = appDir.replace(/(\\)/g, "/");
+        configPath = appDir + "/.config/settings.json";
         
         console.log( 'load config' );
-        console.log( appDir );
+        console.log( configPath );
     });
 
 
@@ -157,59 +158,69 @@ function initTabs () {
         });
     };
 
-    function openProject() {
+    function openProject( projArg ) {
         let win = BrowserWindow.getFocusedWindow();
         let obj = getObjTemplate();
         let desktop = app.getPath( "desktop" );
+        let filePath = "";
 
-        dialog.showOpenDialog(win, { defaultPath: desktop, properties: ['openFile'],
-                                filters: [ {name: 'ShowApp Project (*.json)', extensions: ['json']} ] },
-                                function (optionPath) {
+        if ( projArg === undefined ) {
+            dialog.showOpenDialog(win, { defaultPath: desktop, properties: ['openFile'],
+                                    filters: [ {name: 'ShowApp Project (*.json)', extensions: ['json']} ] },
+                                    function (optionPath) {
 
-            if (optionPath === undefined) {
-                console.log( "wrong optionPath" );
-                return;
-            }
-            else {
-                let filePath = optionPath[0].replace(/(\\)/g, "/");
-
-                if ( projAlreadyOpen( filePath ) ) {
-                    // console.log( "Project already open!" );
-                    dialog.showMessageBox( win, {
-                        type: 'warning',
-                        title: "Warning!",
-                        message: 'Project is already open.',
-                        detail: 'You can have only one instance of each project open at the same time.',
-                        buttons: ['OK']
-                    });
+                if (optionPath === undefined) {
+                    console.log( "wrong optionPath" );
                     return;
                 }
                 else {
-                    projectName = filePath.slice(filePath.lastIndexOf('/') + 1, filePath.lastIndexOf('.'));
-                    // console.log( projectName );
-                    fse.readFile( filePath, 'utf8', function (err, data) {
-                        if (err) throw err;
-                        let objData = JSON.parse(data);
-
-                        if (objData === undefined) {
-                            console.log( "wrong obj" );
-                            return;
-                        }
-                        else {
-                            obj.name = projectName;
-                            obj.path = filePath;
-                            obj.data = objData;
-                            let tabID = addTab( obj );
-                            openProjects[ tabID ] = obj;
-
-                            // send event to content.js to load accordion
-                            tabs.trigger( "tab-loaded", [ tabID ] );
-                        }
-                    });
+                    filePath = optionPath[0].replace(/(\\)/g, "/");
+                    localFuncOpenFile();
                 }
-            }
-        });
+            });
+        }
+        else {
+            filePath = projArg;
+            localFuncOpenFile();            
+        }
 
+
+        function localFuncOpenFile() {
+            if ( projAlreadyOpen( filePath ) ) {
+                // console.log( "Project already open!" );
+                dialog.showMessageBox( win, {
+                    type: 'warning',
+                    title: "Warning!",
+                    message: 'Project is already open.',
+                    detail: 'You can have only one instance of each project open at the same time.',
+                    buttons: ['OK']
+                });
+                return;
+            }
+            else {
+                projectName = filePath.slice(filePath.lastIndexOf('/') + 1, filePath.lastIndexOf('.'));
+                // console.log( projectName );
+                fse.readFile( filePath, 'utf8', function (err, data) {
+                    if (err) throw err;
+                    let objData = JSON.parse(data);
+
+                    if (objData === undefined) {
+                        console.log( "wrong obj" );
+                        return;
+                    }
+                    else {
+                        obj.name = projectName;
+                        obj.path = filePath;
+                        obj.data = objData;
+                        let tabID = addTab( obj );
+                        openProjects[ tabID ] = obj;
+
+                        // send event to content.js to load accordion
+                        tabs.trigger( "tab-loaded", [ tabID ] );
+                    }
+                });
+            }
+        }
     }
 
 
