@@ -147,6 +147,7 @@ $( function() {
                                 break;
 
                             case "BR":
+                                break;
 
                             default:
                                 console.log( "def" + item.children[i].nodeName );

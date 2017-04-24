@@ -17,7 +17,6 @@ $( function() {
     var fileIcon = "";
     var fileFilter = {};
     var fileSource = "";
-    var fileThumb = "<img src='#{thumb-src}' class='thumb-content'>";
     var optionPathText = $( "#opt-path" );
     var optionThumbPathText = $( "#opt-thumb-path" );
     var openDefPath = "";
@@ -56,6 +55,7 @@ $( function() {
         fileSource = fileSource.replace( /#\{source\}/g, 'file://' + optionPath );
 
 
+        let fileThumb = "<img src='#{thumb-src}' class='thumb-content'>";
 
         if ( optionThumbPath === "" ) {
             fileThumb = "";

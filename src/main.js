@@ -16,14 +16,26 @@ var childApp = null;
 //------------------------------------------------------------------------------
 
 app.on('ready', () => {
-    // console.log( process.argv.length );
-    // console.log( process.argv );
 
-    // if ( process.argv.length > 1 ) {
-    //     if ( process.argv[1] === "--play" ) {
-    //         console.log( "play argument" );
-    //     }
-    // }
+    // Handle CLI arguments
+    for ( i = 1; i < process.argv.length; i++ ) {
+        switch (process.argv[i]) {
+            case '--play':
+            case '-p':
+                console.log( "play" );
+                console.log( "str = " + process.argv[i + 1]);
+                i++
+                break;
+            case '--icon':
+            case '-i':
+                console.log( "create shortcut" );
+                break;
+
+            default:
+                // console.log( "wrong argument" );
+        }
+    }
+
 
     mainWindow = new BrowserWindow({
         //title: "ShowApp " + app.getVersion(),
@@ -36,14 +48,14 @@ app.on('ready', () => {
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     })
 
-    console.log( __dirname);
+    // console.log( __dirname);
 
     // Create hidden debug menu
     debugMenu.createMenu();
     mainWindow.setMenuBarVisibility(false);
 
     mainWindow.loadURL('file://' + __dirname + '/index.html');
-    mainWindow.maximize();
+    // mainWindow.maximize();
 
     globalShortcut.register('CommandOrControl+F12', function () {
         mainWindow.webContents.send('preview-off');
