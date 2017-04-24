@@ -289,7 +289,7 @@ $( function() {
                 }
                 else {
                     $("> .tab-proj-cover img", "#" + id).attr("src","file://" + optionPath);
-                    openProjects[ id ].data.header.cover = optionPath;
+                    openProjects[ id ].data.header.cover = result;
                 }
 
 
@@ -357,13 +357,15 @@ $( function() {
 
     $( "#tabs" ).on( "tab-loaded", function( event, param ) {
         // console.log( openProjects[ param ].data.entry );
+        let projDir = openProjects[ param ].path.slice( 0, openProjects[ param ].path.lastIndexOf('/') );
+        // console.log( "projDir = " + projDir );
 
         openProjects[ param ].data.entry.forEach( function( item, index ) {
             btnFileOption = item.type;
             prepFileTokens();
             
-            optionPath = item.path;
-            optionThumbPath = item.thum;
+            optionPath = projDir + item.path;
+            optionThumbPath = projDir + item.thum;
             addContent( item );
         });
     });

@@ -87,7 +87,8 @@ function initTabs () {
             $("#project-" + tabCounter).val( openProjArg.data.header.title );
 
             if ( openProjArg.data.header.cover !== "" ) {
-                $("> .tab-proj-cover img", "#" + id).attr("src","file://" + openProjArg.data.header.cover);
+                let projDir = openProjArg.path.slice( 0, openProjArg.path.lastIndexOf('/') );
+                $("> .tab-proj-cover img", "#" + id).attr("src","file://" + projDir + openProjArg.data.header.cover);
             }
 
         }

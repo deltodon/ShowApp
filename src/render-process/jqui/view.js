@@ -146,8 +146,10 @@ $( function() {
                                 }                                
                                 break;
 
+                            case "BR":
+
                             default:
-                                console.log( "def" );
+                                console.log( "def" + item.children[i].nodeName );
 
                         }             
                     }
