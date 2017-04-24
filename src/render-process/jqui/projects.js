@@ -24,14 +24,36 @@ function initTabs () {
         let appDir = app.getAppPath();
         appDir = appDir.replace(/(\\)/g, "/");
         configPath = appDir + "/.config/settings.json";
+
+        if ( fse.existsSync( configPath ) ) {
+            fse.readFile( configPath, 'utf8', function (err, data) {
+                if (err) {
+                    errorMessage("error reading file\n" + err);
+                    return;
+                }
+
+                let objData = JSON.parse(data);
+
+                if (objData === undefined) {
+                    console.log( "no config file!" );
+                    return;
+                }
+                else {
+                    for ( i = 0; i < objData.projects.length; i++ ) {
+                        openProject( objData.projects[i] );
+                    }
+                }
+            });
+        }
+        else {
+            console.log( "config does not exist" );
+        }
         
-        console.log( 'load config' );
-        console.log( configPath );
+        // console.log( 'load config' );
+        // console.log( configPath );
     });
 
 
-
-    var projectName = "";
     var tabContent = "<div class='tab-proj-cover'><img src=''></div><div class='tab-buttons'><button class='btn-proj-img'><i class='fa fa-picture-o fa-fw'></i> Add Image</button>\
                         <button class='btn-proj-save'><i class='fa fa-floppy-o fa-fw'></i> Save Project</button>\
                         <div class='img-notice'><i class='fa fa-info-circle fa-fw'></i> Note: for the best result use a square image of minimum size 400x400 pixels.</div></div>\
@@ -81,7 +103,7 @@ function initTabs () {
 
     // Actual addTab function: adds new tab using the input from the form above
     function addTab( openProjArg ) {
-        var label = projectName,
+        var label = openProjArg.name,
             id = "tabs-" + tabCounter,
             li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
             tabContentHtml =  tabContent.replace( /#\{student\}/g, "student-" + tabCounter ).replace( /#\{project\}/g, "project-" + tabCounter );
@@ -130,7 +152,7 @@ function initTabs () {
             
             if (projectPath){
                 projectPath = projectPath.replace(/(\\)/g, "/");
-                projectName = projectPath.substr(projectPath.lastIndexOf('/') + 1);
+                let projectName = projectPath.substr(projectPath.lastIndexOf('/') + 1);
 
                 makeDirectory(projectPath);
                 makeDirectory(projectPath.concat("/audio"));
@@ -147,11 +169,11 @@ function initTabs () {
                     } 
                 });
 
-                let tabID = addTab();
-
                 obj.name = projectName;
                 obj.path = filePath;
 
+                let tabID = addTab( obj );
+                
                 openProjects[ tabID ] = obj;
                 
             } 
@@ -198,7 +220,7 @@ function initTabs () {
                 return;
             }
             else {
-                projectName = filePath.slice(filePath.lastIndexOf('/') + 1, filePath.lastIndexOf('.'));
+                let projectName = filePath.slice(filePath.lastIndexOf('/') + 1, filePath.lastIndexOf('.'));
                 // console.log( projectName );
                 fse.readFile( filePath, 'utf8', function (err, data) {
                     if (err) throw err;
@@ -217,6 +239,7 @@ function initTabs () {
 
                         // send event to content.js to load accordion
                         tabs.trigger( "tab-loaded", [ tabID ] );
+
                     }
                 });
             }
