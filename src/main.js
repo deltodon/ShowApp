@@ -68,12 +68,15 @@ app.on('ready', () => {
 
         mainWindow.webContents.on('did-finish-load', function() {
             console.log("main - ready-to-show");
+            mainWindow.webContents.send('load-config');
             mainWindow.setFullScreen(true);
             mainWindow.webContents.send('cmd-play');
         });        
     }
     else {
-
+        mainWindow.webContents.on('did-finish-load', function() {
+            mainWindow.webContents.send('load-config');
+        }); 
 
         globalShortcut.register('CommandOrControl+F12', function () {
             mainWindow.webContents.send('preview-off');
@@ -84,7 +87,18 @@ app.on('ready', () => {
             // Toggle Top Menu
             let visible = !mainWindow.isMenuBarVisible();
             mainWindow.setMenuBarVisibility(visible);
-        });  
+        });
+
+        mainWindow.on('close', function( event ) {
+            event.preventDefault();
+            console.log("before close window");
+            mainWindow.webContents.send('save-config');            
+        });
+
+        ipc.on('config-saved', function() {
+            console.log("config saved");
+            mainWindow.destroy();
+        }); 
     }
 
 

@@ -1,5 +1,5 @@
 const fse = require('fs-extra');
-
+const ipc = require('electron').ipcRenderer;
 
 
 // --------------------------------------------------------------
@@ -7,7 +7,9 @@ const fse = require('fs-extra');
 // $( "#tabs" ).on( "tabscreate", function( event, ui ) {
 //     console.log( "detected tabscreate" );
 // } );
-
+ipc.on('save-config', function() {
+    ipc.send('config-saved');
+});
  	
 
 $( "#tabs" ).on( "tab-added", function( event, param ) {

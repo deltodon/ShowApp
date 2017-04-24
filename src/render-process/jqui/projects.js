@@ -5,6 +5,7 @@ const dialog = electron.dialog;
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const fse = require('fs-extra');
+const ipc = require('electron').ipcRenderer;
 
 const maxProjects = 2;
 
@@ -18,6 +19,17 @@ $( function() {
 // --------------------------------------------------------------
 
 function initTabs () {
+
+    ipc.on('load-config', function() {
+        let appDir = app.getAppPath();
+        appDir = appDir.replace(/(\\)/g, "/");
+        
+        console.log( 'load config' );
+        console.log( appDir );
+    });
+
+
+
     var projectName = "";
     var tabContent = "<div class='tab-proj-cover'><img src=''></div><div class='tab-buttons'><button class='btn-proj-img'><i class='fa fa-picture-o fa-fw'></i> Add Image</button>\
                         <button class='btn-proj-save'><i class='fa fa-floppy-o fa-fw'></i> Save Project</button>\
