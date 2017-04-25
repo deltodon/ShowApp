@@ -9,6 +9,8 @@ const ipc = require('electron').ipcRenderer;
 
 const maxProjects = 2;
 
+// var configData;
+
 
 // --------------------------------------------------------------
 
@@ -18,39 +20,94 @@ $( function() {
 
 // --------------------------------------------------------------
 
+function loadConfigFile() {
+    var deferred = new $.Deferred();
+
+    let appDir = app.getAppPath();
+    appDir = appDir.replace(/(\\)/g, "/");
+    configPath = appDir + "/.config/settings.json";
+
+    if ( fse.existsSync( configPath ) ) {
+        fse.readFile( configPath, 'utf8', function (err, data) {
+            if (err) {
+                // errorMessage("error reading file\n" + err);
+                deferred.reject( "error reading file\n" + err );
+                return;
+            }
+
+            var objData = JSON.parse(data);
+
+            if (objData === undefined) {
+                deferred.reject( "no config file!" );
+            }
+            else {
+                deferred.resolve(objData);
+            }
+        });
+    }
+    else {
+        deferred.reject( "config does not exist" );
+    }
+
+    return deferred.promise();
+}
+
+// --------------------------------------------------------------
+
+
+
+
+
+// --------------------------------------------------------------
+
 function initTabs () {
 
     ipc.on('load-config', function() {
-        let appDir = app.getAppPath();
-        appDir = appDir.replace(/(\\)/g, "/");
-        configPath = appDir + "/.config/settings.json";
 
-        if ( fse.existsSync( configPath ) ) {
-            fse.readFile( configPath, 'utf8', function (err, data) {
-                if (err) {
-                    errorMessage("error reading file\n" + err);
-                    return;
-                }
-
-                let objData = JSON.parse(data);
-
-                if (objData === undefined) {
-                    console.log( "no config file!" );
-                    return;
-                }
-                else {
-                    objData.projects.forEach(function callback(currentValue, index, array) {
-                        openProject( currentValue );
-                    });
-                }
+        var loadPromise = loadConfigFile();
+        
+        loadPromise.done(function (result) {
+            console.log( "done!" );
+            // console.log( result );
+            result.projects.forEach(function callback(currentValue, index, array) {
+                openProject( currentValue );
             });
-        }
-        else {
-            console.log( "config does not exist" );
-        }
-       
-        // console.log( 'load config' );
-        // console.log( configPath );
+        });
+
+        loadPromise.fail(function (result) {
+            console.log( "fail!" );
+            console.log( result );
+        });
+
+        // let appDir = app.getAppPath();
+        // appDir = appDir.replace(/(\\)/g, "/");
+        // configPath = appDir + "/.config/settings.json";
+
+        // if ( fse.existsSync( configPath ) ) {
+        //     fse.readFile( configPath, 'utf8', function (err, data) {
+        //         if (err) {
+        //             errorMessage("error reading file\n" + err);
+        //             return;
+        //         }
+
+        //         let objData = JSON.parse(data);
+
+        //         if (objData === undefined) {
+        //             console.log( "no config file!" );
+        //             return;
+        //         }
+        //         else {
+        //             objData.projects.forEach(function callback(currentValue, index, array) {
+        //                 openProject( currentValue );
+        //             });
+        //         }
+        //     });
+        // }
+        // else {
+        //     console.log( "config does not exist" );
+        // }
+
+
     });
 
 
