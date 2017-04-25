@@ -232,6 +232,7 @@
     height: 120px;
     padding-top: 10px;
     overflow-y: hidden;
+    /*background: var(--color-view-bgr);*/
     /*overflow-x: scroll;*/
     overflow-x: auto;
 }
@@ -248,7 +249,7 @@
 }
 
 .thumb-sel:hover {
-  border: 5px solid rgba(0, 200, 255, 0.8);
+  border: 5px solid var(--color-view-head);
 }
 
 .thumbImg {
