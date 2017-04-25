@@ -67,9 +67,7 @@ app.on('ready', () => {
         });
 
         mainWindow.webContents.on('did-finish-load', function() {
-            console.log("main - ready-to-show");
-            mainWindow.webContents.send('load-config');
-            mainWindow.setFullScreen(true);
+            // console.log("main - ready-to-show");
             mainWindow.webContents.send('cmd-play');
         });        
     }

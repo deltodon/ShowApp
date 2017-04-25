@@ -49,14 +49,12 @@ $( function() {
         $(".slideshow-group").remove();
     });
 
-    ipc.on('cmd-play', function() {
-        console.log( 'cmd-play' );
+    $( "#view-main" ).on( "start-show", function() {
         generateSlideShow();
         $("#wrapper").hide();
         $("#view-main").show();
         ipc.send('preview-on');
     });
-
 
     var backBtn = $( "#btn-back-to-main" )
                     .button()

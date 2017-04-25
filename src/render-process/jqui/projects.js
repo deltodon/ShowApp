@@ -54,12 +54,6 @@ function loadConfigFile() {
 
 // --------------------------------------------------------------
 
-
-
-
-
-// --------------------------------------------------------------
-
 function initTabs () {
 
     ipc.on('load-config', function() {
@@ -69,9 +63,7 @@ function initTabs () {
         loadPromise.done(function (result) {
             console.log( "done!" );
             // console.log( result );
-            result.projects.forEach(function callback(currentValue, index, array) {
-                openProject( currentValue );
-            });
+            loadConfigProjects( result.projects );
         });
 
         loadPromise.fail(function (result) {
@@ -79,36 +71,65 @@ function initTabs () {
             console.log( result );
         });
 
-        // let appDir = app.getAppPath();
-        // appDir = appDir.replace(/(\\)/g, "/");
-        // configPath = appDir + "/.config/settings.json";
-
-        // if ( fse.existsSync( configPath ) ) {
-        //     fse.readFile( configPath, 'utf8', function (err, data) {
-        //         if (err) {
-        //             errorMessage("error reading file\n" + err);
-        //             return;
-        //         }
-
-        //         let objData = JSON.parse(data);
-
-        //         if (objData === undefined) {
-        //             console.log( "no config file!" );
-        //             return;
-        //         }
-        //         else {
-        //             objData.projects.forEach(function callback(currentValue, index, array) {
-        //                 openProject( currentValue );
-        //             });
-        //         }
-        //     });
-        // }
-        // else {
-        //     console.log( "config does not exist" );
-        // }
-
-
     });
+
+    ipc.on('cmd-play', function() {
+        console.log( 'cmd-play' );
+
+        var loadPromise = loadConfigFile();
+        
+        loadPromise.always(function (result) {
+            // console.log( "done!" );
+            var def = loadConfigProjects( result.projects );
+            def.always(function () {
+                $( "#view-main" ).trigger( "start-show" );
+            });
+        });
+
+    });    
+
+    function loadConfigProjects( argPaths ) {
+
+        // argPaths.projects.forEach( function callback(currentValue, index, array ) {
+        //     openProject( currentValue );
+        // });
+
+        var deferred = new $.Deferred();
+
+        if ( argPaths === undefined ) {
+            deferred.reject( "argPaths undefined" );
+            return;
+        }
+
+        // TODO: refactor this callback hell into recursive function
+        if ( argPaths.length > 0) {
+            var def1 = asyncLoadProject( argPaths[0] );
+            def1.always( function () {
+                if ( argPaths.length > 1) {
+                    var def2 = asyncLoadProject( argPaths[1] );
+                    def2.always( function () {
+                        if ( argPaths.length > 2) {
+                            var def3 = asyncLoadProject( argPaths[2] );
+                            def3.always( function () {
+                                deferred.resolve();
+                            });
+                        }
+                        else {
+                            deferred.resolve();
+                        }
+                    });
+                }
+                else {
+                    deferred.resolve();
+                }
+            });
+        }
+        else {
+            deferred.resolve();
+        }       
+
+        return deferred.promise();
+    }
 
 
     var tabContent = "<div class='tab-proj-cover'><img src=''></div><div class='tab-buttons'><button class='btn-proj-img'><i class='fa fa-picture-o fa-fw'></i> Add Image</button>\
@@ -236,6 +257,54 @@ function initTabs () {
             } 
         });
     };
+
+
+    function asyncLoadProject( projArg ) {
+        var deferred = new $.Deferred();
+        let obj = getObjTemplate();
+
+        if ( projArg === undefined ) {
+            deferred.reject( "async projArg undefined" )
+        }
+        else {
+            if ( projAlreadyOpen( projArg ) ) {
+                deferred.reject( "async projAlreadyOpen" )
+            }
+            else {
+                let projectName = projArg.slice(projArg.lastIndexOf('/') + 1, projArg.lastIndexOf('.'));
+                // console.log( projectName );
+                fse.readFile( projArg, 'utf8', function (err, data) {
+                    if (err) {
+                        deferred.reject( "async error reading file\n" + err );
+                        // throw err;
+                    }
+
+                    let objData = JSON.parse(data);
+
+                    if (objData === undefined) {
+                        deferred.reject( "async objData undefined" );
+                        console.log( "async objData undefined"  );
+                        return;
+                    }
+                    else {
+                        obj.name = projectName;
+                        obj.path = projArg;
+                        obj.data = objData;
+                        let tabID = addTab( obj );
+                        openProjects[ tabID ] = obj;
+
+                        // send event to content.js to load accordion
+                        tabs.trigger( "tab-loaded", [ tabID ] );
+                        deferred.resolve();
+                    }
+                });
+            }
+        }
+
+        return deferred.promise();       
+    }
+
+
 
     function openProject( projArg ) {
         let win = BrowserWindow.getFocusedWindow();
