@@ -39,16 +39,16 @@ function initTabs () {
                     return;
                 }
                 else {
-                    for ( i = 0; i < objData.projects.length; i++ ) {
-                        openProject( objData.projects[i] );
-                    }
+                    objData.projects.forEach(function callback(currentValue, index, array) {
+                        openProject( currentValue );
+                    });
                 }
             });
         }
         else {
             console.log( "config does not exist" );
         }
-        
+       
         // console.log( 'load config' );
         // console.log( configPath );
     });
