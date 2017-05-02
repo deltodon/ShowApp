@@ -232,28 +232,33 @@ function initTabs () {
                 projectPath = projectPath.replace(/(\\)/g, "/");
                 let projectName = projectPath.substr(projectPath.lastIndexOf('/') + 1);
 
-                makeDirectory(projectPath);
-                makeDirectory(projectPath.concat("/audio"));
-                makeDirectory(projectPath.concat("/video"));
-                makeDirectory(projectPath.concat("/images"));
-                makeDirectory(projectPath.concat("/binaries"));
-                makeDirectory(projectPath.concat("/documents"));
+                makeDirectory(projectPath)
+                .then(makeDirectory(projectPath.concat("/video")))
+                .then(makeDirectory(projectPath.concat("/images")))
+                .then(makeDirectory(projectPath.concat("/binaries")))
+                .then(makeDirectory(projectPath.concat("/documents")))
+                .then(function()
+                {
+                    var filePath = projectPath.concat("/", projectName, ".json");
 
-                var filePath = projectPath.concat("/", projectName, ".json");
+                    fse.writeFile(filePath, jsonFile, "utf8", function(err) {
+                        if (err) {
+                            errorMessage("error writing file\n" + err);
+                        } 
+                    });
 
-                fse.writeFile(filePath, jsonFile, "utf8", function(err) {
-                    if (err) {
-                        errorMessage("error writing file\n" + err);
-                    } 
-                });
+                    obj.name = projectName;
+                    obj.path = filePath;
 
-                obj.name = projectName;
-                obj.path = filePath;
+                    let tabID = addTab( obj );
+                    
+                    openProjects[ tabID ] = obj;
 
-                let tabID = addTab( obj );
-                
-                openProjects[ tabID ] = obj;
-                
+                })
+                .catch(function(err)
+                {
+                    errorMessage("Uh, oh, couldn't write necessary files. Here's the whole ordeal: " + err);
+                })               
             } 
         });
     };
@@ -426,12 +431,19 @@ function getObjTemplate() {
 //------------------------------------------------------------------------------
 
 function makeDirectory(path){
-    fse.mkdir(path, function (err) {
-        if (err) {
-            errorMessage("failed to create directory\n" + err);
-            //console.log('failed to create directory', err);
-        }
+
+    return new Promise(function (resolve,reject)
+    {
+        fse.ensureDir(path, function (err) {
+
+            if (err) {
+                reject(err);
+            }
+            resolve(path);
+        });
+
     });
+
 };
 
 //------------------------------------------------------------------------------ 
