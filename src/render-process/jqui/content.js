@@ -23,6 +23,7 @@ $( function() {
     var optionPath = "";
     var optionThumbPath = "";
     var btnFileOption = "";
+    var btnCount = 1;
 
 
     // Actual addTab function: adds new tab using the input from the form above
@@ -54,12 +55,15 @@ $( function() {
 
         fileSource = fileSource.replace( /#\{source\}/g, 'file://' + optionPath );
 
+        fileSource = fileSource.replace( /#\{path\}/g, optionPath );
+        fileSource = fileSource.replace( /#\{btn-id\}/g, "accord-button-" + btnCount );
+
 
         let fileThumb = "<img src='#{thumb-src}' class='thumb-content'>";
 
         if ( optionThumbPath === "" ) {
             fileThumb = "";
-            console.log( "optionThumbPath is empty!" )
+            // console.log( "optionThumbPath is empty!" )
         }
         else {
             fileThumb = fileThumb.replace( /#\{thumb-src\}/g, 'file://' + optionThumbPath );
@@ -71,9 +75,27 @@ $( function() {
                             <div>" + fileSource + "<p class='preview-text'>" + textContentHtml + "</p>Thumbnail:<br>" + fileThumb + "</div></div>");
 
         if ( btnFileOption == "App") {
-            $("button", accordArg.last()).button()
-                                         .data( "path", optionPath )
-                                         .click( function() { ipc.send( 'run-app', $( this).data( "path" ) ); });
+
+            console.log( optionPath );
+            
+            $( "#accord-button-" + btnCount ).button()
+                                        //  .data( "path", optionPath )
+                                         .click( function() {
+                                             let pathArg = $( this).data( "path" );
+                                             console.log( pathArg );
+                                             ipc.send( 'run-app', pathArg );
+                                         });
+
+             
+            btnCount++;
+
+            // $("button", accordArg.last()).button()
+            //                             //  .data( "path", optionPath )
+            //                              .click( function() {
+            //                                  let pathArg = $( this).data( "path" );
+            //                                  console.log( pathArg );
+            //                                  ipc.send( 'run-app', pathArg );
+            //                              });                                         
         }
 
         accordArg.accordion( "refresh" );
@@ -256,7 +278,7 @@ $( function() {
                 fileIcon = appIcon;
                 fileFilter = {name: 'Application (*.exe)', extensions: ['exe']};
                 // fileFilter = {name: 'Application (*.exe; *.bat)', extensions: ['exe', 'bat']};
-                fileSource = "<button>Play App</button>";
+                fileSource = "<button id='#{btn-id}' data-path='#{path}'>Play App</button>";
                 // openDefPath = openDefPath.concat( "\\binaries" );
                 // console.log( "5" );
                 break;
