@@ -2,9 +2,16 @@
 
 Desktop application for creating and viewing graduate showcase presentations
 
+
 ## Latest Release
 
 You can download the latest version [here](https://github.com/deltodon/ShowApp/releases/download/v1.0.1/ShowApp-1.0.1.zip)
+
+
+## User guide
+
+Please refer to **[Wiki](https://github.com/deltodon/ShowApp/wiki)** and **[YouTube Playlist](https://www.youtube.com/playlist?list=PLSYleHA2_B7UE_OUEsBQwJ_Mg06JmCjqT)** for further details.
+
 
 ## Development Outline
 
