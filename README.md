@@ -3,9 +3,9 @@
 Desktop application for creating and viewing graduate showcase presentations
 
 
-## Latest Release
+## Versions
 
-You can download the latest version [here](https://github.com/deltodon/ShowApp/releases/download/v1.0.1/ShowApp-1.0.1.zip)
+1.x - The latest version (recomended) [1.0.1](https://github.com/deltodon/ShowApp/releases/download/v1.0.1/ShowApp-1.0.1.zip)
 
 
 ## User guide
@@ -15,13 +15,25 @@ Please refer to **[Wiki](https://github.com/deltodon/ShowApp/wiki)** and **[YouT
 
 ## Development Outline
 
-Further development of this project is on hold until 14th May 2018, as I am currently working on my dissertation.
+### Version 1.x
+
+- [ ] Refactor and debug the code base
+- [ ] Create final release of 1.x for "posterity"
+
+### Version 2.x
+
+- [ ] Recreate user interface in [React](https://reactjs.org/)
+- [ ] Markdown support in text editor
+- [ ] LaTeX math support in text editor with [MathJax](https://www.mathjax.org/)
+- [ ] WebGL 3D viewport with [Three.js](https://threejs.org/)
+
+### Documentation
+
+- [x] Write documentation for setting up development and build environment
+- [ ] Document the code design from development perspective
+- [ ] Establish coding and contribution best practices
 
 
 ## Contribution
 
-Whether you have navigated to this repository by accident or you are one of the students using the ShowApp software for your presentation, please know that this source code was developed in a very short period of time.
-
-No pull request will be accepted until further notice and if you feel adventurous enough to make a fork and use the code base at this stage, then be warned that you do so at your own peril ;-)
-
-
+- TBD
