@@ -15,6 +15,9 @@ var childApp = null;
 
 //------------------------------------------------------------------------------
 
+/**
+ * Main entry of the program.
+ */
 app.on('ready', () => {
 
     let showMode = false;
@@ -103,8 +106,6 @@ app.on('ready', () => {
         //     // mainWindow.destroy();
         // }); 
     }
-
-
 
 });
 

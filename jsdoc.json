@@ -1,0 +1,55 @@
+{
+  "tags": {
+      "allowUnknownTags": true,
+      "dictionaries": ["jsdoc","closure"]
+  },
+  "source": {
+      "include": ["./src"],
+      "exclude": [ ],
+      "includePattern": ".+\\.js(doc|x)?$",
+      "excludePattern": "(node_modules/|docs)"
+  },
+  "sourceType": "module",
+  "recurseDepth": 10,
+  "plugins": [
+      "plugins/markdown",
+      "plugins/summarize",
+      "jsdoc-mermaid",
+      "node_modules/better-docs/category"
+  ],
+  "opts": {
+      "encoding": "utf8",
+      "destination": "docs/",
+      "readme": "README.md",
+      "recurse": true,
+      "verbose": true,
+      "tutorials": "./docs-src/tutorials",
+      "template": "node_modules/better-docs"
+  },
+  "templates": {
+      "cleverLinks": false,
+      "monospaceLinks": false,
+      "default": {
+          "staticFiles": {
+            "include": [
+                "./docs-src/statics"
+            ]
+          }
+      },
+      "better-docs": {
+          "name": "ShowApp Documentation",
+          "logo": "src/assets/png/64x64.png",
+          "trackingCode": "tracking-code-which-will-go-to-the-HEAD",
+          "navigation": [
+              {
+                  "label": "Github",
+                  "href": "https://github.com/deltodon/ShowApp"
+              },
+              {
+                  "label": "Deltodon",
+                  "href": "https://deltodon.com/"
+              }
+          ]
+      }
+  }
+}
