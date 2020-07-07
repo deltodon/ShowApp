@@ -28,7 +28,7 @@
   "homepage": "https://github.com/deltodon/ShowApp#readme",
   "devDependencies": {
     "better-docs": "^1.1.6",
-    "electron": "^1.4.15",
+    "electron": "^7.2.4",
     "electron-packager": "^8.5.2",
     "jsdoc": "^3.6.3",
     "jsdoc-mermaid": "^1.0.0",
